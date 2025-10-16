@@ -1,0 +1,12 @@
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\bin\Release\net9.0\Dario.Core.Domain.Card.deps.json
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\bin\Release\net9.0\Dario.Core.Domain.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\bin\Release\net9.0\Dario.Core.Domain.Card.pdb
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\Dario.Core.Domain.Card.csproj.AssemblyReference.cache
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\Dario.Core.Domain.Card.GeneratedMSBuildEditorConfig.editorconfig
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\Dario.Core.Domain.Card.AssemblyInfoInputs.cache
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\Dario.Core.Domain.Card.AssemblyInfo.cs
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\Dario.Core.Domain.Card.csproj.CoreCompileInputs.cache
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\Dario.Core.Domain.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\refint\Dario.Core.Domain.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\Dario.Core.Domain.Card.pdb
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Domain.Card\obj\Release\net9.0\ref\Dario.Core.Domain.Card.dll

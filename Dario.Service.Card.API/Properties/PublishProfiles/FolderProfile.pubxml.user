@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+https://go.microsoft.com/fwlink/?LinkID=208121.
+-->
+<Project>
+  <PropertyGroup>
+    <_PublishTargetUrl>E:\Project\Rayanparsi\MicroServices\Card\Dario.Service.Card.API\bin\Release\net8.0\publish\</_PublishTargetUrl>
+    <History>True|2025-09-09T08:03:51.7804322Z||;True|2025-09-09T11:27:22.9026170+03:30||;True|2025-09-01T14:01:27.8937649+03:30||;True|2024-12-28T14:47:23.2786008+03:30||;True|2024-12-28T14:37:55.7783822+03:30||;True|2024-12-24T16:02:44.5747468+03:30||;True|2024-12-23T23:29:51.9832427+03:30||;True|2024-12-23T18:10:39.6132900+03:30||;True|2024-12-14T12:52:22.9002140+03:30||;True|2024-12-08T18:29:13.5586418+03:30||;True|2024-12-07T17:50:15.7102532+03:30||;True|2024-10-05T12:22:42.4092738+03:30||;True|2024-10-05T11:59:58.1858373+03:30||;</History>
+    <LastFailureDetails />
+  </PropertyGroup>
+</Project>

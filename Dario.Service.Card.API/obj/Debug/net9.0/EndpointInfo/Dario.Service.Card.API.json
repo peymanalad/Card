@@ -1,0 +1,318 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Dario.Service.Card.API",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/Card/Pool": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Pool",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/Id": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Id",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/Data": {
+      "post": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Data",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CardRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CardResponseRayanResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/Clear": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Clear",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Card/Health": {
+      "get": {
+        "tags": [
+          "Card"
+        ],
+        "operationId": "Health",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CardRequest": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "cardPan": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardExDate": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardResponse": {
+        "type": "object",
+        "properties": {
+          "cardId": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "cardPan": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardProductCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardData": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardHash": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardExDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardMask": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardBin": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardBinName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardName": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardFamily": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardNationalCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "cardIban": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CardResponseRayanResponse": {
+        "type": "object",
+        "properties": {
+          "isError": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "statusCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "item": {
+            "$ref": "#/components/schemas/CardResponse"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}

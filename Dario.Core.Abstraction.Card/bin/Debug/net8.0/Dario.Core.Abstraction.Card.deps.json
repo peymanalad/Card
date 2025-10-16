@@ -1,0 +1,286 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "Dario.Core.Abstraction.Card/1.0.0": {
+        "dependencies": {
+          "Dario.Core.Domain.Card": "1.0.0"
+        },
+        "runtime": {
+          "Dario.Core.Abstraction.Card.dll": {}
+        }
+      },
+      "FluentValidation/11.9.2": {
+        "runtime": {
+          "lib/net8.0/FluentValidation.dll": {
+            "assemblyVersion": "11.0.0.0",
+            "fileVersion": "11.9.2.0"
+          }
+        }
+      },
+      "Microsoft.CSharp/4.7.0": {},
+      "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.1": {
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.324.11423"
+          }
+        }
+      },
+      "Microsoft.Extensions.Logging.Abstractions/8.0.1": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1"
+        },
+        "runtime": {
+          "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.324.11423"
+          }
+        }
+      },
+      "Rayanparsi.Core.Domain/1.2.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Core.Domain.dll": {
+            "assemblyVersion": "1.2.1.0",
+            "fileVersion": "1.2.1.0"
+          }
+        }
+      },
+      "Rayanparsi.Core.Domain.Toolkits/1.2.0": {
+        "dependencies": {
+          "Rayanparsi.Core.Domain": "1.2.1",
+          "Rayanparsi.Utilities": "1.2.0"
+        },
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Core.Domain.Toolkits.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Core.RequestResponse/1.2.0": {
+        "dependencies": {
+          "FluentValidation": "11.9.2"
+        },
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Core.RequestResponse.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Extensions.Caching.Abstractions/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Extensions.Caching.Abstractions.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Extensions.DependencyInjection.Abstractions/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Extensions.DependencyInjection.Abstractions.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Extensions.Logger.Abstractions/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Extensions.Logger.Abstractions.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Extensions.ObjectMappers.Abstractions/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Extensions.ObjectMappers.Abstractions.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Extensions.Serializers.Abstractions/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Extensions.Serializers.Abstractions.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Extensions.Translations.Abstractions/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Extensions.Translations.Abstractions.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Extensions.UsersManagement.Abstractions/1.2.0": {
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Extensions.UsersManagement.Abstractions.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Rayanparsi.Utilities/1.2.0": {
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.1",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.1",
+          "Rayanparsi.Extensions.Caching.Abstractions": "1.2.0",
+          "Rayanparsi.Extensions.DependencyInjection.Abstractions": "1.2.0",
+          "Rayanparsi.Extensions.Logger.Abstractions": "1.2.0",
+          "Rayanparsi.Extensions.ObjectMappers.Abstractions": "1.2.0",
+          "Rayanparsi.Extensions.Serializers.Abstractions": "1.2.0",
+          "Rayanparsi.Extensions.Translations.Abstractions": "1.2.0",
+          "Rayanparsi.Extensions.UsersManagement.Abstractions": "1.2.0"
+        },
+        "runtime": {
+          "lib/net8.0/Rayanparsi.Utilities.dll": {
+            "assemblyVersion": "1.2.0.0",
+            "fileVersion": "1.2.0.0"
+          }
+        }
+      },
+      "Dario.Core.Domain.Card/1.0.0": {
+        "dependencies": {
+          "Rayanparsi.Core.Domain": "1.2.1",
+          "Rayanparsi.Core.Domain.Toolkits": "1.2.0",
+          "Rayanparsi.Core.RequestResponse": "1.2.0"
+        },
+        "runtime": {
+          "Dario.Core.Domain.Card.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Dario.Core.Abstraction.Card/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "FluentValidation/11.9.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XeHp9LvFvu1fsQ/NvDCymV02GOCB1nz7ZUhfpI3uMhCcHTkV1K5bMkv+Nc/kuNYyAsX5+5bcmUanIEMd5QN+Eg==",
+      "path": "fluentvalidation/11.9.2",
+      "hashPath": "fluentvalidation.11.9.2.nupkg.sha512"
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
+    },
+    "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fGLiCRLMYd00JYpClraLjJTNKLmMJPnqxMaiRzEBIIvevlzxz33mXy39Lkd48hu1G+N21S7QpaO5ZzKsI6FRuA==",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.1",
+      "hashPath": "microsoft.extensions.dependencyinjection.abstractions.8.0.1.nupkg.sha512"
+    },
+    "Microsoft.Extensions.Logging.Abstractions/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-RIFgaqoaINxkM2KTOw72dmilDmTrYA0ns2KW4lDz4gZ2+o6IQ894CzmdL3StM2oh7QQq44nCWiqKqc4qUI9Jmg==",
+      "path": "microsoft.extensions.logging.abstractions/8.0.1",
+      "hashPath": "microsoft.extensions.logging.abstractions.8.0.1.nupkg.sha512"
+    },
+    "Rayanparsi.Core.Domain/1.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jDEkG+c0Ndr85SOgTXE5nRJ8Yvi2t4YbS5OOsZ+t8G9YZY+q1Wpdgc40N0VZ1DKJ4QcOwGMwGvYZLQCgFDE0wg==",
+      "path": "rayanparsi.core.domain/1.2.1",
+      "hashPath": "rayanparsi.core.domain.1.2.1.nupkg.sha512"
+    },
+    "Rayanparsi.Core.Domain.Toolkits/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-TVp86lYnKpdRPyhHjZ663WMj1pg053oke6ylAhYe2Fk8+4Iue0Rl9ZegSIzMxavCML3oIdHa7Vpgr0VYE8BSYg==",
+      "path": "rayanparsi.core.domain.toolkits/1.2.0",
+      "hashPath": "rayanparsi.core.domain.toolkits.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Core.RequestResponse/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pg2yLMY0EhCzih6nrn1nRaN/U3cikuHTY2P5bHhdjBxycMcbrCM9RBGuau8zdgR+6enr0zAqCNjyTSaE4c/a6w==",
+      "path": "rayanparsi.core.requestresponse/1.2.0",
+      "hashPath": "rayanparsi.core.requestresponse.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Extensions.Caching.Abstractions/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-fkW1Tab+BXj4RSwf+C80lN7JTRb63Y0gRW18x1+fmRL8Vez85KNDxkqwXFaskCviwWWTc6GiIwbjbbjP5SxlDQ==",
+      "path": "rayanparsi.extensions.caching.abstractions/1.2.0",
+      "hashPath": "rayanparsi.extensions.caching.abstractions.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Extensions.DependencyInjection.Abstractions/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-aizNsLu1Qes9pSWASP5fVUSx4lB0aG/nAqgXNl7QXtdGhkXfw0jDc9oDNNVqpduV4dgkI7Rk6YAdo3EUT6dB2A==",
+      "path": "rayanparsi.extensions.dependencyinjection.abstractions/1.2.0",
+      "hashPath": "rayanparsi.extensions.dependencyinjection.abstractions.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Extensions.Logger.Abstractions/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lMLn8xmbPxwVwlenDDssa7z2nvJkOSj4S5YAZT171hHJ+vn4GJ6xklt6SfbmuhjBt6+LDdewD8UVm70ptRx1bg==",
+      "path": "rayanparsi.extensions.logger.abstractions/1.2.0",
+      "hashPath": "rayanparsi.extensions.logger.abstractions.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Extensions.ObjectMappers.Abstractions/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-T2tR+u0y8m9Lh1I/VR4XVH/QqzMd6F1cuXaR11FEKPCcoJ//zfH7WxKMrmqQaHYSBt85L4kh5k6IdBeK5Jp6Sw==",
+      "path": "rayanparsi.extensions.objectmappers.abstractions/1.2.0",
+      "hashPath": "rayanparsi.extensions.objectmappers.abstractions.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Extensions.Serializers.Abstractions/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-HY8aZ4WXBGqIzJr8725KB+er67udYaKFGYhPhwJ9u7jhWTAoiTCTqruT3E1IMbviky8XomQBlh6pCgh+aBYZEw==",
+      "path": "rayanparsi.extensions.serializers.abstractions/1.2.0",
+      "hashPath": "rayanparsi.extensions.serializers.abstractions.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Extensions.Translations.Abstractions/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-x+ClnSwH8jCnHv1GI1iW1RJyTs89MNOQionJ3pDnve1VWRF6doSaloO/p7sXyWggOnd9AzBAQ1Ps+LjtH4XQyA==",
+      "path": "rayanparsi.extensions.translations.abstractions/1.2.0",
+      "hashPath": "rayanparsi.extensions.translations.abstractions.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Extensions.UsersManagement.Abstractions/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8f0UHMvdWZY5/sdnKOoKmI08WwL6KhBAgGrkcP2v98ZzAPCOVBDJbJdqJlRNs+DZrsv7kPuc34hffey37V25kg==",
+      "path": "rayanparsi.extensions.usersmanagement.abstractions/1.2.0",
+      "hashPath": "rayanparsi.extensions.usersmanagement.abstractions.1.2.0.nupkg.sha512"
+    },
+    "Rayanparsi.Utilities/1.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-mkSSpiM2ZNS7Om/uFcY/fZjEGSBHaDccmO1zEna1O7qWucv6uKstPsE6klWHJT0nvC5Q7ZBd3uCoJURUtfTdyg==",
+      "path": "rayanparsi.utilities/1.2.0",
+      "hashPath": "rayanparsi.utilities.1.2.0.nupkg.sha512"
+    },
+    "Dario.Core.Domain.Card/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

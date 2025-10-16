@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Rayanparsi.Core.Domain" Version="1.2.1" />
+    <PackageReference Include="Rayanparsi.Core.Domain.Toolkits" Version="1.2.0" />
+	<PackageReference Include="Rayanparsi.Core.RequestResponse" Version="1.2.0" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,125 @@
+[
+  {
+    "ContainingType": "Dario.Service.Card.API.Controllers.CardController",
+    "Method": "Clear",
+    "RelativePath": "api/Card/Clear",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "Clear"
+  },
+  {
+    "ContainingType": "Dario.Service.Card.API.Controllers.CardController",
+    "Method": "Data",
+    "RelativePath": "api/Card/Data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Dario.Core.Domain.Card.CardRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Rayanparsi.Core.Domain.Entities.RayanResponse\u00601[[Dario.Core.Domain.Card.CardResponse, Dario.Core.Domain.Card, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "Data"
+  },
+  {
+    "ContainingType": "Dario.Service.Card.API.Controllers.CardController",
+    "Method": "Health",
+    "RelativePath": "api/Card/Health",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "System.Boolean",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "Health"
+  },
+  {
+    "ContainingType": "Dario.Service.Card.API.Controllers.CardController",
+    "Method": "Id",
+    "RelativePath": "api/Card/Id",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Dario.Core.Domain.Card.CardRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Rayanparsi.Core.Domain.Entities.RayanResponse\u00601[[Dario.Core.Domain.Card.CardResponse, Dario.Core.Domain.Card, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "Id"
+  },
+  {
+    "ContainingType": "Dario.Service.Card.API.Controllers.CardController",
+    "Method": "Pool",
+    "RelativePath": "api/Card/Pool",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Dario.Core.Domain.Card.CardRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Rayanparsi.Core.Domain.Entities.RayanResponse\u00601[[Dario.Core.Domain.Card.CardResponse, Dario.Core.Domain.Card, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "Pool"
+  }
+]
