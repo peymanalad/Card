@@ -10,6 +10,7 @@ using Rayanparsi.Core.Domain.Entities;
 using Rayanparsi.Utilities.Extensions;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Transactions;
 
 namespace Dario.Core.Application.Card;
@@ -18,8 +19,8 @@ public class CardServices : ICardServices
 {
     private readonly IOptions<CardServicesOptions> _configuration;
     private readonly ILogger<CardServices> _logger;
-    private readonly IDbConnection _dbConnection;
-    private readonly IDbConnection _dbConnectionQuery;
+    //private readonly IDbConnection _dbConnection;
+    //private readonly IDbConnection _dbConnectionQuery;
     private static string _key = "19F83D0DFDE6C9ECE44B735AF7DEC8B3";
     public CardServices(IOptions<CardServicesOptions> configuration, ILogger<CardServices> logger)
     {
@@ -27,8 +28,8 @@ public class CardServices : ICardServices
         _logger = logger;
         //_dbConnection = new SqlConnection(configuration.Value.ConnectionString);
         //_dbConnectionQuery= new SqlConnection(configuration.Value.ConnectionStringQuery);
-        _dbConnection = new OracleConnection(configuration.Value.ConnectionString);
-        _dbConnectionQuery = new OracleConnection(configuration.Value.ConnectionStringQuery);
+        //_dbConnection = new OracleConnection(configuration.Value.ConnectionString);
+        //_dbConnectionQuery = new OracleConnection(configuration.Value.ConnectionStringQuery);
     }
 
     public async Task<RayanResponse<CardResponse>> CardGetAsync(CardRequest request)
@@ -73,10 +74,11 @@ public class CardServices : ICardServices
                 return entity;
             }
 
-            using var connection = new OracleConnection(_configuration.Value.ConnectionString);
+            using var connection = CreateConnection();
             await connection.OpenAsync();
 
             using var command = connection.CreateCommand();
+            command.BindByName = true;
             command.CommandText = "DarioCardStorage";
             command.CommandType = CommandType.StoredProcedure;
 
@@ -146,13 +148,25 @@ public class CardServices : ICardServices
         };
         try
         {
-            entity.item = await _dbConnection.QueryFirstAsync<CardResponse>("DarioCardByIdData"
-                 , param: new { Id = request.CardId }
-           , commandType: CommandType.StoredProcedure);
+            // entity.item = await _dbConnection.QueryFirstAsync<CardResponse>("DarioCardByIdData"
+            //      , param: new { Id = request.CardId }
+            //, commandType: CommandType.StoredProcedure);
+            var card = await ExecuteCardLookupAsync("DarioCardByIdData", request.CardId);
+            if (card is null)
+            {
+                entity.message = "No card record returned.";
+                return entity;
+            }
+
+            entity.item = card;
             entity.statusCode = 0;
             entity.isError = false;
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while calling DarioCardByIdData for card id {CardId}", request.CardId);
+            entity.message = ex.Message;
+        }
         return entity;
     }
 
@@ -166,16 +180,28 @@ public class CardServices : ICardServices
         };
         try
         {
-            CardResponse card = await _dbConnection.QueryFirstAsync<CardResponse>("DarioCardByIdData"
-                  , param: new { Id = request.CardId }
-            , commandType: CommandType.StoredProcedure);
+            //CardResponse card = await _dbConnection.QueryFirstAsync<CardResponse>("DarioCardByIdData"
+            //      , param: new { Id = request.CardId }
+            //, commandType: CommandType.StoredProcedure);
+            var card = await ExecuteCardLookupAsync("DarioCardByIdData", request.CardId);
+            if (card is null)
+            {
+                entity.message = "No card record returned.";
+                return entity;
+            }
+
             card.CardId = request.CardId;
             card.CardPan = card.CardData.DecryptString(_key);
+            card.CardExDate = card.CardExDate.DecryptString(_key);
             entity.item = card;
             entity.statusCode = 0;
             entity.isError = false;
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while calling DarioCardByIdData for card id {CardId}", request.CardId);
+            entity.message = ex.Message;
+        }
         return entity;
     }
 
@@ -202,12 +228,146 @@ public class CardServices : ICardServices
             //   var ress= _dbConnection.QueryAsync<int>("GETALL_Update", request,commandType: CommandType.StoredProcedure).Result;
             //}
             //var healthCheck = await _dbConnection.QueryAsync<int>("SELECT 1;");
-            _ = await _dbConnection.QueryAsync<int>("SELECT 1 FROM DUAL");
-            entity.item = true;
+            //_ = await _dbConnection.QueryAsync<int>("SELECT 1 FROM DUAL");
+            //entity.item = true;
+            using var connection = CreateQueryConnection();
+            await connection.OpenAsync();
+
+            using var command = connection.CreateCommand();
+            command.CommandText = "SELECT 1 FROM DUAL";
+            command.CommandType = CommandType.Text;
+
+            var result = await command.ExecuteScalarAsync();
+            entity.item = Convert.ToInt32(result, CultureInfo.InvariantCulture) == 1;
             entity.statusCode = 0;
             entity.isError = false;
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while executing health check against Oracle database.");
+            entity.message = ex.Message;
+        }
         return entity;
     }
+
+
+
+    private OracleConnection CreateConnection()
+        => new OracleConnection(_configuration.Value.ConnectionString);
+
+    private OracleConnection CreateQueryConnection()
+        => new OracleConnection(_configuration.Value.ConnectionStringQuery);
+
+    private async Task<CardResponse?> ExecuteCardLookupAsync(string procedureName, long cardId)
+    {
+        using var connection = CreateConnection();
+        await connection.OpenAsync();
+
+        using var command = connection.CreateCommand();
+        command.BindByName = true;
+        command.CommandText = procedureName;
+        command.CommandType = CommandType.StoredProcedure;
+
+        OracleRefCursor? refCursor = null;
+        foreach (var parameterName in new[] { "p_Id", "Id", "p_CardId" })
+        {
+            command.Parameters.Clear();
+            AddInputParameter(command, parameterName, OracleDbType.Int64, cardId);
+            var cursorParameter = command.Parameters.Add("o_cursor", OracleDbType.RefCursor, ParameterDirection.Output);
+
+            try
+            {
+                await command.ExecuteNonQueryAsync();
+                refCursor = cursorParameter.Value as OracleRefCursor;
+                if (refCursor != null)
+                {
+                    break;
+                }
+            }
+            catch (OracleException ex) when (IsParameterBindingException(ex))
+            {
+                continue;
+            }
+        }
+
+        if (refCursor is null)
+        {
+            return null;
+        }
+
+        using var cursor = refCursor;
+        using var reader = cursor.GetDataReader();
+        if (!reader.Read())
+        {
+            return null;
+        }
+
+        return MapCardResponse(reader);
+    }
+
+    private static bool IsParameterBindingException(OracleException ex)
+        => ex.Number is 6550 or 1036;
+
+    private static CardResponse MapCardResponse(IDataRecord record)
+    {
+        return new CardResponse
+        {
+            CardId = GetInt64(record, "CARDID"),
+            CardPan = GetString(record, "CARDPAN"),
+            CardProductCode = GetString(record, "CARDPRODUCTCODE"),
+            CardData = GetString(record, "CARDDATA"),
+            CardHash = GetString(record, "CARDHASH"),
+            CardExDate = GetString(record, "CARDEXDATE"),
+            CardMask = GetString(record, "CARDMASK"),
+            CardBin = GetString(record, "CARDBIN"),
+            CardBinName = GetString(record, "CARDBINNAME"),
+            CardName = GetString(record, "CARDNAME"),
+            CardFamily = GetString(record, "CARDFAMILY"),
+            CardNationalCode = GetString(record, "CARDNATIONALCODE"),
+            CardIban = GetString(record, "CARDIBAN"),
+        };
+    }
+
+    private static string GetString(IDataRecord record, string columnName)
+    {
+        return TryGetValue(record, columnName, value => value?.ToString() ?? string.Empty, string.Empty);
+    }
+
+    private static long GetInt64(IDataRecord record, string columnName)
+    {
+        return TryGetValue(record, columnName, value => Convert.ToInt64(value, CultureInfo.InvariantCulture), 0L);
+    }
+
+    private static T TryGetValue<T>(IDataRecord record, string columnName, Func<object, T> converter, T defaultValue)
+    {
+        if (TryGetOrdinal(record, columnName, out var ordinal) && !record.IsDBNull(ordinal))
+        {
+            return converter(record.GetValue(ordinal));
+        }
+
+        return defaultValue;
+    }
+
+    private static bool TryGetOrdinal(IDataRecord record, string columnName, out int ordinal)
+    {
+        for (var i = 0; i < record.FieldCount; i++)
+        {
+            var fieldName = record.GetName(i);
+            if (fieldName.Equals(columnName, StringComparison.OrdinalIgnoreCase) ||
+                NormalizeColumnName(fieldName).Equals(NormalizeColumnName(columnName), StringComparison.OrdinalIgnoreCase))
+            {
+                ordinal = i;
+                return true;
+            }
+        }
+
+        ordinal = -1;
+        return false;
+    }
+
+    private static string NormalizeColumnName(string columnName)
+    {
+        return columnName.Replace("_", string.Empty, StringComparison.Ordinal).ToUpperInvariant();
+    }
+
 }
