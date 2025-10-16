@@ -32,3 +32,4 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\Debug\net9.0\refint\Dario.Core.Application.Card.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\Debug\net9.0\ref\Dario.Core.Application.Card.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.sourcelink.json

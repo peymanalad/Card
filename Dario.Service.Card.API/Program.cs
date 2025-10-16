@@ -32,7 +32,7 @@ builder.Services.AddOpenTelemetry()
 
     .WithTracing(tracing => tracing
         .AddAspNetCoreInstrumentation()
-        .AddSqlClientInstrumentation()
+        //.AddSqlClientInstrumentation()
         .AddOtlpExporter(otlpOptions =>
         {
             otlpOptions.Endpoint = new Uri("http://192.168.13.11:4317");
@@ -47,7 +47,7 @@ builder.Services.AddOpenTelemetry()
      }))
     .WithMetrics(metric => metric
     .AddAspNetCoreInstrumentation()
-    .AddSqlClientInstrumentation()
+    //.AddSqlClientInstrumentation()
     .AddRuntimeInstrumentation()
             .AddOtlpExporter(otlpOptions =>
             {

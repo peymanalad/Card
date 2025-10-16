@@ -248,3 +248,4 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.genruntimeconfig.cache
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\ref\Dario.Service.Card.API.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.sourcelink.json
