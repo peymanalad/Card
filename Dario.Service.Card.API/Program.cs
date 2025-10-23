@@ -8,6 +8,9 @@ using OpenTelemetry.Trace;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
+
+EnvLoader.Load(Path.Combine(builder.Environment.ContentRootPath, ".env"));
+builder.Configuration.AddEnvironmentVariables();
 // Add services to the container.
 
 builder.Services.AddControllers();

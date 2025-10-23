@@ -1,4 +1,5 @@
-﻿using Dario.Core.Abstraction.Card;
+﻿using System;
+using Dario.Core.Abstraction.Card;
 using Dario.Core.Abstraction.Card.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,12 +13,12 @@ public static class CardServiceCollectionExtensions
     {
         services.AddTransient<ICardServices, CardServices>();
         services.Configure<CardServicesOptions>(configuration);
+        services.PostConfigure<CardServicesOptions>(ApplyEnvironmentOverrides);
         return services;
     }
     public static IServiceCollection AddDarioCardServices(this IServiceCollection services, IConfiguration configuration, string sectionName)
     {
-        services.AddDarioCardServices(configuration.GetSection(sectionName));
-        return services;
+        return services.AddDarioCardServices(configuration.GetSection(sectionName));
     }
 
     public static IServiceCollection AddDarioCardServices(this IServiceCollection services, Action<CardServicesOptions> setupAction)
@@ -25,5 +26,21 @@ public static class CardServiceCollectionExtensions
         services.AddTransient<ICardServices, CardServices>();
         services.Configure(setupAction);
         return services;
+    }
+
+    private static void ApplyEnvironmentOverrides(CardServicesOptions options)
+    {
+        OverrideIfSet(ref options.ConnectionString, "DB_CONNECTION_STRING");
+        OverrideIfSet(ref options.ConnectionStringQuery, "DB_QUERY_CONNECTION_STRING");
+        OverrideIfSet(ref options.EncryptionKey, "CARD_ENCRYPTION_KEY");
+    }
+
+    private static void OverrideIfSet(ref string currentValue, string environmentVariable)
+    {
+        var environmentValue = Environment.GetEnvironmentVariable(environmentVariable);
+        if (!string.IsNullOrWhiteSpace(environmentValue))
+        {
+            currentValue = environmentValue;
+        }
     }
 }

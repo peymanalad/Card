@@ -21,11 +21,12 @@ public class CardServices : ICardServices
     private readonly ILogger<CardServices> _logger;
     //private readonly IDbConnection _dbConnection;
     //private readonly IDbConnection _dbConnectionQuery;
-    private static string _key = "19F83D0DFDE6C9ECE44B735AF7DEC8B3";
+    private readonly string _encryptionKey;
     public CardServices(IOptions<CardServicesOptions> configuration, ILogger<CardServices> logger)
     {
         _configuration = configuration;
         _logger = logger;
+        _encryptionKey = configuration.Value.EncryptionKey;
         //_dbConnection = new SqlConnection(configuration.Value.ConnectionString);
         //_dbConnectionQuery= new SqlConnection(configuration.Value.ConnectionStringQuery);
         //_dbConnection = new OracleConnection(configuration.Value.ConnectionString);
@@ -63,9 +64,9 @@ public class CardServices : ICardServices
             var cardProduct = cardPan.CardProduct();
             var cardEnd = cardPan.CardEnd();
             var cardHash = cardPan.CardHash();
-            var encryptedPan = cardPan.EncryptString(_key);
+            var encryptedPan = cardPan.EncryptString(_encryptionKey);
             var cardExpDate = request.CardExDate ?? string.Empty;
-            var encryptedExpDate = cardExpDate.EncryptString(_key);
+            var encryptedExpDate = cardExpDate.EncryptString(_encryptionKey);
 
             if (!long.TryParse(cardBinText, out var cardBin))
             {
@@ -191,8 +192,8 @@ public class CardServices : ICardServices
             }
 
             card.CardId = request.CardId;
-            card.CardPan = card.CardData.DecryptString(_key);
-            card.CardExDate = card.CardExDate.DecryptString(_key);
+            card.CardPan = card.CardData.DecryptString(_encryptionKey);
+            card.CardExDate = card.CardExDate.DecryptString(_encryptionKey);
             entity.item = card;
             entity.statusCode = 0;
             entity.isError = false;
