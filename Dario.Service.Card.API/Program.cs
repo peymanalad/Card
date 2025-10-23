@@ -1,5 +1,6 @@
 using Dario.Core.Abstraction.Card.Options;
 using Dario.Core.Application.Card;
+using EnvLoader;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -9,7 +10,7 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-EnvLoader.Load(Path.Combine(builder.Environment.ContentRootPath, ".env"));
+EnvLoader.EnvLoader.Load(builder.Environment.ContentRootPath); 
 builder.Configuration.AddEnvironmentVariables();
 // Add services to the container.
 
@@ -19,6 +20,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var config = builder.Configuration.GetSection("CardServices");
 builder.Services.AddDarioCardServices(config);
+var serviceIp = config.GetValue<string>("ServiceIP") ?? throw new InvalidOperationException("CardServices:ServiceIP configuration is missing.");
+var servicePort = config.GetValue<int?>("ServicePort") ?? throw new InvalidOperationException("CardServices:ServicePort configuration is missing.");
 //builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 //{
 //    serverOptions.Listen(IPAddress.Parse(config.GetSection("ServiceIP").Value)

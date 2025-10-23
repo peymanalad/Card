@@ -19,18 +19,12 @@ public class CardServices : ICardServices
 {
     private readonly IOptions<CardServicesOptions> _configuration;
     private readonly ILogger<CardServices> _logger;
-    //private readonly IDbConnection _dbConnection;
-    //private readonly IDbConnection _dbConnectionQuery;
     private readonly string _encryptionKey;
     public CardServices(IOptions<CardServicesOptions> configuration, ILogger<CardServices> logger)
     {
         _configuration = configuration;
         _logger = logger;
         _encryptionKey = configuration.Value.EncryptionKey;
-        //_dbConnection = new SqlConnection(configuration.Value.ConnectionString);
-        //_dbConnectionQuery= new SqlConnection(configuration.Value.ConnectionStringQuery);
-        //_dbConnection = new OracleConnection(configuration.Value.ConnectionString);
-        //_dbConnectionQuery = new OracleConnection(configuration.Value.ConnectionStringQuery);
     }
 
     public async Task<RayanResponse<CardResponse>> CardGetAsync(CardRequest request)
@@ -43,22 +37,6 @@ public class CardServices : ICardServices
         };
         try
         {
-            //long res = await _dbConnection.QueryFirstOrDefaultAsync<long>("DarioCardStorage",
-            //        param: new
-            //        {
-            //            CardHash = request.CardPan.CardHash(),
-            //            CardData = request.CardPan.EncryptString(_key),
-            //            CardBin = request.CardPan.CardBin(),
-            //            CardProduct = request.CardPan.CardProduct(),
-            //            CardEnd = request.CardPan.CardEnd(),
-            //            CardExpDate = request.CardExDate.EncryptString(_key),
-            //        }
-            //   , commandType: CommandType.StoredProcedure);
-            //entity.item = new CardResponse() { CardId = res,CardBin = request.CardPan.CardBin()
-            //    ,CardData= request.CardPan.CardEnd(),CardProductCode = request.CardPan.CardProduct()
-            //};
-            //entity.statusCode = 0;
-            //entity.isError = false;
             var cardPan = request.CardPan ?? string.Empty;
             var cardBinText = cardPan.CardBin();
             var cardProduct = cardPan.CardProduct();
@@ -149,9 +127,6 @@ public class CardServices : ICardServices
         };
         try
         {
-            // entity.item = await _dbConnection.QueryFirstAsync<CardResponse>("DarioCardByIdData"
-            //      , param: new { Id = request.CardId }
-            //, commandType: CommandType.StoredProcedure);
             var card = await ExecuteCardLookupAsync("DarioCardByIdData", request.CardId);
             if (card is null)
             {
@@ -181,9 +156,6 @@ public class CardServices : ICardServices
         };
         try
         {
-            //CardResponse card = await _dbConnection.QueryFirstAsync<CardResponse>("DarioCardByIdData"
-            //      , param: new { Id = request.CardId }
-            //, commandType: CommandType.StoredProcedure);
             var card = await ExecuteCardLookupAsync("DarioCardByIdData", request.CardId);
             if (card is null)
             {
@@ -216,21 +188,6 @@ public class CardServices : ICardServices
         };
         try
         {
-            //var res = _dbConnection.QueryAsync<CardRRBRequest>("GETALL", commandType: CommandType.StoredProcedure).Result.ToList();
-            //foreach(var item in res)
-            //{
-            //   var card= CardGetAsync(new CardRequest() { 
-            //    CardPan=item.RRNC
-            //    }).Result.item;
-            //    CardRRBZRequest request = new CardRRBZRequest()
-            //    {
-            //        RRN=item.RRN,Id=card.CardId
-            //    };
-            //   var ress= _dbConnection.QueryAsync<int>("GETALL_Update", request,commandType: CommandType.StoredProcedure).Result;
-            //}
-            //var healthCheck = await _dbConnection.QueryAsync<int>("SELECT 1;");
-            //_ = await _dbConnection.QueryAsync<int>("SELECT 1 FROM DUAL");
-            //entity.item = true;
             using var connection = CreateQueryConnection();
             await connection.OpenAsync();
 

@@ -30,17 +30,16 @@ public static class CardServiceCollectionExtensions
 
     private static void ApplyEnvironmentOverrides(CardServicesOptions options)
     {
-        OverrideIfSet(ref options.ConnectionString, "DB_CONNECTION_STRING");
-        OverrideIfSet(ref options.ConnectionStringQuery, "DB_QUERY_CONNECTION_STRING");
-        OverrideIfSet(ref options.EncryptionKey, "CARD_ENCRYPTION_KEY");
+        options.ConnectionString = OverrideIfSet(options.ConnectionString, "DB_CONNECTION_STRING");
+        options.ConnectionStringQuery = OverrideIfSet(options.ConnectionStringQuery, "DB_QUERY_CONNECTION_STRING");
+        options.EncryptionKey = OverrideIfSet(options.EncryptionKey, "CARD_ENCRYPTION_KEY");
     }
 
-    private static void OverrideIfSet(ref string currentValue, string environmentVariable)
+    private static string OverrideIfSet(string currentValue, string environmentVariable)
     {
         var environmentValue = Environment.GetEnvironmentVariable(environmentVariable);
-        if (!string.IsNullOrWhiteSpace(environmentValue))
-        {
-            currentValue = environmentValue;
-        }
+        return string.IsNullOrWhiteSpace(environmentValue)
+            ? currentValue
+            : environmentValue;
     }
 }
