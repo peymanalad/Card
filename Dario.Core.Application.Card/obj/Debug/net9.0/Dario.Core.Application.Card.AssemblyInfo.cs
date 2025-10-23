@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Dario.Core.Application.Card")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cc0cd94abe85b192071f95ed08d37ab60e6e276d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+348fbf95aab1032d7f4c3f36764f09ed0157d565")]
 [assembly: System.Reflection.AssemblyProductAttribute("Dario.Core.Application.Card")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Dario.Core.Application.Card")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
