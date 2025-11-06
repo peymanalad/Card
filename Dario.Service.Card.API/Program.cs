@@ -10,7 +10,7 @@ using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-EnvLoader.EnvLoader.Load(builder.Environment.ContentRootPath); 
+EnvLoader.EnvLoader.Load(builder.Environment.ContentRootPath);
 builder.Configuration.AddEnvironmentVariables();
 // Add services to the container.
 
@@ -20,8 +20,43 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var config = builder.Configuration.GetSection("CardServices");
 builder.Services.AddDarioCardServices(config);
+builder.Services.AddSingleton(CardServicesTelemetry.Meter);
 var serviceIp = config.GetValue<string>("ServiceIP") ?? throw new InvalidOperationException("CardServices:ServiceIP configuration is missing.");
 var servicePort = config.GetValue<int?>("ServicePort") ?? throw new InvalidOperationException("CardServices:ServicePort configuration is missing.");
+
+
+var otlpEndpointValue = builder.Configuration.GetValue<string>("OpenTelemetry:OtlpEndpoint")?.Trim();
+if (string.IsNullOrEmpty(otlpEndpointValue))
+{
+    throw new InvalidOperationException("OpenTelemetry:OtlpEndpoint configuration is required. Provide it via configuration or the OpenTelemetry__OtlpEndpoint environment variable.");
+}
+
+if (!Uri.TryCreate(otlpEndpointValue, UriKind.Absolute, out var otlpEndpoint))
+{
+    throw new InvalidOperationException($"OpenTelemetry:OtlpEndpoint value '{otlpEndpointValue}' is not a valid absolute URI.");
+}
+
+var otlpProtocolValue = builder.Configuration.GetValue<string>("OpenTelemetry:OtlpProtocol")?.Trim();
+var otlpProtocol = otlpProtocolValue?.ToLowerInvariant() switch
+{
+    null or "" or "grpc" => OtlpExportProtocol.Grpc,
+    "httpprotobuf" => OtlpExportProtocol.HttpProtobuf,
+    var value => throw new InvalidOperationException($"Unsupported OpenTelemetry:OtlpProtocol value '{value}'. Use 'grpc' or 'httpProtobuf'.")
+};
+
+var otlpHeaders = builder.Configuration.GetValue<string>("OpenTelemetry:Headers");
+
+void ConfigureOtlpExporter(OtlpExporterOptions options)
+{
+    options.Endpoint = otlpEndpoint;
+    options.Protocol = otlpProtocol;
+
+    if (!string.IsNullOrWhiteSpace(otlpHeaders))
+    {
+        options.Headers = otlpHeaders;
+    }
+}
+
 //builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 //{
 //    serverOptions.Listen(IPAddress.Parse(config.GetSection("ServiceIP").Value)
@@ -36,34 +71,24 @@ builder.Services.AddOpenTelemetry()
         resource.AddService(serviceName: "card"))
 
     .WithTracing(tracing => tracing
+        .AddSource(CardServicesTelemetry.ActivitySourceName)
         .AddAspNetCoreInstrumentation()
         //.AddSqlClientInstrumentation()
-        .AddOtlpExporter(otlpOptions =>
-        {
-            otlpOptions.Endpoint = new Uri("http://192.168.13.11:4317");
-            otlpOptions.Protocol = OtlpExportProtocol.Grpc;
-        }))
+        .AddOtlpExporter(ConfigureOtlpExporter))
 
     .WithLogging(logging => logging
-     .AddOtlpExporter(otlpOptions =>
-     {
-         otlpOptions.Endpoint = new Uri("http://192.168.13.11:4317");
-         otlpOptions.Protocol = OtlpExportProtocol.Grpc;
-     }))
+     .AddOtlpExporter(ConfigureOtlpExporter))
     .WithMetrics(metric => metric
-    .AddAspNetCoreInstrumentation()
-    //.AddSqlClientInstrumentation()
-    .AddRuntimeInstrumentation()
-            .AddOtlpExporter(otlpOptions =>
-            {
-                otlpOptions.Endpoint = new Uri("http://192.168.13.11:4317");
-                otlpOptions.Protocol = OtlpExportProtocol.Grpc;
-            })
+        .AddMeter(CardServicesTelemetry.MeterName)
+        .AddAspNetCoreInstrumentation()
+        //.AddSqlClientInstrumentation()
+        .AddRuntimeInstrumentation()
+        .AddOtlpExporter(ConfigureOtlpExporter)
     );
 
-builder.Services.AddWindowsService(options=>
+builder.Services.AddWindowsService(options =>
 {
-   
+
 });
 var app = builder.Build();
 

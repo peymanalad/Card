@@ -9,6 +9,7 @@ using Oracle.ManagedDataAccess.Types;
 using Rayanparsi.Core.Domain.Entities;
 using Rayanparsi.Utilities.Extensions;
 using System.Data;
+using System.Diagnostics;
 using System.Data.SqlClient;
 using System.Globalization;
 using System.Transactions;
@@ -29,6 +30,16 @@ public class CardServices : ICardServices
 
     public async Task<RayanResponse<CardResponse>> CardGetAsync(CardRequest request)
     {
+        const string operationName = "Pool";
+        const string procedureName = "DarioCardStorage";
+        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
+        CardServicesTelemetry.RequestCounter.Add(1, tags);
+        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
+        activity?.SetTag("oracle.procedure", procedureName);
+        activity?.SetTag("card.operation", operationName);
+
+        var stopwatch = Stopwatch.StartNew();
+        var isSuccess = false;
         RayanResponse<CardResponse> entity = new RayanResponse<CardResponse>()
         {
             isError = true,
@@ -42,6 +53,8 @@ public class CardServices : ICardServices
             var cardProduct = cardPan.CardProduct();
             var cardEnd = cardPan.CardEnd();
             var cardHash = cardPan.CardHash();
+            activity?.SetTag("card.masked", cardHash);
+            activity?.SetTag("card.bin", cardBinText);
             var encryptedPan = cardPan.EncryptString(_encryptionKey);
             var cardExpDate = request.CardExDate ?? string.Empty;
             var encryptedExpDate = cardExpDate.EncryptString(_encryptionKey);
@@ -58,7 +71,7 @@ public class CardServices : ICardServices
 
             using var command = connection.CreateCommand();
             command.BindByName = true;
-            command.CommandText = "DarioCardStorage";
+            command.CommandText = procedureName;
             command.CommandType = CommandType.StoredProcedure;
 
             AddInputParameter(command, "p_CardHash", OracleDbType.NVarchar2, cardHash);
@@ -96,6 +109,7 @@ public class CardServices : ICardServices
                 };
                 entity.statusCode = 0;
                 entity.isError = false;
+                isSuccess = true;
             }
             else
             {
@@ -106,8 +120,19 @@ public class CardServices : ICardServices
         {
             _logger.LogError(ex, "An error occurred while calling DarioCardStorage for card ending with {CardEnd}", request.CardPan.CardEnd());
             entity.message = ex.Message;
+            CardServicesTelemetry.ErrorCounter.Add(1, tags);
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
         }
-        //catch { }
+        finally
+        {
+            stopwatch.Stop();
+            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            activity?.SetTag("card.request.success", isSuccess);
+            if (isSuccess)
+            {
+                activity?.SetStatus(ActivityStatusCode.Ok);
+            }
+        }
         return entity;
     }
 
@@ -119,6 +144,18 @@ public class CardServices : ICardServices
 
     public async Task<RayanResponse<CardResponse>> CardGetByIdAsync(CardRequest request)
     {
+        const string operationName = "Id";
+        const string procedureName = "DarioCardByIdData";
+        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
+        CardServicesTelemetry.RequestCounter.Add(1, tags);
+        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
+        activity?.SetTag("oracle.procedure", procedureName);
+        activity?.SetTag("card.operation", operationName);
+        activity?.SetTag("card.identifier", request.CardId);
+
+        var stopwatch = Stopwatch.StartNew();
+        var isSuccess = false;
+
         RayanResponse<CardResponse> entity = new RayanResponse<CardResponse>()
         {
             isError = true,
@@ -127,7 +164,7 @@ public class CardServices : ICardServices
         };
         try
         {
-            var card = await ExecuteCardLookupAsync("DarioCardByIdData", request.CardId);
+            var card = await ExecuteCardLookupAsync(procedureName, request.CardId);
             if (card is null)
             {
                 entity.message = "No card record returned.";
@@ -137,17 +174,43 @@ public class CardServices : ICardServices
             entity.item = card;
             entity.statusCode = 0;
             entity.isError = false;
+            isSuccess = true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while calling DarioCardByIdData for card id {CardId}", request.CardId);
             entity.message = ex.Message;
+            CardServicesTelemetry.ErrorCounter.Add(1, tags);
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+        }
+        finally
+        {
+            stopwatch.Stop();
+            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            activity?.SetTag("card.request.success", isSuccess);
+            if (isSuccess)
+            {
+                activity?.SetStatus(ActivityStatusCode.Ok);
+            }
         }
         return entity;
     }
 
     public async Task<RayanResponse<CardResponse>> CardDataGetByIdAsync(CardRequest request)
     {
+        const string operationName = "Data";
+        const string procedureName = "DarioCardByIdData";
+        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
+        CardServicesTelemetry.RequestCounter.Add(1, tags);
+        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
+        activity?.SetTag("oracle.procedure", procedureName);
+        activity?.SetTag("card.operation", operationName);
+        activity?.SetTag("card.identifier", request.CardId);
+
+        var stopwatch = Stopwatch.StartNew();
+        var isSuccess = false;
+
+
         RayanResponse<CardResponse> entity = new RayanResponse<CardResponse>()
         {
             isError = true,
@@ -156,7 +219,7 @@ public class CardServices : ICardServices
         };
         try
         {
-            var card = await ExecuteCardLookupAsync("DarioCardByIdData", request.CardId);
+            var card = await ExecuteCardLookupAsync(procedureName, request.CardId);
             if (card is null)
             {
                 entity.message = "No card record returned.";
@@ -169,17 +232,41 @@ public class CardServices : ICardServices
             entity.item = card;
             entity.statusCode = 0;
             entity.isError = false;
+            isSuccess = true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while calling DarioCardByIdData for card id {CardId}", request.CardId);
             entity.message = ex.Message;
+            CardServicesTelemetry.ErrorCounter.Add(1, tags);
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+        }
+        finally
+        {
+            stopwatch.Stop();
+            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            activity?.SetTag("card.request.success", isSuccess);
+            if (isSuccess)
+            {
+                activity?.SetStatus(ActivityStatusCode.Ok);
+            }
         }
         return entity;
     }
 
     public async Task<RayanResponse<bool>> HealthAsync()
     {
+        const string operationName = "Health";
+        const string procedureName = "SELECT 1 FROM DUAL";
+        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
+        CardServicesTelemetry.RequestCounter.Add(1, tags);
+        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
+        activity?.SetTag("oracle.procedure", procedureName);
+        activity?.SetTag("card.operation", operationName);
+
+        var stopwatch = Stopwatch.StartNew();
+        var isSuccess = false;
+
         RayanResponse<bool> entity = new RayanResponse<bool>()
         {
             isError = true,
@@ -199,11 +286,24 @@ public class CardServices : ICardServices
             entity.item = Convert.ToInt32(result, CultureInfo.InvariantCulture) == 1;
             entity.statusCode = 0;
             entity.isError = false;
+            isSuccess = true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while executing health check against Oracle database.");
             entity.message = ex.Message;
+            CardServicesTelemetry.ErrorCounter.Add(1, tags);
+            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
+        }
+        finally
+        {
+            stopwatch.Stop();
+            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            activity?.SetTag("card.request.success", isSuccess);
+            if (isSuccess)
+            {
+                activity?.SetStatus(ActivityStatusCode.Ok);
+            }
         }
         return entity;
     }
