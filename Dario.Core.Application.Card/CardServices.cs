@@ -538,7 +538,7 @@ public class CardServices : ICardServices
 
         if (trimmed.StartsWith("(DESCRIPTION", StringComparison.OrdinalIgnoreCase))
         {
-            var host = ExtractDescriptorValue(trimmed, "HOST");
+            var descriptorHost = ExtractDescriptorValue(trimmed, "HOST");
             var portValue = ExtractDescriptorValue(trimmed, "PORT");
             int? port = null;
             if (!string.IsNullOrWhiteSpace(portValue) && int.TryParse(portValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedPort))
@@ -546,7 +546,7 @@ public class CardServices : ICardServices
                 port = parsedPort;
             }
 
-            return (host, port);
+            return (descriptorHost, port);
         }
 
         if (trimmed.StartsWith("//", StringComparison.Ordinal))
