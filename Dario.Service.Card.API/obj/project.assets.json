@@ -5288,7 +5288,9 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "Dario.Core.Abstraction.Card >= 1.0.0",
       "Dario.Core.Application.Card >= 1.0.0",
+      "Dario.Core.Domain.Card >= 1.0.0",
       "Microsoft.Extensions.Hosting.WindowsServices >= 9.0.0",
       "OpenTelemetry >= 1.12.0",
       "OpenTelemetry.AutoInstrumentation >= 1.12.0",
@@ -5335,8 +5337,14 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
+            "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj": {
+              "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj"
+            },
             "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj": {
               "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj"
+            },
+            "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj": {
+              "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj"
             }
           }
         }
@@ -5351,7 +5359,7 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net9.0": {
@@ -5409,7 +5417,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.111/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

@@ -18,7 +18,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Dario.Core.Abstraction.Card\Dario.Core.Abstraction.Card.csproj" />
 		<ProjectReference Include="..\Dario.Core.Application.Card\Dario.Core.Application.Card.csproj" />
+		<ProjectReference Include="..\Dario.Core.Domain.Card\Dario.Core.Domain.Card.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0qIUwQLDwnQ=",
+  "dgSpecHash": "UgFuM42Gb7o=",
   "success": true,
   "projectFilePath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj",
   "expectedPackageFiles": [
@@ -47,5 +47,15 @@
     "C:\\Users\\nasser\\.nuget\\packages\\system.security.cryptography.protecteddata\\8.0.0\\system.security.cryptography.protecteddata.8.0.0.nupkg.sha512",
     "C:\\Users\\nasser\\.nuget\\packages\\system.text.encodings.web\\8.0.0\\system.text.encodings.web.8.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1900",
+      "level": "Warning",
+      "message": "Error occurred while getting package vulnerability data: Unable to load the service index for source https://api.nuget.org/v3/index.json.",
+      "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj",
+      "warningLevel": 1,
+      "filePath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj",
+      "targetGraphs": []
+    }
+  ]
 }

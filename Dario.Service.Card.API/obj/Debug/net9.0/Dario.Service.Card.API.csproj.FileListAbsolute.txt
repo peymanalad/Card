@@ -118,15 +118,6 @@ E:\Project\Rayanparsi\MicroServices\Card\Dario.Service.Card.API\obj\Debug\net9.0
 E:\Project\Rayanparsi\MicroServices\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.genruntimeconfig.cache
 E:\Project\Rayanparsi\MicroServices\Card\Dario.Service.Card.API\obj\Debug\net9.0\ref\Dario.Service.Card.API.dll
 E:\Project\Rayanparsi\MicroServices\Card\Dario.Service.Card.API\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.AssemblyReference.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfoInputs.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfo.cs
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.CoreCompileInputs.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.sourcelink.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.staticwebassets.endpoints.json
@@ -231,9 +222,18 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Abstraction.Card.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Application.Card.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Domain.Card.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Application.Card.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Application.Card.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Domain.Card.pdb
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.AssemblyReference.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfoInputs.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfo.cs
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.CoreCompileInputs.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.sourcelink.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
