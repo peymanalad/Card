@@ -11,15 +11,15 @@ public static class CardServicesTelemetry
     public static ActivitySource ActivitySource { get; } = new(ActivitySourceName);
     public static Meter Meter { get; } = new(MeterName);
 
-    public static Counter<long> RequestCounter { get; } = Meter.CreateCounter<long>("card.request.count");
-    public static Counter<long> ErrorCounter { get; } = Meter.CreateCounter<long>("card.request.error.count");
-    public static Histogram<double> RequestDuration { get; } = Meter.CreateHistogram<double>("card.request.duration", unit: "ms");
+    public static Counter<long> RequestCounter { get; } = Meter.CreateCounter<long>("card.endpoint.request.count");
+    public static Counter<long> ErrorCounter { get; } = Meter.CreateCounter<long>("card.endpoint.request.error.count");
+    public static Histogram<double> RequestDuration { get; } = Meter.CreateHistogram<double>("card.endpoint.request.duration", unit: "ms");
 
-    public static TagList CreateOperationTags(string operation)
+    public static TagList CreateOperationTags(string endpoint)
     {
         var tags = new TagList
         {
-            { "operation", operation }
+            { "endpoint", endpoint }
         };
 
         return tags;

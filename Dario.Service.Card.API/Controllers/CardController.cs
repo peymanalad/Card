@@ -26,15 +26,17 @@ public class CardController : ControllerBase
         _endpointRequestCounter = meter.CreateCounter<long>("card.endpoint.request.count");
         _endpointRequestDuration = meter.CreateHistogram<double>("card.endpoint.request.duration", unit: "ms");
     }
+
+    private static KeyValuePair<string, object?> EndpointLabel(string value) => new("endpoint", value);
+
     [HttpPost(Name = "Pool")]
     public async Task<RayanResponse<CardResponse>> Pool(CardRequest request)
     {
         //_logger.LogInformation($"card is {request.CardPan.Substring(0,6)}");
         //return await Task.FromResult(await _srv.CardGetAsync(request));
-        var tags = CardServicesTelemetry.CreateOperationTags("Pool");
-        tags.Add("endpoint", "/api/Card/Pool");
+        var endpointLabel = EndpointLabel("Pool");
 
-        _endpointRequestCounter.Add(1, tags);
+        _endpointRequestCounter.Add(1, endpointLabel);
         var stopwatch = Stopwatch.StartNew();
 
         var cardBin = request.CardPan?.CardBin();
@@ -50,7 +52,7 @@ public class CardController : ControllerBase
         finally
         {
             stopwatch.Stop();
-            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, endpointLabel);
         }
     }
 
@@ -58,10 +60,9 @@ public class CardController : ControllerBase
     public async Task<RayanResponse<CardResponse>> Id(CardRequest request)
     {
         //return await Task.FromResult(await _srv.CardGetByIdAsync(request));
-        var tags = CardServicesTelemetry.CreateOperationTags("Id");
-        tags.Add("endpoint", "/api/Card/Id");
+        var endpointLabel = EndpointLabel("Id");
 
-        _endpointRequestCounter.Add(1, tags);
+        _endpointRequestCounter.Add(1, endpointLabel);
         var stopwatch = Stopwatch.StartNew();
         try
         {
@@ -70,17 +71,16 @@ public class CardController : ControllerBase
         finally
         {
             stopwatch.Stop();
-            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, endpointLabel);
         }
     }
     [HttpPost(Name = "Data")]
     public async Task<RayanResponse<CardResponse>> Data(CardRequest request)
     {
         //return await Task.FromResult(await _srv.CardDataGetByIdAsync(request));
-        var tags = CardServicesTelemetry.CreateOperationTags("Data");
-        tags.Add("endpoint", "/api/Card/Data");
+        var endpointLabel = EndpointLabel("Data");
 
-        _endpointRequestCounter.Add(1, tags);
+        _endpointRequestCounter.Add(1, endpointLabel);
         var stopwatch = Stopwatch.StartNew();
         try
         {
@@ -89,7 +89,7 @@ public class CardController : ControllerBase
         finally
         {
             stopwatch.Stop();
-            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, endpointLabel);
         }
     }
 
@@ -103,10 +103,9 @@ public class CardController : ControllerBase
     public async Task<bool> Health()
     {
         //return  (_srv.HealthAsync().Result.item);
-        var tags = CardServicesTelemetry.CreateOperationTags("Health");
-        tags.Add("endpoint", "/api/Card/Health");
+        var endpointLabel = EndpointLabel("Health");
 
-        _endpointRequestCounter.Add(1, tags);
+        _endpointRequestCounter.Add(1, endpointLabel);
         var stopwatch = Stopwatch.StartNew();
         try
         {
@@ -116,7 +115,7 @@ public class CardController : ControllerBase
         finally
         {
             stopwatch.Stop();
-            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
+            _endpointRequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, endpointLabel);
         }
     }
 }
