@@ -14,6 +14,7 @@ public static class CardServicesTelemetry
     public static Counter<long> RequestCounter { get; } = Meter.CreateCounter<long>("card.endpoint.request.count");
     public static Counter<long> ErrorCounter { get; } = Meter.CreateCounter<long>("card.endpoint.request.error.count");
     public static Histogram<double> RequestDuration { get; } = Meter.CreateHistogram<double>("card.endpoint.request.duration", unit: "ms");
+    public static Histogram<double> DatabaseCallDuration { get; } = Meter.CreateHistogram<double>("card.oracle.call.duration", unit: "ms");
 
     public static TagList CreateOperationTags(string endpoint)
     {
