@@ -2,9 +2,15 @@ version: "3.8"
 
 services:
   zookeeper:
-    image: bitnami/zookeeper:3.9.2
+    image: confluentinc/cp-zookeeper:7.6.0
+    container_name: zookeeper
     environment:
-      - ALLOW_ANONYMOUS_LOGIN=yes
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+      ZOOKEEPER_INIT_LIMIT: 5
+      ZOOKEEPER_SYNC_LIMIT: 2
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_SERVERS: zookeeper:2888:3888
     ports:
       - "2181:2181"
     healthcheck:
@@ -16,26 +22,29 @@ services:
       - observability
 
   kafka:
-    image: bitnami/kafka:3.6.1
+    image: confluentinc/cp-kafka:7.6.0
+    container_name: kafka
     depends_on:
       - zookeeper
     environment:
-      - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
-      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
-      - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
-      - KAFKA_CFG_OFFSETS_TOPIC_REPLICATION_FACTOR=1
-      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
-      - ALLOW_PLAINTEXT_LISTENER=yes
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     ports:
       - "9092:9092"
     healthcheck:
-      test: ["CMD", "bash", "-c", "kafka-topics.sh --bootstrap-server localhost:9092 --list"]
+      test: ["CMD", "bash", "-c", "kafka-topics --bootstrap-server localhost:9092 --list >/dev/null 2>&1 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
     networks:
       - observability
+
 
   clickhouse:
     image: clickhouse/clickhouse-server:23.11
@@ -57,10 +66,9 @@ services:
       - observability
 
   signoz-query-service:
-    image: signoz/signoz-query-service:0.33.0
+    image: signoz/query-service:latest
     depends_on:
       - clickhouse
-      - alertmanager
     environment:
       - CLICKHOUSE_HOST=clickhouse
       - CLICKHOUSE_PORT=9000
@@ -70,6 +78,8 @@ services:
       - ALERTMANAGER_URL=http://alertmanager:9093
       - SIGNOZ_LOG_COLLECTOR_ENDPOINT=signoz-otel-collector:4317
       - STORAGE=clickhouse
+    volumes:
+      - signoz-data:/var/lib/signoz      
     ports:
       - "8080:8080"
     healthcheck:
@@ -81,7 +91,7 @@ services:
       - observability
 
   signoz-frontend:
-    image: signoz/signoz-frontend:0.33.0
+    image: signoz/frontend:latest
     depends_on:
       - signoz-query-service
     environment:
@@ -98,17 +108,22 @@ services:
       - observability
 
   alertmanager:
-    image: signoz/alertmanager:0.33.0
+    image: signoz/alertmanager:0.23.7
+    depends_on:
+      signoz-query-service:
+        condition: service_healthy
     command:
       - "--config.file=/etc/alertmanager/config.yaml"
+      - "--queryService.url=http://signoz-query-service:8080"
+      - "--storage.path=/data"
     volumes:
-      - alertmanager-data:/alertmanager
+      - alertmanager-data:/data
       - ./alertmanager-config.yaml:/etc/alertmanager/config.yaml:ro
     networks:
       - observability
 
   signoz-otel-collector:
-    image: signoz/signoz-otel-collector:0.33.0
+    image: signoz/signoz-otel-collector:latest
     depends_on:
       - clickhouse
       - kafka
@@ -119,6 +134,10 @@ services:
       - CLICKHOUSE_DATABASE=signoz_traces
       - KAFKA_BROKER=kafka:9092
       - ALERTMANAGER_URL=http://alertmanager:9093
+    command:
+      - "--config=/etc/signoz-otel-config.yaml"
+    volumes:
+      - ../signoz/signoz-otel-config.yaml:/etc/signoz-otel-config.yaml:ro
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:13133/healthz"]
       interval: 30s
@@ -223,6 +242,7 @@ volumes:
   alertmanager-data:
   elastic-data:
   card-app-logs:
+  signoz-data: 
 
 networks:
   observability:

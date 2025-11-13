@@ -9,8 +9,6 @@ receivers:
     username: ${ORACLE_USER}
     password: ${ORACLE_PASSWORD}
     collection_interval: 60s
-    tls:
-      insecure: true    
   filelog:
     include:
       - /var/log/app/*.log
