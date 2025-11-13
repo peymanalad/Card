@@ -24,8 +24,7 @@
       },
       "Microsoft.AspNetCore.Http.Abstractions/2.3.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Http.Features": "2.3.0",
-          "System.Text.Encodings.Web": "8.0.0"
+          "Microsoft.AspNetCore.Http.Features": "2.3.0"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll": {
@@ -68,7 +67,6 @@
           }
         }
       },
-      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Extensions.DependencyInjection.Abstractions/9.0.4": {
         "runtime": {
           "lib/net9.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
@@ -98,8 +96,7 @@
       },
       "Microsoft.Net.Http.Headers/2.3.0": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "8.0.0",
-          "System.Buffers": "4.6.0"
+          "Microsoft.Extensions.Primitives": "8.0.0"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Net.Http.Headers.dll": {
@@ -109,9 +106,6 @@
         }
       },
       "Rayanparsi.Core.Domain/1.2.1": {
-        "dependencies": {
-          "Microsoft.CSharp": "4.7.0"
-        },
         "runtime": {
           "lib/net8.0/Rayanparsi.Core.Domain.dll": {
             "assemblyVersion": "1.2.1.0",
@@ -218,8 +212,6 @@
           }
         }
       },
-      "System.Buffers/4.6.0": {},
-      "System.Text.Encodings.Web/8.0.0": {},
       "Dario.Core.Domain.Card/1.0.0": {
         "dependencies": {
           "Rayanparsi.Core.Domain": "1.2.1",
@@ -275,13 +267,6 @@
       "sha512": "sha512-ZkFpUrSmp6TocxZLBEX3IBv5dPMbQuMs6L/BPl0WRfn32UVOtNYJQ0bLdh3cL9LMV0rmTW/5R0w8CBYxr0AOUw==",
       "path": "microsoft.aspnetcore.routing.abstractions/2.3.0",
       "hashPath": "microsoft.aspnetcore.routing.abstractions.2.3.0.nupkg.sha512"
-    },
-    "Microsoft.CSharp/4.7.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
-      "path": "microsoft.csharp/4.7.0",
-      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.Extensions.DependencyInjection.Abstractions/9.0.4": {
       "type": "package",
@@ -387,20 +372,6 @@
       "sha512": "sha512-JjkJUHvmH6ByA0Hg7HERWV5LgNoFjjYptyBUM5Woj3txvEAbstmavA/oTJBECFBkHnHdm775HJ8xy6oyvzQDhA==",
       "path": "rayanparsi.utilities/1.2.1",
       "hashPath": "rayanparsi.utilities.1.2.1.nupkg.sha512"
-    },
-    "System.Buffers/4.6.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-lN6tZi7Q46zFzAbRYXTIvfXcyvQQgxnY7Xm6C6xQ9784dEL1amjM6S6Iw4ZpsvesAKnRVsM4scrDQaDqSClkjA==",
-      "path": "system.buffers/4.6.0",
-      "hashPath": "system.buffers.4.6.0.nupkg.sha512"
-    },
-    "System.Text.Encodings.Web/8.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
-      "path": "system.text.encodings.web/8.0.0",
-      "hashPath": "system.text.encodings.web.8.0.0.nupkg.sha512"
     },
     "Dario.Core.Domain.Card/1.0.0": {
       "type": "project",

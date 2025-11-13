@@ -1,0 +1,8 @@
+global:
+  resolve_timeout: 1m
+
+route:
+  receiver: team-placeholder
+
+receivers:
+  - name: team-placeholder

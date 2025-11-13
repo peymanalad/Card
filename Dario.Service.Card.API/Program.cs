@@ -146,11 +146,6 @@ builder.Logging.AddOpenTelemetry(o =>
     o.IncludeFormattedMessage = true;
     o.ParseStateValues = true;
 });
-
-builder.Services.AddWindowsService(options =>
-{
-
-});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
