@@ -3,6 +3,14 @@ receivers:
     protocols:
       grpc:
       http:
+  oracledb:
+    endpoint: ${ORACLE_ENDPOINT}
+    service: ${ORACLE_SERVICE}
+    username: ${ORACLE_USER}
+    password: ${ORACLE_PASSWORD}
+    collection_interval: 60s
+    tls:
+      insecure: true    
   filelog:
     include:
       - /var/log/app/*.log
@@ -12,6 +20,32 @@ receivers:
       - type: move
         from: attributes.file_path
         to: resource.file.path
+  filelog/oracle_alert:
+    include:
+      - /opt/oracle/diag/rdbms/*/*/trace/alert_*.log
+    start_at: end
+    poll_interval: 500ms
+    multiline:
+      line_start_pattern: "^\\w{3}\\s+\\d{1,2}"
+    operators:
+      - type: move
+        from: attributes.file_path
+        to: resource.file.path
+      - type: add
+        field: resource.log.type
+        value: oracle_alert
+  filelog/oracle_audit:
+    include:
+      - /opt/oracle/admin/*/adump/*.aud
+    start_at: end
+    poll_interval: 500ms
+    operators:
+      - type: move
+        from: attributes.file_path
+        to: resource.file.path
+      - type: add
+        field: resource.log.type
+        value: oracle_audit
 
 processors:
   batch:
@@ -48,10 +82,10 @@ service:
       processors: [resource, attributes, batch]
       exporters: [otlp/signoz]
     metrics:
-      receivers: [otlp]
+      receivers: [otlp, oracledb]
       processors: [resource, attributes, batch]
       exporters: [otlp/signoz]
     logs:
-      receivers: [otlp, filelog]
+      receivers: [otlp, filelog, filelog/oracle_alert, filelog/oracle_audit]
       processors: [resource, attributes, batch]
       exporters: [otlp/signoz, elasticsearch]
