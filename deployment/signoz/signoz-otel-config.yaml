@@ -1,0 +1,48 @@
+extensions:
+  health_check:
+    endpoint: 0.0.0.0:13133
+  pprof:
+    endpoint: 0.0.0.0:1777
+  zpages:
+    endpoint: 0.0.0.0:55679
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 4000
+    spike_limit_mib: 512
+  batch:
+    send_batch_size: 8192
+    timeout: 5s
+
+exporters:
+  clickhouse/traces:
+    dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=${CLICKHOUSE_DATABASE}
+  clickhouse/metrics:
+    dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=signoz_metrics
+  clickhouse/logs:
+    dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=signoz_logs
+  alertmanager:
+    endpoint: ${ALERTMANAGER_URL}
+
+service:
+  extensions: [health_check, pprof, zpages]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [clickhouse/traces]
+    metrics:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [clickhouse/metrics]
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [clickhouse/logs]
