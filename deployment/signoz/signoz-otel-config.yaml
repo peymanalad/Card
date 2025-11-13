@@ -22,14 +22,22 @@ processors:
     timeout: 5s
 
 exporters:
-  clickhousetraces: 
-    dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=${CLICKHOUSE_DATABASE}
-  signozclickhousemetrics:
-    dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=signoz_metrics
+  clickhousetraces:
+    datasource: tcp://clickhouse:9000?password=Rayanparsi1900y
+    use_new_schema: true
+  clickhousemetricswrite:
+    endpoint: tcp://clickhouse:9000?password=Rayanparsi1900y
+    database: signoz_metrics
   clickhouselogsexporter:
-    dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=signoz_logs
-  alertmanager:
-    endpoint: ${ALERTMANAGER_URL}
+    dsn: tcp://clickhouse:9000/signoz_logs?password=Rayanparsi1900y
+    timeout: 10s
+  metadataexporter:
+    dsn: tcp://clickhouse:9000/signoz_metadata?password=Rayanparsi1900y
+    timeout: 10s
+    tenant_id: default
+    cache:
+      provider: in_memory
+
 
 service:
   extensions: [health_check, pprof, zpages]

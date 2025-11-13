@@ -4,10 +4,10 @@ receivers:
       grpc:
       http:
   oracledb:
-    endpoint: ${ORACLE_ENDPOINT}
-    service: ${ORACLE_SERVICE}
-    username: ${ORACLE_USER}
-    password: ${ORACLE_PASSWORD}
+    endpoint: oracle-free:1521
+    service: FREEPDB1
+    username: DARIOCARD
+    password: Rayanparsi1900y
     collection_interval: 60s
   filelog:
     include:
