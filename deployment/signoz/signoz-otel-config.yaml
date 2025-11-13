@@ -22,11 +22,11 @@ processors:
     timeout: 5s
 
 exporters:
-  clickhouse/traces:
+  clickhousetraces: 
     dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=${CLICKHOUSE_DATABASE}
-  clickhouse/metrics:
+  signozclickhousemetrics:
     dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=signoz_metrics
-  clickhouse/logs:
+  clickhouselogsexporter:
     dsn: tcp://${CLICKHOUSE_HOST}:${CLICKHOUSE_PORT}?database=signoz_logs
   alertmanager:
     endpoint: ${ALERTMANAGER_URL}
@@ -37,12 +37,12 @@ service:
     traces:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [clickhouse/traces]
+      exporters: [clickhousetraces]
     metrics:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [clickhouse/metrics]
+      exporters: [signozclickhousemetrics]
     logs:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [clickhouse/logs]
+      exporters: [clickhouselogsexporter]
