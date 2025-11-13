@@ -108,7 +108,13 @@ alertmanagerConfig:
       group_interval: 2m
       repeat_interval: 4h
       receiver: team-oncall
+      routes:
+        - receiver: dba-operations
+          matchers: ['team="dba"']
     receivers:
       - name: team-oncall
         pagerduty_configs:
           - routing_key: <pagerduty-routing-key>
+      - name: dba-operations
+        email_configs:
+          - to: peyman.alad@gmail.com

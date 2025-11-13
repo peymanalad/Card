@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: kibana-import-card-logs
+  labels:
+    app: kibana
+    role: saved-objects-import
+spec:
+  backoffLimit: 3
+  template:
+    metadata:
+      labels:
+        app: kibana
+        role: saved-objects-import
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: import
+          image: curlimages/curl:8.5.0
+          command:
+            - /bin/sh
+            - -c
+            - |
+              set -eu
+              until curl -sSf -u "$ELASTICSEARCH_USERNAME:$ELASTICSEARCH_PASSWORD" "$KIBANA_URL/api/status" >/dev/null; do
+                echo "Waiting for Kibana..."
+                sleep 15
+              done
+              curl -sS -u "$ELASTICSEARCH_USERNAME:$ELASTICSEARCH_PASSWORD" -X POST "$KIBANA_URL/api/saved_objects/_import?overwrite=true" \
+                -H "kbn-xsrf: true" \
+                --form file=@/saved-objects/card-logs.ndjson
+          env:
+            - name: KIBANA_URL
+              value: http://kibana:5601
+            - name: ELASTICSEARCH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-credentials
+                  key: username
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: elastic-credentials
+                  key: password
+          volumeMounts:
+            - name: saved-objects
+              mountPath: /saved-objects
+              readOnly: true
+      volumes:
+        - name: saved-objects
+          configMap:
+            name: kibana-saved-objects
+            items:
+              - key: card-logs.ndjson
+                path: card-logs.ndjson

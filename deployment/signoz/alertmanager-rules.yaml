@@ -1,0 +1,65 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: card-platform-alerts
+  labels:
+    release: signoz
+    role: alert-rules
+spec:
+  groups:
+    - name: card-platform.latency
+      interval: 1m
+      rules:
+        - alert: CardServiceHighLatency
+          expr: histogram_quantile(0.95, sum(rate(signoz_latency_bucket{service_name="card-service"}[5m])) by (le, service_name)) > 0.5
+          for: 5m
+          labels:
+            severity: critical
+            team: card-operations
+          annotations:
+            summary: "95th percentile latency for card-service is above 500ms"
+            description: |
+              P95 latency for card-service has been above 500ms for the last five minutes. Investigate recent deployments or downstream dependency health.
+            runbook_url: https://signoz.example.com/application/traces
+    - name: card-platform.error-rate
+      interval: 1m
+      rules:
+        - alert: CardServiceHighErrorRate
+          expr: (sum(rate(signoz_calls_total{service_name="card-service", status_code="STATUS_CODE_ERROR"}[5m])) / sum(rate(signoz_calls_total{service_name="card-service"}[5m]))) * 100 > 2
+          for: 10m
+          labels:
+            severity: critical
+            team: card-operations
+          annotations:
+            summary: "Card-service error rate is above 2%"
+            description: |
+              Error rate for card-service has exceeded 2% over the past 10 minutes. Check upstream services and recent changes.
+            runbook_url: https://signoz.example.com/application/metrics
+    - name: card-platform.cpu
+      interval: 1m
+      rules:
+        - alert: CardServiceHighCPU
+          expr: avg(rate(container_cpu_usage_seconds_total{namespace="card-platform", pod=~"card-service-.*"}[5m]) * 100) > 85
+          for: 10m
+          labels:
+            severity: warning
+            team: card-operations
+          annotations:
+            summary: "Card-service pods CPU usage above 85%"
+            description: |
+              Average CPU utilization for card-service pods has been higher than 85% for 10 minutes. Consider scaling the deployment or investigating runaway processes.
+            runbook_url: https://kubernetes.example.com/namespaces/card-platform/deployments/card-service
+    - name: card-platform.oracle
+      interval: 5m
+      rules:
+        - alert: OracleTablespaceLowFreeSpace
+          expr: max(oracledb_tablespace_used_percent{tablespace=~"DATA.*"}) > 80
+          for: 15m
+          labels:
+            severity: critical
+            team: dba
+          annotations:
+            summary: "Oracle tablespace usage above 80%"
+            description: |
+              Oracle DATA tablespace utilization is above 80% for more than 15 minutes. Review space consumption and plan for cleanup or expansion.
+            runbook_url: https://wiki.example.com/oracle/tablespace/runbook
