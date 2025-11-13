@@ -3,6 +3,10 @@
   "WorkspaceRootPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.core.application.card\\cardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|solutionrelative:dario.core.application.card\\cardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -13,10 +17,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
@@ -81,21 +81,8 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 7,
           "Children": [
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "instrument.sh",
-              "DocumentMoniker": "C:\\Users\\nasser\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh",
-              "RelativeDocumentMoniker": "..\\..\\..\\..\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh",
-              "ToolTip": "C:\\Users\\nasser\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh [Read Only]",
-              "RelativeToolTip": "..\\..\\..\\..\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh [Read Only]",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA==",
-              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
-              "WhenOpened": "2025-11-12T14:34:12.296Z",
-              "EditorCaption": " [Read Only]"
-            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
@@ -113,34 +100,55 @@
               "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 5,
+              "Title": "instrument.sh",
+              "DocumentMoniker": "C:\\Users\\nasser\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh",
+              "RelativeDocumentMoniker": "..\\..\\..\\..\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh",
+              "ToolTip": "C:\\Users\\nasser\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh [Read Only]",
+              "RelativeToolTip": "..\\..\\..\\..\\.nuget\\packages\\opentelemetry.autoinstrumentation\\1.12.0\\contentFiles\\any\\any\\instrument.sh [Read Only]",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA==",
+              "Icon": "00000000-0000-0000-0000-000000000000.000000|",
+              "WhenOpened": "2025-11-12T14:34:12.296Z",
+              "EditorCaption": " [Read Only]"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Program.cs",
               "RelativeDocumentMoniker": "Dario.Service.Card.API\\Program.cs",
               "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Program.cs",
               "RelativeToolTip": "Dario.Service.Card.API\\Program.cs",
-              "ViewState": "AgIAAGgAAAAAAAAAAAAUwGkAAAAGAAAAAAAAAA==",
+              "ViewState": "AgIAAFoAAAAAAAAAAAAuwHAAAAAGAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T13:09:13.613Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "CardServices.cs",
               "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\CardServices.cs",
               "RelativeDocumentMoniker": "Dario.Core.Application.Card\\CardServices.cs",
               "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\CardServices.cs",
               "RelativeToolTip": "Dario.Core.Application.Card\\CardServices.cs",
-              "ViewState": "AgIAAFsCAAAAWKQM7CUiwFgCAABwAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFgCAABwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-14T13:09:13.881Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CardController.cs",
               "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Controllers\\CardController.cs",
               "RelativeDocumentMoniker": "Dario.Service.Card.API\\Controllers\\CardController.cs",
@@ -148,8 +156,7 @@
               "RelativeToolTip": "Dario.Service.Card.API\\Controllers\\CardController.cs",
               "ViewState": "AgIAABYAAAAAAAAAAAAkwEUAAAAdAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T13:09:13.613Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.613Z"
             },
             {
               "$type": "Document",
@@ -161,12 +168,11 @@
               "RelativeToolTip": "Dario.Service.Card.API\\appsettings.json",
               "ViewState": "AgIAAAMAAAAAAAAAAAAgwBQAAAAWAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T13:09:13.865Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.865Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "CardServicesOptions.cs",
               "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
               "RelativeDocumentMoniker": "Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
@@ -174,8 +180,7 @@
               "RelativeToolTip": "Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAYAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T13:09:13.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.897Z"
             },
             {
               "$type": "Document",
@@ -187,12 +192,7 @@
               "RelativeToolTip": "Dario.Core.Application.Card\\CardServicesTelemetry.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAAAsAAAA4AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-06T07:13:56.717Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+              "WhenOpened": "2025-11-06T07:13:56.717Z"
             },
             {
               "$type": "Document",
@@ -204,20 +204,7 @@
               "RelativeToolTip": "Dario.Core.Application.Card\\CardServiceCollectionExtensions.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAAAAAC0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T13:09:13.889Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{c6f34f0d-7ae5-4f3a-be61-fe0c21ae9eb8}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{56df62a4-05a3-4e5b-aa1a-99371ccfb997}"
+              "WhenOpened": "2025-10-14T13:09:13.889Z"
             },
             {
               "$type": "Document",
@@ -229,8 +216,7 @@
               "RelativeToolTip": "Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-14T13:09:13.613Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.613Z"
             },
             {
               "$type": "Document",
@@ -242,8 +228,7 @@
               "RelativeToolTip": "Dario.Service.Card.API\\.env",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAEAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-10-23T08:05:09.953Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-23T08:05:09.953Z"
             },
             {
               "$type": "Document",
@@ -255,8 +240,7 @@
               "RelativeToolTip": "Dario.Core.Abstraction.Card\\ICardServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T13:09:13.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.897Z"
             },
             {
               "$type": "Document",
@@ -268,8 +252,7 @@
               "RelativeToolTip": "Dario.Service.Card.API\\Configuration\\EnvLoader.cs",
               "ViewState": "AgIAADoAAAAAAAAAAMBSwFIAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-23T08:03:13.995Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-23T08:03:13.995Z"
             },
             {
               "$type": "Document",
@@ -281,8 +264,7 @@
               "RelativeToolTip": "Dario.Service.Card.API\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T13:09:13.518Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.518Z"
             },
             {
               "$type": "Document",
@@ -294,8 +276,7 @@
               "RelativeToolTip": "Dario.Service.Card.API\\Dario.Service.Card.API.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-10-23T08:00:08.892Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-23T08:00:08.892Z"
             },
             {
               "$type": "Document",
@@ -307,8 +288,7 @@
               "RelativeToolTip": "Dario.Core.Domain.Card\\CardRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAuwAMAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T13:09:13.897Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.897Z"
             },
             {
               "$type": "Document",
@@ -320,8 +300,7 @@
               "RelativeToolTip": "Dario.Core.Domain.Card\\CardResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-14T13:09:13.891Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:09:13.891Z"
             },
             {
               "$type": "Document",
@@ -333,8 +312,7 @@
               "RelativeToolTip": "Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj",
               "ViewState": "AgIAAAEAAAAAAAAAAAAawBEAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-10-14T13:15:34.421Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:15:34.421Z"
             },
             {
               "$type": "Document",
@@ -346,8 +324,7 @@
               "RelativeToolTip": "Dario.Service.Card.API\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-14T13:14:45.766Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-14T13:14:45.766Z"
             }
           ]
         }

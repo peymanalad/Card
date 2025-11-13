@@ -29,18 +29,43 @@ var serviceIp = config.GetValue<string>("ServiceIP") ?? throw new InvalidOperati
 var servicePort = config.GetValue<int?>("ServicePort") ?? throw new InvalidOperationException("CardServices:ServicePort configuration is missing.");
 
 
-var otlpEndpointValue = builder.Configuration.GetValue<string>("OpenTelemetry:OtlpEndpoint")?.Trim();
+var serviceName = Environment.GetEnvironmentVariable("OTEL_SERVICE_NAME")?.Trim();
+if (string.IsNullOrWhiteSpace(serviceName))
+{
+    serviceName = builder.Configuration.GetValue<string>("OpenTelemetry:ServiceName")?.Trim();
+}
+
+if (string.IsNullOrWhiteSpace(serviceName))
+{
+    throw new InvalidOperationException("OpenTelemetry:ServiceName configuration is required. Provide it via configuration or the OTEL_SERVICE_NAME environment variable.");
+}
+
+var serviceNamespace = builder.Configuration.GetValue<string>("OpenTelemetry:ServiceNamespace")?.Trim();
+var serviceVersion = builder.Configuration.GetValue<string>("OpenTelemetry:ServiceVersion")?.Trim();
+var deploymentEnvironment = builder.Configuration.GetValue<string>("OpenTelemetry:DeploymentEnvironment")?.Trim();
+
+var otlpEndpointValue = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_ENDPOINT")?.Trim();
 if (string.IsNullOrEmpty(otlpEndpointValue))
 {
-    throw new InvalidOperationException("OpenTelemetry:OtlpEndpoint configuration is required. Provide it via configuration or the OpenTelemetry__OtlpEndpoint environment variable.");
+    otlpEndpointValue = builder.Configuration.GetValue<string>("OpenTelemetry:OtlpEndpoint")?.Trim();
+}
+
+if (string.IsNullOrEmpty(otlpEndpointValue))
+{
+    throw new InvalidOperationException("An OTLP endpoint is required. Provide it via configuration or the OTEL_EXPORTER_OTLP_ENDPOINT environment variable.");
 }
 
 if (!Uri.TryCreate(otlpEndpointValue, UriKind.Absolute, out var otlpEndpoint))
 {
-    throw new InvalidOperationException($"OpenTelemetry:OtlpEndpoint value '{otlpEndpointValue}' is not a valid absolute URI.");
+    throw new InvalidOperationException($"The OTLP endpoint value '{otlpEndpointValue}' is not a valid absolute URI.");
 }
 
-var otlpProtocolValue = builder.Configuration.GetValue<string>("OpenTelemetry:OtlpProtocol")?.Trim();
+var otlpProtocolValue = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_PROTOCOL")?.Trim();
+if (string.IsNullOrEmpty(otlpProtocolValue))
+{
+    otlpProtocolValue = builder.Configuration.GetValue<string>("OpenTelemetry:OtlpProtocol")?.Trim();
+}
+
 var otlpProtocol = otlpProtocolValue?.ToLowerInvariant() switch
 {
     null or "" or "grpc" => OtlpExportProtocol.Grpc,
@@ -48,8 +73,11 @@ var otlpProtocol = otlpProtocolValue?.ToLowerInvariant() switch
     var value => throw new InvalidOperationException($"Unsupported OpenTelemetry:OtlpProtocol value '{value}'. Use 'grpc' or 'httpProtobuf'.")
 };
 
-var otlpHeaders = builder.Configuration.GetValue<string>("OpenTelemetry:Headers");
-
+var otlpHeaders = Environment.GetEnvironmentVariable("OTEL_EXPORTER_OTLP_HEADERS");
+if (string.IsNullOrWhiteSpace(otlpHeaders))
+{
+    otlpHeaders = builder.Configuration.GetValue<string>("OpenTelemetry:Headers");
+}
 void ConfigureOtlpExporter(OtlpExporterOptions options)
 {
     options.Endpoint = otlpEndpoint;
@@ -72,8 +100,17 @@ void ConfigureOtlpExporter(OtlpExporterOptions options)
 //});
 builder.Services.AddOpenTelemetry()
     .ConfigureResource(resource =>
-        resource.AddService(serviceName: "card"))
+    {
+        resource.AddService(serviceName: serviceName!, serviceNamespace: serviceNamespace, serviceVersion: serviceVersion);
 
+        if (!string.IsNullOrWhiteSpace(deploymentEnvironment))
+        {
+            resource.AddAttributes(new[]
+            {
+                new KeyValuePair<string, object>("deployment.environment", deploymentEnvironment!)
+            });
+        }
+    })
     .WithTracing(tracing => tracing
         .AddSource(CardServicesTelemetry.ActivitySourceName)
         .AddAspNetCoreInstrumentation(o =>
