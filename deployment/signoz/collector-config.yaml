@@ -70,10 +70,13 @@ exporters:
     endpoint: signoz-otel-collector:4317
     tls:
       insecure: true
-  elasticsearch:
-    endpoints:
-      - http://elasticsearch:9200
-    logs_index: card-logs
+  kafka/logstash:
+    brokers:
+      - kafka:9092
+    topic: card-logs
+    encoding: otlp_json
+    metadata:
+      full: true
 
 service:
   pipelines:
@@ -88,4 +91,4 @@ service:
     logs:
       receivers: [otlp, filelog, filelog/oracle_alert, filelog/oracle_audit]
       processors: [resource, attributes, batch]
-      exporters: [otlp/signoz, elasticsearch]
+      exporters: [otlp/signoz, kafka/logstash]

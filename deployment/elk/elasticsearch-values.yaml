@@ -84,3 +84,42 @@ http:
 
 updateStrategy:
   type: RollingUpdate
+
+indexLifecyclePolicies:
+  card-logs-policy:
+    policy:
+      phases:
+        hot:
+          actions:
+            rollover:
+              max_primary_shard_size: 50gb
+              max_age: 7d
+        warm:
+          min_age: 7d
+          actions:
+            set_priority:
+              priority: 50
+            allocate:
+              number_of_replicas: 1
+              include:
+                _tier_preference: data_warm,data_cold
+        delete:
+          min_age: 30d
+          actions:
+            delete: {}
+
+indexTemplates:
+  card-logs-template:
+    index_patterns:
+      - logs-card-production-*
+    priority: 500
+    data_stream: {}
+    template:
+      settings:
+        index.lifecycle.name: card-logs-policy
+        index.lifecycle.rollover_alias: logs-card-production
+        index.routing.allocation.include._tier_preference: data_hot,data_warm
+        number_of_shards: 3
+        number_of_replicas: 1
+      mappings:
+        dynamic: true
