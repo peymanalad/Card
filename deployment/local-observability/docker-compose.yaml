@@ -135,7 +135,7 @@ services:
       - KAFKA_BROKER=kafka:9092
       - ALERTMANAGER_URL=http://alertmanager:9093
     volumes:
-      - ../signoz/signoz-otel-config.yaml:/etc/signoz-otel-config.yaml:ro
+      - ../signoz/signoz-otel-config.yaml:/etc/otel/config.yaml:ro
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:13133/healthz"]
       interval: 30s
