@@ -73,7 +73,7 @@ services:
       - CLICKHOUSE_HOST=clickhouse
       - CLICKHOUSE_PORT=9000
       - CLICKHOUSE_USER=default
-      - CLICKHOUSE_PASSWORD=
+      - CLICKHOUSE_PASSWORD=""
       - CLICKHOUSE_DATABASE=signoz_traces
       - ALERTMANAGER_URL=http://alertmanager:9093
       - SIGNOZ_LOG_COLLECTOR_ENDPOINT=signoz-otel-collector:4317
@@ -144,26 +144,26 @@ services:
     networks:
       - observability
 
-  card-otel-collector:
-    image: otel/opentelemetry-collector-contrib:0.99.0
-    depends_on:
-      - signoz-otel-collector
-      - kafka
-    command:
-      - "--config=/etc/otel/config.yaml"
-    volumes:
-      - ../signoz/collector-config.yaml:/etc/otel/config.yaml:ro
-      - card-app-logs:/var/log/app
-    environment:
-      - ORACLE_ENDPOINT=localhost:1521
-      - ORACLE_SERVICE=XE
-      - ORACLE_USER=otel_collector
-      - ORACLE_PASSWORD=otel_collector
-    ports:
-      - "4317:4317"
-      - "4318:4318"
-    networks:
-      - observability
+  # card-otel-collector:
+  #   image: otel/opentelemetry-collector-contrib:0.99.0
+  #   depends_on:
+  #     - signoz-otel-collector
+  #     - kafka
+  #   command:
+  #     - "--config=/etc/otel/config.yaml"
+  #   volumes:
+  #     - ../signoz/collector-config.yaml:/etc/otel/config.yaml:ro
+  #     - card-app-logs:/var/log/app
+  #   environment:
+  #     - ORACLE_ENDPOINT=localhost:1521
+  #     - ORACLE_SERVICE=XE
+  #     - ORACLE_USER=otel_collector
+  #     - ORACLE_PASSWORD=otel_collector
+  #   ports:
+  #     - "4317:4317"
+  #     - "4318:4318"
+  #   networks:
+  #     - observability
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.14.0
