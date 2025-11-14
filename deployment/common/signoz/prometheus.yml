@@ -22,4 +22,7 @@ rule_files: []
 scrape_configs: []
 
 remote_read:
-  - url: tcp://clickhouse:9000/signoz_metrics
+  - url: http://signoz-query-service:8080/api/v1/prom/read
+
+remote_write:
+  - url: http://signoz-otel-collector:14318/api/v1/prometheus

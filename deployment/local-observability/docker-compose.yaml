@@ -77,7 +77,7 @@ services:
       - CLICKHOUSE_DATABASE=signoz_traces
       - ALERTMANAGER_URL=http://alertmanager:9093
       - SIGNOZ_LOG_COLLECTOR_ENDPOINT=signoz-otel-collector:4317
-      - STORAGE=clickhouse
+      - SIGNOZ_TELEMETRYSTORE_PROVIDER=clickhouse
     volumes:
       - signoz-data:/var/lib/signoz      
     ports:
