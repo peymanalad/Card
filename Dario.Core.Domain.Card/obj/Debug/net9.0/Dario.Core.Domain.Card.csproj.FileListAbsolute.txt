@@ -23,3 +23,16 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Domain.Card\obj\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\refint\Dario.Core.Domain.Card.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\ref\Dario.Core.Domain.Card.dll
+E:\Projects\Card\Dario.Core.Domain.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.deps.json
+E:\Projects\Card\Dario.Core.Domain.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.dll
+E:\Projects\Card\Dario.Core.Domain.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.pdb
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.csproj.AssemblyReference.cache
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.AssemblyInfoInputs.cache
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.AssemblyInfo.cs
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.csproj.CoreCompileInputs.cache
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.sourcelink.json
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.dll
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\refint\Dario.Core.Domain.Card.dll
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\Dario.Core.Domain.Card.pdb
+E:\Projects\Card\Dario.Core.Domain.Card\obj\Debug\net9.0\ref\Dario.Core.Domain.Card.dll

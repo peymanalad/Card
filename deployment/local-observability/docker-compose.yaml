@@ -4,6 +4,11 @@ services:
   zookeeper:
     image: confluentinc/cp-zookeeper:7.6.0
     container_name: zookeeper
+    user: root
+    labels:
+      signoz.io/scrape: "true"
+      signoz.io/port: "9141"
+      signoz.io/path: "/metrics"
     environment:
       ZOOKEEPER_CLIENT_PORT: 2181
       ZOOKEEPER_TICK_TIME: 2000
@@ -19,7 +24,11 @@ services:
       timeout: 10s
       retries: 5
     networks:
-      - observability
+      observability:
+        aliases:
+          - zookeeper-1
+          - zookeeper-2
+          - zookeeper-3
 
   kafka:
     image: confluentinc/cp-kafka:7.6.0
@@ -36,7 +45,7 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
     ports:
-      - "9092:9092"
+      - "19092:9092"
     healthcheck:
       test: ["CMD", "bash", "-c", "kafka-topics --bootstrap-server localhost:9092 --list >/dev/null 2>&1 || exit 1"]
       interval: 30s
@@ -47,16 +56,29 @@ services:
 
 
   clickhouse:
-    image: clickhouse/clickhouse-server:23.11
+    image: clickhouse/clickhouse-server:25.5.6
+    tty: true
+    labels:
+      signoz.io/scrape: "true"
+      signoz.io/port: "9363"
+      signoz.io/path: "/metrics"
     volumes:
       - clickhouse-data:/var/lib/clickhouse
+      - ../common/clickhouse/config.xml:/etc/clickhouse-server/config.xml
+      - ../common/clickhouse/users.xml:/etc/clickhouse-server/users.xml
+      - ../common/clickhouse/custom-function.xml:/etc/clickhouse-server/custom-function.xml
+      - ../common/clickhouse/user_scripts:/var/lib/clickhouse/user_scripts/
+      - ../common/clickhouse/cluster.xml:/etc/clickhouse-server/config.d/cluster.xml
     ulimits:
+      nproc: 65535
       nofile:
         soft: 262144
         hard: 262144
     ports:
       - "9000:9000"
       - "8123:8123"
+    environment:
+      - CLICKHOUSE_SKIP_USER_SETUP=1
     healthcheck:
       test: ["CMD", "bash", "-c", "clickhouse-client --host localhost --query 'select 1'"]
       interval: 30s
@@ -65,77 +87,63 @@ services:
     networks:
       - observability
 
-  signoz-query-service:
-    image: signoz/query-service:latest
+  signoz:
+    image: signoz/signoz:v0.101.0
+    container_name: signoz
     depends_on:
-      - clickhouse
-    environment:
-      - CLICKHOUSE_HOST=clickhouse
-      - CLICKHOUSE_PORT=9000
-      - CLICKHOUSE_USER=default
-      - CLICKHOUSE_PASSWORD=""
-      - CLICKHOUSE_DATABASE=signoz_traces
-      - ALERTMANAGER_URL=http://alertmanager:9093
-      - SIGNOZ_LOG_COLLECTOR_ENDPOINT=signoz-otel-collector:4317
-      - SIGNOZ_TELEMETRYSTORE_PROVIDER=clickhouse
-    volumes:
-      - signoz-data:/var/lib/signoz      
-    ports:
-      - "8080:8080"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    networks:
-      - observability
-
-  signoz-frontend:
-    image: signoz/frontend:latest
-    depends_on:
-      - signoz-query-service
-    environment:
-      - QUERY_SERVICE=http://signoz-query-service:8080
-      - OTEL_ENDPOINT=http://signoz-otel-collector:4318
-    ports:
-      - "3301:3301"
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:3301"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-    networks:
-      - observability
-
-  alertmanager:
-    image: signoz/alertmanager:0.23.7
-    depends_on:
-      signoz-query-service:
+      clickhouse:
         condition: service_healthy
+      schema-migrator-sync:
+        condition: service_completed_successfully
     command:
-      - "--config.file=/etc/alertmanager/config.yaml"
-      - "--queryService.url=http://signoz-query-service:8080"
-      - "--storage.path=/data"
+      - --config=/root/config/prometheus.yml
+    environment:
+      - SIGNOZ_ALERTMANAGER_PROVIDER=signoz
+      - SIGNOZ_TELEMETRYSTORE_CLICKHOUSE_DSN=tcp://clickhouse:9000
+      - SIGNOZ_SQLSTORE_SQLITE_PATH=/var/lib/signoz/signoz.db
+      - DASHBOARDS_PATH=/root/config/dashboards
+      - STORAGE=clickhouse
+      - GODEBUG=netdns=go
+      - TELEMETRY_ENABLED=true
+      - DEPLOYMENT_TYPE=docker-standalone-amd
+      - DOT_METRICS_ENABLED=true
+      - SIGNOZ_JWT_SECRET=change_this_to_a_long_random_string
     volumes:
-      - alertmanager-data:/data
-      - ./alertmanager-config.yaml:/etc/alertmanager/config.yaml:ro
+      - ../signoz/prometheus.yml:/root/config/prometheus.yml
+      - ../signoz/dashboards:/root/config/dashboards
+      - signoz-data:/var/lib/signoz
+    ports:
+      - "3301:8080"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "localhost:8080/api/v1/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
     networks:
       - observability
+
 
   signoz-otel-collector:
-    image: signoz/signoz-otel-collector:latest
+    image: signoz/signoz-otel-collector:v0.129.8
+    container_name: signoz-otel-collector
     depends_on:
-      - clickhouse
-      - kafka
+      clickhouse:
+        condition: service_healthy
+      schema-migrator-sync:
+        condition: service_completed_successfully
     environment:
       - SIGNOZ_COLLECTOR_NAME=main-collector
       - CLICKHOUSE_HOST=clickhouse
       - CLICKHOUSE_PORT=9000
       - CLICKHOUSE_DATABASE=signoz_traces
       - KAFKA_BROKER=kafka:9092
-      - ALERTMANAGER_URL=http://alertmanager:9093
+      - OTEL_RESOURCE_ATTRIBUTES=host.name=signoz-host,os.type=linux
+      - LOW_CARDINAL_EXCEPTION_GROUPING=false
     volumes:
       - ../signoz/signoz-otel-config.yaml:/etc/otel/config.yaml:ro
+    ports:
+      - "4317:4317"
+      - "4318:4318"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:13133/healthz"]
       interval: 30s
@@ -143,6 +151,38 @@ services:
       retries: 5
     networks:
       - observability
+
+
+  schema-migrator-sync:
+    image: signoz/signoz-schema-migrator:v0.129.8
+    container_name: schema-migrator-sync
+    command:
+      - sync
+      - --dsn=tcp://clickhouse:9000
+      - --up=
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+    restart: on-failure
+    networks:
+      - observability
+
+  schema-migrator-async:
+    image: signoz/signoz-schema-migrator:v0.129.8
+    container_name: schema-migrator-async
+    command:
+      - async
+      - --dsn=tcp://clickhouse:9000
+      - --up=
+    depends_on:
+      clickhouse:
+        condition: service_healthy
+      schema-migrator-sync:
+        condition: service_completed_successfully
+    restart: on-failure
+    networks:
+      - observability
+
 
   # card-otel-collector:
   #   image: otel/opentelemetry-collector-contrib:0.99.0
@@ -179,7 +219,7 @@ services:
     volumes:
       - elastic-data:/usr/share/elasticsearch/data
     ports:
-      - "9200:9200"
+      - "19200:9200"
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:9200/_cluster/health"]
       interval: 30s

@@ -1,49 +1,49 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\",
+  "WorkspaceRootPath": "E:\\Projects\\Card\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|e:\\projects\\card\\dario.service.card.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
       "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\dario.service.card.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\dario.service.card.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|e:\\projects\\card\\dario.service.card.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.service.card.api\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|e:\\projects\\card\\dario.service.card.api\\dario.service.card.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\dario.service.card.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|e:\\projects\\card\\dario.service.card.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\appsettings.development.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|e:\\projects\\card\\dario.service.card.api\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A096C627-75CD-4C47-AECD-DD11163D41AA}|Dario.Service.Card.API\\Dario.Service.Card.API.csproj|solutionrelative:dario.service.card.api\\controllers\\cardcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.core.application.card\\cardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|e:\\projects\\card\\dario.core.application.card\\cardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|solutionrelative:dario.core.application.card\\cardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.core.application.card\\cardservicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|e:\\projects\\card\\dario.core.application.card\\cardservicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{669B0D96-F2ED-47D4-AD44-A33E71880E75}|Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj|solutionrelative:dario.core.application.card\\cardservicecollectionextensions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B2C65F4E-C971-43D0-A214-7BA17F6C200B}|Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.core.domain.card\\cardresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B2C65F4E-C971-43D0-A214-7BA17F6C200B}|Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj|e:\\projects\\card\\dario.core.domain.card\\cardresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B2C65F4E-C971-43D0-A214-7BA17F6C200B}|Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj|solutionrelative:dario.core.domain.card\\cardresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B2C65F4E-C971-43D0-A214-7BA17F6C200B}|Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.core.domain.card\\cardrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B2C65F4E-C971-43D0-A214-7BA17F6C200B}|Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj|e:\\projects\\card\\dario.core.domain.card\\cardrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B2C65F4E-C971-43D0-A214-7BA17F6C200B}|Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj|solutionrelative:dario.core.domain.card\\cardrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{776EC434-63A8-47E3-9CCE-E861335DDD82}|Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.core.abstraction.card\\icardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{776EC434-63A8-47E3-9CCE-E861335DDD82}|Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj|e:\\projects\\card\\dario.core.abstraction.card\\icardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{776EC434-63A8-47E3-9CCE-E861335DDD82}|Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj|solutionrelative:dario.core.abstraction.card\\icardservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{776EC434-63A8-47E3-9CCE-E861335DDD82}|Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj|c:\\users\\nasser\\documents\\rayan parsi\\code\\card\\dario.core.abstraction.card\\options\\cardservicesoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{776EC434-63A8-47E3-9CCE-E861335DDD82}|Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj|e:\\projects\\card\\dario.core.abstraction.card\\options\\cardservicesoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{776EC434-63A8-47E3-9CCE-E861335DDD82}|Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj|solutionrelative:dario.core.abstraction.card\\options\\cardservicesoptions.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
@@ -54,75 +54,82 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{0ad07096-bba9-4900-a651-0598d26f6d24}"
+              "Name": "ST:0:0:{e506b91c-c606-466a-90a9-123d1d1e12b3}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{6324226f-61b6-4f28-92ee-18d4b5fe1e48}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "appsettings.Development.json",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\appsettings.Development.json",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Service.Card.API\\appsettings.Development.json",
               "RelativeDocumentMoniker": "Dario.Service.Card.API\\appsettings.Development.json",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\appsettings.Development.json",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Service.Card.API\\appsettings.Development.json",
               "RelativeToolTip": "Dario.Service.Card.API\\appsettings.Development.json",
               "ViewState": "AgIAAAMAAAAAAAAAAAAQwBYAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-09-09T08:02:44.132Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-09-09T08:02:44.132Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 4,
               "Title": "CardController.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Controllers\\CardController.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Service.Card.API\\Controllers\\CardController.cs",
               "RelativeDocumentMoniker": "Dario.Service.Card.API\\Controllers\\CardController.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Controllers\\CardController.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Service.Card.API\\Controllers\\CardController.cs",
               "RelativeToolTip": "Dario.Service.Card.API\\Controllers\\CardController.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAowCsAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAABAAAAAAAAAAAAAowCsAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-24T10:22:24.509Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Program.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Service.Card.API\\Program.cs",
               "RelativeDocumentMoniker": "Dario.Service.Card.API\\Program.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Program.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Service.Card.API\\Program.cs",
               "RelativeToolTip": "Dario.Service.Card.API\\Program.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAAADwAAAADAAAAAAAAAA==",
+              "ViewState": "AgIAACoAAAAAAAAAAAAAADwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-05-14T13:15:29.417Z"
+              "WhenOpened": "2025-05-14T13:15:29.417Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Dario.Service.Card.API.csproj",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
               "RelativeDocumentMoniker": "Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
               "RelativeToolTip": "Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2025-08-26T12:10:44.61Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-26T12:10:44.61Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\appsettings.json",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Service.Card.API\\appsettings.json",
               "RelativeDocumentMoniker": "Dario.Service.Card.API\\appsettings.json",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\appsettings.json",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Service.Card.API\\appsettings.json",
               "RelativeToolTip": "Dario.Service.Card.API\\appsettings.json",
-              "ViewState": "AgIAAAwAAAAAAAAAAAAAABUAAAAOAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAqAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
               "WhenOpened": "2025-08-24T10:27:21.013Z",
               "EditorCaption": ""
@@ -131,9 +138,9 @@
               "$type": "Document",
               "DocumentIndex": 5,
               "Title": "CardServices.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\CardServices.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Core.Application.Card\\CardServices.cs",
               "RelativeDocumentMoniker": "Dario.Core.Application.Card\\CardServices.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\CardServices.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Core.Application.Card\\CardServices.cs",
               "RelativeToolTip": "Dario.Core.Application.Card\\CardServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAIEAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -143,9 +150,9 @@
               "$type": "Document",
               "DocumentIndex": 6,
               "Title": "CardServiceCollectionExtensions.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\CardServiceCollectionExtensions.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Core.Application.Card\\CardServiceCollectionExtensions.cs",
               "RelativeDocumentMoniker": "Dario.Core.Application.Card\\CardServiceCollectionExtensions.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\CardServiceCollectionExtensions.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Core.Application.Card\\CardServiceCollectionExtensions.cs",
               "RelativeToolTip": "Dario.Core.Application.Card\\CardServiceCollectionExtensions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -155,9 +162,9 @@
               "$type": "Document",
               "DocumentIndex": 7,
               "Title": "CardResponse.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\CardResponse.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\CardResponse.cs",
               "RelativeDocumentMoniker": "Dario.Core.Domain.Card\\CardResponse.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\CardResponse.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\CardResponse.cs",
               "RelativeToolTip": "Dario.Core.Domain.Card\\CardResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -167,9 +174,9 @@
               "$type": "Document",
               "DocumentIndex": 8,
               "Title": "CardRequest.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\CardRequest.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\CardRequest.cs",
               "RelativeDocumentMoniker": "Dario.Core.Domain.Card\\CardRequest.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\CardRequest.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\CardRequest.cs",
               "RelativeToolTip": "Dario.Core.Domain.Card\\CardRequest.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -179,9 +186,9 @@
               "$type": "Document",
               "DocumentIndex": 9,
               "Title": "ICardServices.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\ICardServices.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\ICardServices.cs",
               "RelativeDocumentMoniker": "Dario.Core.Abstraction.Card\\ICardServices.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\ICardServices.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\ICardServices.cs",
               "RelativeToolTip": "Dario.Core.Abstraction.Card\\ICardServices.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
@@ -191,9 +198,9 @@
               "$type": "Document",
               "DocumentIndex": 10,
               "Title": "CardServicesOptions.cs",
-              "DocumentMoniker": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
+              "DocumentMoniker": "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
               "RelativeDocumentMoniker": "Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
-              "ToolTip": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
+              "ToolTip": "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
               "RelativeToolTip": "Dario.Core.Abstraction.Card\\Options\\CardServicesOptions.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",

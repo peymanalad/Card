@@ -2,3 +2,4 @@
 *.vsidx
 /.env
 !Dario.Service.Card.API/.env
+.idea
