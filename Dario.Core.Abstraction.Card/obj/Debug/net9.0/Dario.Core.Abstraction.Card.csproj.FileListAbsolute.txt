@@ -13,22 +13,6 @@ E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Abstraction.Card\obj\Debug\n
 E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\refint\Dario.Core.Abstraction.Card.dll
 E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
 E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\ref\Dario.Core.Abstraction.Card.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.deps.json
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.pdb
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.csproj.AssemblyReference.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.AssemblyInfoInputs.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.AssemblyInfo.cs
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.csproj.CoreCompileInputs.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.sourcelink.json
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Co.6F70E5A1.Up2Date
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\refint\Dario.Core.Abstraction.Card.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\ref\Dario.Core.Abstraction.Card.dll
 E:\Projects\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.deps.json
 E:\Projects\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.dll
 E:\Projects\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
@@ -45,3 +29,19 @@ E:\Projects\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstrac
 E:\Projects\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\refint\Dario.Core.Abstraction.Card.dll
 E:\Projects\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
 E:\Projects\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\ref\Dario.Core.Abstraction.Card.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.deps.json
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.pdb
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.csproj.AssemblyReference.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.AssemblyInfoInputs.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.AssemblyInfo.cs
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.csproj.CoreCompileInputs.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.sourcelink.json
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Co.6F70E5A1.Up2Date
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\refint\Dario.Core.Abstraction.Card.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Abstraction.Card\obj\Debug\net9.0\ref\Dario.Core.Abstraction.Card.dll

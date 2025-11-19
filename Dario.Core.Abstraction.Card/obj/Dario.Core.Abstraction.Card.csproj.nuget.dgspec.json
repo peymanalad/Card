@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj": {}
+    "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj": {}
   },
   "projects": {
-    "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj": {
+    "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj",
+        "projectUniqueName": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj",
         "projectName": "Dario.Core.Abstraction.Card",
-        "projectPath": "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj",
-        "packagesPath": "C:\\Users\\Alad Zero\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\Card\\Dario.Core.Abstraction.Card\\obj\\",
+        "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj",
+        "packagesPath": "C:\\Users\\nasser\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Alad Zero\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -27,15 +27,18 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Users\\Alad Zero\\Documents\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Observability\\Dario.Observability\\bin\\Release": {},
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\RayanparsiPackages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "E:\\Projects\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj": {
-                "projectPath": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj"
+              "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj": {
+                "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj"
               }
             }
           }
@@ -50,7 +53,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -71,24 +74,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Projects\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj": {
+    "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj",
+        "projectUniqueName": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj",
         "projectName": "Dario.Core.Domain.Card",
-        "projectPath": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj",
-        "packagesPath": "C:\\Users\\Alad Zero\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\Card\\Dario.Core.Domain.Card\\obj\\",
+        "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj",
+        "packagesPath": "C:\\Users\\nasser\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\Alad Zero\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\nasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -98,7 +101,10 @@
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "C:\\Program Files\\dotnet\\library-packs": {},
-          "C:\\Users\\Alad Zero\\Documents\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Observability\\Dario.Observability\\bin\\Release": {},
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\RayanparsiPackages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -117,7 +123,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net9.0": {
@@ -152,7 +158,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
