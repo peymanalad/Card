@@ -252,7 +252,6 @@ E:\Projects\Card\Dario.Service.Card.API\obj\Debug\net9.0\ref\Dario.Service.Card.
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.staticwebassets.endpoints.json
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\.env
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.exe
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.deps.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.runtimeconfig.json

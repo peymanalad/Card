@@ -22,8 +22,4 @@
 		<ProjectReference Include="..\Dario.Core.Domain.Card\Dario.Core.Domain.Card.csproj" />
 	</ItemGroup>
 
-	<ItemGroup>
-		<None Include=".env" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
-	</ItemGroup>
-
 </Project>

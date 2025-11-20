@@ -1,4 +1,4 @@
-using Dario.Core.Application.Card;
+﻿using Dario.Core.Application.Card;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
@@ -6,7 +6,6 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Oracle.ManagedDataAccess.OpenTelemetry;
-using System.Collections.Generic;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -115,6 +114,10 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 {
     serverOptions.Listen(IPAddress.Parse(config.GetSection("ServiceIP").Value)
                        , Convert.ToInt32(config.GetSection("ServicePort").Value));
+    //serverOptions.Listen(IPAddress.Loopback, 5001, listenOptions =>
+    //{
+    //    listenOptions.UseHttps("testCert.pfx", "testPassword");
+    //});
 });
 var app = builder.Build();
 
@@ -124,6 +127,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 //}
+
 app.UseAuthorization();
 
 app.MapControllers();

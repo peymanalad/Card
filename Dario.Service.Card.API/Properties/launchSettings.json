@@ -14,22 +14,12 @@
       "dotnetRunMessages": true,
       "launchBrowser": true,
       "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5045",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318",
-        "OTEL_SERVICE_NAME": "card-webapi"
-      }
+      "applicationUrl": "http://localhost:5045"
     },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:4318",
-        "OTEL_SERVICE_NAME": "card-webapi"
-      }
+      "launchUrl": "swagger"
     }
   }
 }
