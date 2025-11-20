@@ -1,22 +1,108 @@
-using Dario.Core.Abstraction.Card.Options;
 using Dario.Core.Application.Card;
-using Dario.Observability;
-using EnvLoader;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Routing;
+using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Oracle.ManagedDataAccess.OpenTelemetry;
 using System.Collections.Generic;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
 
-EnvLoader.EnvLoader.Load(builder.Environment.ContentRootPath);
-builder.Configuration.AddEnvironmentVariables();
+var serviceName = builder.Environment.ApplicationName;
+var serviceVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown";
+var deploymentEnvironment = builder.Environment.EnvironmentName;
+
+var otelConfig = builder.Configuration.GetSection("OpenTelemetry");
+var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]
+                  ?? otelConfig.GetValue<string>("Endpoint")
+                  ?? "http://signoz-otel-collector:4317";
+var otlpProtocol = builder.Configuration["OTEL_EXPORTER_OTLP_PROTOCOL"]
+                 ?? otelConfig.GetValue<string>("Protocol");
+var otlpExportProtocol = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase)
+    ? OtlpExportProtocol.HttpProtobuf
+    : OtlpExportProtocol.Grpc;
+var otelResourceAttributes = builder.Configuration["OTEL_RESOURCE_ATTRIBUTES"]
+                           ?? otelConfig.GetValue<string>("ResourceAttributes");
+
+var configureResource = (Action<ResourceBuilder>)(resourceBuilder =>
+{
+    resourceBuilder
+        .AddEnvironmentVariableDetector()
+        .AddService(serviceName: serviceName, serviceVersion: serviceVersion)
+        .AddAttributes(new KeyValuePair<string, object>[]
+        {
+            new("deployment.environment", deploymentEnvironment)
+        })
+        .AddAttributes(ParseResourceAttributes(otelResourceAttributes));
+});
+
+var resourceBuilder = ResourceBuilder.CreateDefault();
+configureResource(resourceBuilder);
+
+builder.Services.AddOpenTelemetry()
+    .ConfigureResource(configureResource)
+    .WithTracing(tracing =>
+    {
+        tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddOracleDataProviderInstrumentation()
+            .AddSource("Oracle.ManagedDataAccess.Client")
+            .AddOtlpExporter(options =>
+            {
+                options.Endpoint = new Uri(otlpEndpoint);
+                options.Protocol = otlpExportProtocol;
+                options.ExportProcessorType = ExportProcessorType.Batch;
+            });
+    })
+    .WithMetrics(metrics =>
+    {
+        metrics
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            .AddRuntimeInstrumentation()
+            .AddOtlpExporter(options =>
+            {
+                options.Endpoint = new Uri(otlpEndpoint);
+                options.Protocol = otlpExportProtocol;
+                options.ExportProcessorType = ExportProcessorType.Batch;
+            });
+    });
+
+builder.Logging.ClearProviders();
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeFormattedMessage = true;
+    logging.IncludeScopes = true;
+    logging.ParseStateValues = true;
+    logging.SetResourceBuilder(resourceBuilder);
+    logging.AddOtlpExporter(options =>
+    {
+        options.Endpoint = new Uri(otlpEndpoint);
+        options.Protocol = otlpExportProtocol;
+        options.ExportProcessorType = ExportProcessorType.Batch;
+    });
+});
+static IEnumerable<KeyValuePair<string, object>> ParseResourceAttributes(string? rawAttributes)
+{
+    if (string.IsNullOrWhiteSpace(rawAttributes))
+    {
+        yield break;
+    }
+
+    foreach (var attribute in rawAttributes.Split(',', StringSplitOptions.RemoveEmptyEntries))
+    {
+        var parts = attribute.Split('=', 2, StringSplitOptions.RemoveEmptyEntries);
+
+        if (parts.Length == 2)
+        {
+            yield return new KeyValuePair<string, object>(parts[0].Trim(), parts[1].Trim());
+        }
+    }
+}
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -25,32 +111,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var config = builder.Configuration.GetSection("CardServices");
 builder.Services.AddDarioCardServices(config);
-var serviceIp = config.GetValue<string>("ServiceIP") ?? throw new InvalidOperationException("CardServices:ServiceIP configuration is missing.");
-var servicePort = config.GetValue<int?>("ServicePort") ?? throw new InvalidOperationException("CardServices:ServicePort configuration is missing.");
-
-builder.AddDarioOpenTelemetry(new DarioOpenTelemetryOptions
+builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 {
-    ActivitySourceName = CardServicesTelemetry.ActivitySourceName,
-    Meter = CardServicesTelemetry.Meter,
-    MeterName = CardServicesTelemetry.MeterName,
-    ConfigureAspNetCoreInstrumentation = options =>
-    {
-        options.EnrichWithHttpRequest = (activity, req) =>
-        {
-            var endpoint = req.HttpContext.GetEndpoint();
-            var name = endpoint?.Metadata?.GetMetadata<Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor>()?.ActionName
-                       ?? req.RouteValues["action"]?.ToString()
-                       ?? req.Path.ToString();
-            activity.SetTag("endpoint", name);
-        };
-    },
-    ConfigureMetrics = metric =>
-    {
-        metric.AddView("card.endpoint.request.duration", new ExplicitBucketHistogramConfiguration
-        {
-            Boundaries = new double[] { 5, 10, 20, 50, 100, 200, 300, 500, 750, 1000, 1500, 2000, 3000, 5000 }
-        });
-    }
+    serverOptions.Listen(IPAddress.Parse(config.GetSection("ServiceIP").Value)
+                       , Convert.ToInt32(config.GetSection("ServicePort").Value));
 });
 var app = builder.Build();
 

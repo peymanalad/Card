@@ -249,15 +249,6 @@ E:\Projects\Card\Dario.Service.Card.API\obj\Debug\net9.0\refint\Dario.Service.Ca
 E:\Projects\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.pdb
 E:\Projects\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.genruntimeconfig.cache
 E:\Projects\Card\Dario.Service.Card.API\obj\Debug\net9.0\ref\Dario.Service.Card.API.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.AssemblyReference.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rpswa.dswa.cache.json
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfoInputs.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfo.cs
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.CoreCompileInputs.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cs
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.sourcelink.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.Development.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.staticwebassets.endpoints.json
@@ -268,8 +259,11 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dapper.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Observability.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\FluentValidation.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Google.Protobuf.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Grpc.Core.Api.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Grpc.Net.Client.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Grpc.Net.Common.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Abstractions.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Microsoft.Extensions.Configuration.Binder.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
@@ -285,9 +279,10 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\OpenTelemetry.Exporter.OpenTelemetryProtocol.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\OpenTelemetry.Extensions.Hosting.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\OpenTelemetry.Instrumentation.AspNetCore.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\OpenTelemetry.Instrumentation.Process.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\OpenTelemetry.Instrumentation.Http.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\OpenTelemetry.Instrumentation.Runtime.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Oracle.ManagedDataAccess.dll
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Oracle.ManagedDataAccess.OpenTelemetry.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Rayanparsi.Core.Domain.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Rayanparsi.Core.Domain.Toolkits.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Rayanparsi.Core.RequestResponse.dll
@@ -304,7 +299,6 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\System.Configuration.ConfigurationManager.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\System.Data.SqlClient.dll
-C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\System.Diagnostics.DiagnosticSource.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\System.Diagnostics.PerformanceCounter.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\System.DirectoryServices.Protocols.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\System.Security.Cryptography.ProtectedData.dll
@@ -325,6 +319,15 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Application.Card.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Core.Domain.Card.pdb
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.AssemblyReference.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rpswa.dswa.cache.json
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfoInputs.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.AssemblyInfo.cs
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.csproj.CoreCompileInputs.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cs
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\Dario.Service.Card.API.sourcelink.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rjimswa.dswa.cache.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rjsmrazor.dswa.cache.json
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json

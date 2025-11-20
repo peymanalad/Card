@@ -20,26 +20,16 @@ public class CardServices : ICardServices
 {
     private readonly IOptions<CardServicesOptions> _configuration;
     private readonly ILogger<CardServices> _logger;
-    private readonly string _encryptionKey;
+    private readonly string _encryptionKey = "19F83D0DFDE6C9ECE44B735AF7DEC8B3";
     public CardServices(IOptions<CardServicesOptions> configuration, ILogger<CardServices> logger)
     {
         _configuration = configuration;
         _logger = logger;
-        _encryptionKey = configuration.Value.EncryptionKey;
     }
 
     public async Task<RayanResponse<CardResponse>> CardGetAsync(CardRequest request)
     {
-        const string operationName = "Pool";
         const string procedureName = "DarioCardStorage";
-        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
-        CardServicesTelemetry.RequestCounter.Add(1, tags);
-        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
-        activity?.SetTag("oracle.procedure", procedureName);
-        activity?.SetTag("card.operation", operationName);
-
-        var stopwatch = Stopwatch.StartNew();
-        var isSuccess = false;
         RayanResponse<CardResponse> entity = new RayanResponse<CardResponse>()
         {
             isError = true,
@@ -53,8 +43,6 @@ public class CardServices : ICardServices
             var cardProduct = cardPan.CardProduct();
             var cardEnd = cardPan.CardEnd();
             var cardHash = cardPan.CardHash();
-            activity?.SetTag("card.masked", cardHash);
-            activity?.SetTag("card.bin", cardBinText);
             var encryptedPan = cardPan.EncryptString(_encryptionKey);
             var cardExpDate = request.CardExDate ?? string.Empty;
             var encryptedExpDate = cardExpDate.EncryptString(_encryptionKey);
@@ -83,8 +71,7 @@ public class CardServices : ICardServices
 
             var cursorParameter = command.Parameters.Add("o_cursor", OracleDbType.RefCursor, ParameterDirection.Output);
 
-            await ExecuteNonQueryWithTelemetryAsync(command, operationName, procedureName, "db.execute");
-
+            await command.ExecuteNonQueryAsync();
             var refCursor = (OracleRefCursor?)cursorParameter.Value;
             if (refCursor is null)
             {
@@ -93,8 +80,8 @@ public class CardServices : ICardServices
             }
 
             using var cursor = refCursor;
-            using var reader = GetCursorDataReaderWithTelemetry(command, cursor, operationName, procedureName);
-            if (ReadCursorRowWithTelemetry(command, reader, operationName, procedureName))
+            using var reader = cursor.GetDataReader();
+            if (reader.Read())
             {
                 var cardIdOrdinal = reader.GetOrdinal("CARDID");
                 var cardIdValue = reader.GetValue(cardIdOrdinal);
@@ -109,7 +96,6 @@ public class CardServices : ICardServices
                 };
                 entity.statusCode = 0;
                 entity.isError = false;
-                isSuccess = true;
             }
             else
             {
@@ -120,18 +106,6 @@ public class CardServices : ICardServices
         {
             _logger.LogError(ex, "An error occurred while calling DarioCardStorage for card ending with {CardEnd}", request.CardPan.CardEnd());
             entity.message = ex.Message;
-            CardServicesTelemetry.ErrorCounter.Add(1, tags);
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-        }
-        finally
-        {
-            stopwatch.Stop();
-            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
-            activity?.SetTag("card.request.success", isSuccess);
-            if (isSuccess)
-            {
-                activity?.SetStatus(ActivityStatusCode.Ok);
-            }
         }
         return entity;
     }
@@ -144,27 +118,17 @@ public class CardServices : ICardServices
 
     public async Task<RayanResponse<CardResponse>> CardGetByIdAsync(CardRequest request)
     {
-        const string operationName = "Id";
         const string procedureName = "DarioCardByIdData";
-        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
-        CardServicesTelemetry.RequestCounter.Add(1, tags);
-        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
-        activity?.SetTag("oracle.procedure", procedureName);
-        activity?.SetTag("card.operation", operationName);
-        activity?.SetTag("card.identifier", request.CardId);
-
-        var stopwatch = Stopwatch.StartNew();
-        var isSuccess = false;
 
         RayanResponse<CardResponse> entity = new RayanResponse<CardResponse>()
         {
             isError = true,
             statusCode = 84,
-            message = ""
+            message = "",
         };
         try
         {
-            var card = await ExecuteCardLookupAsync(procedureName, request.CardId, operationName);
+            var card = await ExecuteCardLookupAsync(procedureName, request.CardId);
             if (card is null)
             {
                 entity.message = "No card record returned.";
@@ -174,52 +138,29 @@ public class CardServices : ICardServices
             entity.item = card;
             entity.statusCode = 0;
             entity.isError = false;
-            isSuccess = true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while calling DarioCardByIdData for card id {CardId}", request.CardId);
             entity.message = ex.Message;
-            CardServicesTelemetry.ErrorCounter.Add(1, tags);
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-        }
-        finally
-        {
-            stopwatch.Stop();
-            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
-            activity?.SetTag("card.request.success", isSuccess);
-            if (isSuccess)
-            {
-                activity?.SetStatus(ActivityStatusCode.Ok);
-            }
         }
         return entity;
     }
 
     public async Task<RayanResponse<CardResponse>> CardDataGetByIdAsync(CardRequest request)
     {
-        const string operationName = "Data";
         const string procedureName = "DarioCardByIdData";
-        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
-        CardServicesTelemetry.RequestCounter.Add(1, tags);
-        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
-        activity?.SetTag("oracle.procedure", procedureName);
-        activity?.SetTag("card.operation", operationName);
-        activity?.SetTag("card.identifier", request.CardId);
-
-        var stopwatch = Stopwatch.StartNew();
-        var isSuccess = false;
 
 
         RayanResponse<CardResponse> entity = new RayanResponse<CardResponse>()
         {
             isError = true,
             statusCode = 84,
-            message = ""
+            message = "",
         };
         try
         {
-            var card = await ExecuteCardLookupAsync(procedureName, request.CardId, operationName);
+            var card = await ExecuteCardLookupAsync(procedureName, request.CardId);
             if (card is null)
             {
                 entity.message = "No card record returned.";
@@ -232,40 +173,18 @@ public class CardServices : ICardServices
             entity.item = card;
             entity.statusCode = 0;
             entity.isError = false;
-            isSuccess = true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while calling DarioCardByIdData for card id {CardId}", request.CardId);
             entity.message = ex.Message;
-            CardServicesTelemetry.ErrorCounter.Add(1, tags);
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-        }
-        finally
-        {
-            stopwatch.Stop();
-            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
-            activity?.SetTag("card.request.success", isSuccess);
-            if (isSuccess)
-            {
-                activity?.SetStatus(ActivityStatusCode.Ok);
-            }
         }
         return entity;
     }
 
     public async Task<RayanResponse<bool>> HealthAsync()
     {
-        const string operationName = "Health";
         const string procedureName = "SELECT 1 FROM DUAL";
-        var tags = CardServicesTelemetry.CreateOperationTags(operationName);
-        CardServicesTelemetry.RequestCounter.Add(1, tags);
-        using var activity = CardServicesTelemetry.ActivitySource.StartActivity($"CardServices.{operationName}", ActivityKind.Internal);
-        activity?.SetTag("oracle.procedure", procedureName);
-        activity?.SetTag("card.operation", operationName);
-
-        var stopwatch = Stopwatch.StartNew();
-        var isSuccess = false;
 
         RayanResponse<bool> entity = new RayanResponse<bool>()
         {
@@ -279,31 +198,18 @@ public class CardServices : ICardServices
             await connection.OpenAsync();
 
             using var command = connection.CreateCommand();
-            command.CommandText = "SELECT 1 FROM DUAL";
+            command.CommandText = procedureName;
             command.CommandType = CommandType.Text;
 
-            var result = await ExecuteScalarWithTelemetryAsync(command, operationName, procedureName, "db.scalar");
+            var result = await command.ExecuteScalarAsync();
             entity.item = Convert.ToInt32(result, CultureInfo.InvariantCulture) == 1;
             entity.statusCode = 0;
             entity.isError = false;
-            isSuccess = true;
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while executing health check against Oracle database.");
             entity.message = ex.Message;
-            CardServicesTelemetry.ErrorCounter.Add(1, tags);
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-        }
-        finally
-        {
-            stopwatch.Stop();
-            CardServicesTelemetry.RequestDuration.Record(stopwatch.Elapsed.TotalMilliseconds, tags);
-            activity?.SetTag("card.request.success", isSuccess);
-            if (isSuccess)
-            {
-                activity?.SetStatus(ActivityStatusCode.Ok);
-            }
         }
         return entity;
     }
@@ -316,289 +222,7 @@ public class CardServices : ICardServices
     private OracleConnection CreateQueryConnection()
         => new OracleConnection(_configuration.Value.ConnectionStringQuery);
 
-    private async Task ExecuteNonQueryWithTelemetryAsync(OracleCommand command, string endpoint, string dbOperation, string stage, int? attempt = null)
-    {
-        var statement = GetDbStatement(command, dbOperation);
-        var activity = StartDatabaseActivity(endpoint, stage, command, dbOperation, statement, attempt);
-        var stopwatch = Stopwatch.StartNew();
-        try
-        {
-            await command.ExecuteNonQueryAsync();
-            activity?.SetStatus(ActivityStatusCode.Ok);
-        }
-        catch (Exception ex)
-        {
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            throw;
-        }
-        finally
-        {
-            stopwatch.Stop();
-            RecordDatabaseDuration(stopwatch.Elapsed.TotalMilliseconds, endpoint, dbOperation, stage, command, statement, attempt);
-            activity?.Stop();
-        }
-    }
-
-    private async Task<object?> ExecuteScalarWithTelemetryAsync(OracleCommand command, string endpoint, string dbOperation, string stage)
-    {
-        var statement = GetDbStatement(command, dbOperation);
-        var activity = StartDatabaseActivity(endpoint, stage, command, dbOperation, statement, attempt: null);
-        var stopwatch = Stopwatch.StartNew();
-        try
-        {
-            var result = await command.ExecuteScalarAsync();
-            activity?.SetStatus(ActivityStatusCode.Ok);
-            return result;
-        }
-        catch (Exception ex)
-        {
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            throw;
-        }
-        finally
-        {
-            stopwatch.Stop();
-            RecordDatabaseDuration(stopwatch.Elapsed.TotalMilliseconds, endpoint, dbOperation, stage, command, statement, attempt: null);
-            activity?.Stop();
-        }
-    }
-
-    private OracleDataReader GetCursorDataReaderWithTelemetry(OracleCommand command, OracleRefCursor cursor, string endpoint, string dbOperation)
-    {
-        const string stage = "db.cursor.open";
-        var statement = GetDbStatement(command, dbOperation);
-        var activity = StartDatabaseActivity(endpoint, stage, command, dbOperation, statement, attempt: null);
-        var stopwatch = Stopwatch.StartNew();
-        try
-        {
-            var reader = cursor.GetDataReader();
-            activity?.SetStatus(ActivityStatusCode.Ok);
-            return reader;
-        }
-        catch (Exception ex)
-        {
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            throw;
-        }
-        finally
-        {
-            stopwatch.Stop();
-            RecordDatabaseDuration(stopwatch.Elapsed.TotalMilliseconds, endpoint, dbOperation, stage, command, statement, attempt: null);
-            activity?.Stop();
-        }
-    }
-
-    private bool ReadCursorRowWithTelemetry(OracleCommand command, OracleDataReader reader, string endpoint, string dbOperation)
-    {
-        const string stage = "db.cursor.read";
-        var statement = GetDbStatement(command, dbOperation);
-        var activity = StartDatabaseActivity(endpoint, stage, command, dbOperation, statement, attempt: null);
-        var stopwatch = Stopwatch.StartNew();
-        try
-        {
-            var hasRow = reader.Read();
-            activity?.SetStatus(ActivityStatusCode.Ok);
-            return hasRow;
-        }
-        catch (Exception ex)
-        {
-            activity?.SetStatus(ActivityStatusCode.Error, ex.Message);
-            throw;
-        }
-        finally
-        {
-            stopwatch.Stop();
-            RecordDatabaseDuration(stopwatch.Elapsed.TotalMilliseconds, endpoint, dbOperation, stage, command, statement, attempt: null);
-            activity?.Stop();
-        }
-    }
-
-    private Activity? StartDatabaseActivity(string endpoint, string stage, OracleCommand command, string dbOperation, string? statement, int? attempt)
-    {
-        var activityName = $"CardServices.{endpoint}.{stage}";
-        var activity = CardServicesTelemetry.ActivitySource.StartActivity(activityName, ActivityKind.Client);
-        if (activity is null)
-        {
-            return null;
-        }
-
-        activity.SetTag("db.system", "oracle");
-        activity.SetTag("db.operation", dbOperation);
-        activity.SetTag("db.stage", stage);
-        if (!string.IsNullOrWhiteSpace(statement))
-        {
-            activity.SetTag("db.statement", statement);
-        }
-
-        if (attempt.HasValue)
-        {
-            activity.SetTag("db.attempt", attempt.Value);
-        }
-
-        ApplyConnectionTags(activity, command);
-
-        return activity;
-    }
-
-    private static void ApplyConnectionTags(Activity activity, OracleCommand command)
-    {
-        var connection = command.Connection;
-        if (connection is null)
-        {
-            return;
-        }
-
-        var builder = new OracleConnectionStringBuilder(connection.ConnectionString);
-        if (!string.IsNullOrWhiteSpace(builder.UserID))
-        {
-            activity.SetTag("db.user", builder.UserID);
-        }
-
-        var (address, port) = ParseDataSource(connection.DataSource ?? builder.DataSource);
-        if (!string.IsNullOrWhiteSpace(address))
-        {
-            activity.SetTag("server.address", address);
-        }
-
-        if (port.HasValue)
-        {
-            activity.SetTag("server.port", port.Value);
-        }
-    }
-
-    private static void RecordDatabaseDuration(double durationMs, string endpoint, string dbOperation, string stage, OracleCommand command, string? statement, int? attempt)
-    {
-        var tags = CreateDatabaseTags(endpoint, dbOperation, stage, command, statement, attempt);
-        CardServicesTelemetry.DatabaseCallDuration.Record(durationMs, tags);
-    }
-
-    private static TagList CreateDatabaseTags(string endpoint, string dbOperation, string stage, OracleCommand command, string? statement, int? attempt)
-    {
-        var tags = new TagList
-        {
-            { "endpoint", endpoint },
-            { "db.system", "oracle" },
-            { "db.operation", dbOperation },
-            { "db.stage", stage }
-        };
-
-        if (!string.IsNullOrWhiteSpace(statement))
-        {
-            tags.Add("db.statement", statement);
-        }
-
-        if (attempt.HasValue)
-        {
-            tags.Add("db.attempt", attempt.Value);
-        }
-
-        var connection = command.Connection;
-        if (connection != null)
-        {
-            var builder = new OracleConnectionStringBuilder(connection.ConnectionString);
-
-            if (!string.IsNullOrWhiteSpace(builder.UserID))
-            {
-                tags.Add("db.user", builder.UserID);
-            }
-
-            var (address, port) = ParseDataSource(connection.DataSource ?? builder.DataSource);
-            if (!string.IsNullOrWhiteSpace(address))
-            {
-                tags.Add("server.address", address);
-            }
-
-            if (port.HasValue)
-            {
-                tags.Add("server.port", port.Value);
-            }
-        }
-
-        return tags;
-    }
-
-    private static string? GetDbStatement(OracleCommand command, string dbOperation)
-    {
-        if (command.CommandType == CommandType.StoredProcedure)
-        {
-            return dbOperation;
-        }
-
-        return command.CommandText;
-    }
-
-    private static (string? Address, int? Port) ParseDataSource(string? dataSource)
-    {
-        if (string.IsNullOrWhiteSpace(dataSource))
-        {
-            return (null, null);
-        }
-
-        var trimmed = dataSource.Trim();
-
-        if (trimmed.StartsWith("(DESCRIPTION", StringComparison.OrdinalIgnoreCase))
-        {
-            var descriptorHost = ExtractDescriptorValue(trimmed, "HOST");
-            var portValue = ExtractDescriptorValue(trimmed, "PORT");
-            int? port = null;
-            if (!string.IsNullOrWhiteSpace(portValue) && int.TryParse(portValue, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedPort))
-            {
-                port = parsedPort;
-            }
-
-            return (descriptorHost, port);
-        }
-
-        if (trimmed.StartsWith("//", StringComparison.Ordinal))
-        {
-            trimmed = trimmed[2..];
-        }
-
-        var slashIndex = trimmed.IndexOf('/');
-        var hostPort = slashIndex >= 0 ? trimmed[..slashIndex] : trimmed;
-        var colonIndex = hostPort.LastIndexOf(':');
-
-        string? host = hostPort;
-        int? portNumber = null;
-
-        if (colonIndex >= 0 && colonIndex < hostPort.Length - 1)
-        {
-            host = hostPort[..colonIndex];
-            var portSegment = hostPort[(colonIndex + 1)..];
-            if (int.TryParse(portSegment, NumberStyles.Integer, CultureInfo.InvariantCulture, out var parsedPort))
-            {
-                portNumber = parsedPort;
-            }
-        }
-
-        if (string.IsNullOrWhiteSpace(host))
-        {
-            host = null;
-        }
-
-        return (host, portNumber);
-    }
-
-    private static string? ExtractDescriptorValue(string descriptor, string key)
-    {
-        var token = $"{key}=";
-        var index = descriptor.IndexOf(token, StringComparison.OrdinalIgnoreCase);
-        if (index < 0)
-        {
-            return null;
-        }
-
-        var start = index + token.Length;
-        var end = descriptor.IndexOf(')', start);
-        if (end < 0)
-        {
-            end = descriptor.Length;
-        }
-
-        return descriptor[start..end];
-    }
-
-    private async Task<CardResponse?> ExecuteCardLookupAsync(string procedureName, long cardId, string endpoint)
+    private async Task<CardResponse?> ExecuteCardLookupAsync(string procedureName, long cardId)
     {
         using var connection = CreateConnection();
         await connection.OpenAsync();
@@ -619,7 +243,7 @@ public class CardServices : ICardServices
 
             try
             {
-                await ExecuteNonQueryWithTelemetryAsync(command, endpoint, procedureName, "db.execute", attempt + 1);
+                await command.ExecuteNonQueryAsync();
                 refCursor = cursorParameter.Value as OracleRefCursor;
                 if (refCursor != null)
                 {
@@ -638,8 +262,8 @@ public class CardServices : ICardServices
         }
 
         using var cursor = refCursor;
-        using var reader = GetCursorDataReaderWithTelemetry(command, cursor, endpoint, procedureName);
-        if (!ReadCursorRowWithTelemetry(command, reader, endpoint, procedureName))
+        using var reader = cursor.GetDataReader();
+        if (!reader.Read())
         {
             return null;
         }
