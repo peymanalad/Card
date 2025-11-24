@@ -19,10 +19,16 @@ public class CardController : ControllerBase
     private readonly Counter<long> _endpointRequestCounter;
     private readonly Histogram<double> _endpointRequestDuration;
 
-    public CardController(ILogger<CardController> logger, ICardServices srv)
+    public CardController(ILogger<CardController> logger, ICardServices srv, IMeterFactory meterFactory)
     {
         _logger = logger;
         _srv = srv;
+
+        var meter = meterFactory.Create("Dario.Service.Card.API");
+        _endpointRequestCounter = meter.CreateCounter<long>(
+            name: "card.pool.requests",
+            unit: "requests",
+            description: "Number of card pool requests per BIN");
 
     }
 
@@ -33,11 +39,19 @@ public class CardController : ControllerBase
         //_logger.LogInformation($"card is {request.CardPan.Substring(0,6)}");
         //return await Task.FromResult(await _srv.CardGetAsync(request));
 
-
+        var cardPan = request.CardPan ?? string.Empty;
         var cardBin = request.CardPan?.CardBin();
         if (!string.IsNullOrEmpty(cardBin))
         {
-            _logger.LogInformation($"card is {request.CardPan.Substring(0, 6)}");
+            _logger.LogInformation("card is {CardBin}", cardPan[..6]);
+
+            _endpointRequestCounter.Add(
+                1,
+                new KeyValuePair<string, object?>("card.bin", cardBin));
+        }
+        else
+        {
+            _logger.LogWarning("Card PAN is empty or invalid.");
         }
 
         return await _srv.CardGetAsync(request);

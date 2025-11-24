@@ -330,6 +330,10 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "dependencies": {
+            "Elastic.Clients.Elasticsearch": {
+              "target": "Package",
+              "version": "[9.2.1, )"
+            },
             "Microsoft.Extensions.Hosting.WindowsServices": {
               "target": "Package",
               "version": "[9.0.0, )"

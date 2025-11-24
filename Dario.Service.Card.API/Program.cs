@@ -1,4 +1,6 @@
 ﻿using Dario.Core.Application.Card;
+using Microsoft.Extensions.Logging.Configuration;
+using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
@@ -9,7 +11,6 @@ using Oracle.ManagedDataAccess.OpenTelemetry;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
-
 var serviceName = builder.Environment.ApplicationName;
 var serviceVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown";
 var deploymentEnvironment = builder.Environment.EnvironmentName;
@@ -63,6 +64,7 @@ builder.Services.AddOpenTelemetry()
             .AddAspNetCoreInstrumentation()
             .AddHttpClientInstrumentation()
             .AddRuntimeInstrumentation()
+            .AddMeter("Dario.Service.Card.API")
             .AddOtlpExporter(options =>
             {
                 options.Endpoint = new Uri(otlpEndpoint);
@@ -78,13 +80,20 @@ builder.Logging.AddOpenTelemetry(logging =>
     logging.IncludeScopes = true;
     logging.ParseStateValues = true;
     logging.SetResourceBuilder(resourceBuilder);
+    logging.AddOtlpExporter(o =>
+    {
+        o.Endpoint = new Uri("http://localhost:4319");
+        o.Protocol = OtlpExportProtocol.Grpc;
+    });
     logging.AddOtlpExporter(options =>
     {
         options.Endpoint = new Uri(otlpEndpoint);
+
         options.Protocol = otlpExportProtocol;
         options.ExportProcessorType = ExportProcessorType.Batch;
     });
 });
+
 static IEnumerable<KeyValuePair<string, object>> ParseResourceAttributes(string? rawAttributes)
 {
     if (string.IsNullOrWhiteSpace(rawAttributes))
@@ -120,7 +129,6 @@ builder.WebHost.ConfigureKestrel((context, serverOptions) =>
     //});
 });
 var app = builder.Build();
-
 // Configure the HTTP request pipeline.
 //if (app.Environment.IsDevelopment())
 //{

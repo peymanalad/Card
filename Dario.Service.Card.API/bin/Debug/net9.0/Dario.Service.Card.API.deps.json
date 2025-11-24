@@ -11,6 +11,7 @@
           "Dario.Core.Abstraction.Card": "1.0.0",
           "Dario.Core.Application.Card": "1.0.0",
           "Dario.Core.Domain.Card": "1.0.0",
+          "Elastic.Clients.Elasticsearch": "9.2.1",
           "Microsoft.Extensions.Hosting.WindowsServices": "9.0.0",
           "OpenTelemetry.Exporter.OpenTelemetryProtocol": "1.9.0",
           "OpenTelemetry.Extensions.Hosting": "1.9.0",
@@ -29,6 +30,25 @@
           "lib/net8.0/Dapper.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "2.1.66.48463"
+          }
+        }
+      },
+      "Elastic.Clients.Elasticsearch/9.2.1": {
+        "dependencies": {
+          "Elastic.Transport": "0.10.1"
+        },
+        "runtime": {
+          "lib/net9.0/Elastic.Clients.Elasticsearch.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.2.1.0"
+          }
+        }
+      },
+      "Elastic.Transport/0.10.1": {
+        "runtime": {
+          "lib/net8.0/Elastic.Transport.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.10.1.0"
           }
         }
       },
@@ -629,6 +649,20 @@
       "sha512": "sha512-/q77jUgDOS+bzkmk3Vy9SiWMaetTw+NOoPAV0xPBsGVAyljd5S6P+4RUW7R3ZUGGr9lDRyPKgAMj2UAOwvqZYw==",
       "path": "dapper/2.1.66",
       "hashPath": "dapper.2.1.66.nupkg.sha512"
+    },
+    "Elastic.Clients.Elasticsearch/9.2.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-uL7TTSaAmeJbAHPNiV7tmUIFJH0OXOMRt3kwmqmLzMh6Qa5a4JTb7PswUzJgxFRJPuZPYF9tMsUC3i+xxpXPUw==",
+      "path": "elastic.clients.elasticsearch/9.2.1",
+      "hashPath": "elastic.clients.elasticsearch.9.2.1.nupkg.sha512"
+    },
+    "Elastic.Transport/0.10.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8qUyxd4LzMiR+wtNEzdHHnu+iEpbKfoA001NyYgZZT0YZaNE9fWmFeZMxcTz7HMcYUidZSeT6vvongjZh1j/hQ==",
+      "path": "elastic.transport/0.10.1",
+      "hashPath": "elastic.transport.0.10.1.nupkg.sha512"
     },
     "FluentValidation/11.9.2": {
       "type": "package",

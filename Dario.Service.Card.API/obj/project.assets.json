@@ -15,6 +15,38 @@
           }
         }
       },
+      "Elastic.Clients.Elasticsearch/9.2.1": {
+        "type": "package",
+        "dependencies": {
+          "Elastic.Transport": "0.10.1"
+        },
+        "compile": {
+          "lib/net9.0/Elastic.Clients.Elasticsearch.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net9.0/Elastic.Clients.Elasticsearch.dll": {
+            "related": ".xml"
+          }
+        }
+      },
+      "Elastic.Transport/0.10.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
+        "compile": {
+          "lib/net8.0/Elastic.Transport.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/Elastic.Transport.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
       "FluentValidation/11.9.2": {
         "type": "package",
         "compile": {
@@ -1525,6 +1557,55 @@
         "lib/netstandard2.0/Dapper.dll",
         "lib/netstandard2.0/Dapper.xml",
         "readme.md"
+      ]
+    },
+    "Elastic.Clients.Elasticsearch/9.2.1": {
+      "sha512": "uL7TTSaAmeJbAHPNiV7tmUIFJH0OXOMRt3kwmqmLzMh6Qa5a4JTb7PswUzJgxFRJPuZPYF9tMsUC3i+xxpXPUw==",
+      "type": "package",
+      "path": "elastic.clients.elasticsearch/9.2.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE.txt",
+        "README.md",
+        "elastic.clients.elasticsearch.9.2.1.nupkg.sha512",
+        "elastic.clients.elasticsearch.nuspec",
+        "lib/net462/Elastic.Clients.Elasticsearch.dll",
+        "lib/net462/Elastic.Clients.Elasticsearch.xml",
+        "lib/net8.0/Elastic.Clients.Elasticsearch.dll",
+        "lib/net8.0/Elastic.Clients.Elasticsearch.xml",
+        "lib/net9.0/Elastic.Clients.Elasticsearch.dll",
+        "lib/net9.0/Elastic.Clients.Elasticsearch.xml",
+        "lib/netstandard2.0/Elastic.Clients.Elasticsearch.dll",
+        "lib/netstandard2.0/Elastic.Clients.Elasticsearch.xml",
+        "lib/netstandard2.1/Elastic.Clients.Elasticsearch.dll",
+        "lib/netstandard2.1/Elastic.Clients.Elasticsearch.xml",
+        "nuget-icon.png"
+      ]
+    },
+    "Elastic.Transport/0.10.1": {
+      "sha512": "8qUyxd4LzMiR+wtNEzdHHnu+iEpbKfoA001NyYgZZT0YZaNE9fWmFeZMxcTz7HMcYUidZSeT6vvongjZh1j/hQ==",
+      "type": "package",
+      "path": "elastic.transport/0.10.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "elastic.transport.0.10.1.nupkg.sha512",
+        "elastic.transport.nuspec",
+        "lib/net462/Elastic.Transport.dll",
+        "lib/net462/Elastic.Transport.pdb",
+        "lib/net462/Elastic.Transport.xml",
+        "lib/net8.0/Elastic.Transport.dll",
+        "lib/net8.0/Elastic.Transport.pdb",
+        "lib/net8.0/Elastic.Transport.xml",
+        "lib/netstandard2.0/Elastic.Transport.dll",
+        "lib/netstandard2.0/Elastic.Transport.pdb",
+        "lib/netstandard2.0/Elastic.Transport.xml",
+        "lib/netstandard2.1/Elastic.Transport.dll",
+        "lib/netstandard2.1/Elastic.Transport.pdb",
+        "lib/netstandard2.1/Elastic.Transport.xml",
+        "license.txt",
+        "nuget-icon.png"
       ]
     },
     "FluentValidation/11.9.2": {
@@ -3814,6 +3895,7 @@
       "Dario.Core.Abstraction.Card >= 1.0.0",
       "Dario.Core.Application.Card >= 1.0.0",
       "Dario.Core.Domain.Card >= 1.0.0",
+      "Elastic.Clients.Elasticsearch >= 9.2.1",
       "Microsoft.Extensions.Hosting.WindowsServices >= 9.0.0",
       "OpenTelemetry.Exporter.OpenTelemetryProtocol >= 1.9.0",
       "OpenTelemetry.Extensions.Hosting >= 1.9.0",
@@ -3889,6 +3971,10 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
+          "Elastic.Clients.Elasticsearch": {
+            "target": "Package",
+            "version": "[9.2.1, )"
+          },
           "Microsoft.Extensions.Hosting.WindowsServices": {
             "target": "Package",
             "version": "[9.0.0, )"
