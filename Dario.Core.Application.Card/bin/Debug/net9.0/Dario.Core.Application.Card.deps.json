@@ -40,7 +40,8 @@
       },
       "Microsoft.AspNetCore.Http.Abstractions/2.3.0": {
         "dependencies": {
-          "Microsoft.AspNetCore.Http.Features": "2.3.0"
+          "Microsoft.AspNetCore.Http.Features": "2.3.0",
+          "System.Text.Encodings.Web": "8.0.0"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.AspNetCore.Http.Abstractions.dll": {
@@ -83,6 +84,7 @@
           }
         }
       },
+      "Microsoft.CSharp/4.7.0": {},
       "Microsoft.Extensions.Configuration.Abstractions/9.0.8": {
         "dependencies": {
           "Microsoft.Extensions.Primitives": "9.0.8"
@@ -161,7 +163,8 @@
       },
       "Microsoft.Net.Http.Headers/2.3.0": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "9.0.8"
+          "Microsoft.Extensions.Primitives": "9.0.8",
+          "System.Buffers": "4.6.0"
         },
         "runtime": {
           "lib/netstandard2.0/Microsoft.Net.Http.Headers.dll": {
@@ -174,6 +177,8 @@
         "dependencies": {
           "System.Diagnostics.PerformanceCounter": "8.0.0",
           "System.DirectoryServices.Protocols": "8.0.2",
+          "System.Formats.Asn1": "8.0.1",
+          "System.Memory": "4.6.0",
           "System.Security.Cryptography.Pkcs": "8.0.1"
         },
         "runtime": {
@@ -184,6 +189,9 @@
         }
       },
       "Rayanparsi.Core.Domain/1.2.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
         "runtime": {
           "lib/net8.0/Rayanparsi.Core.Domain.dll": {
             "assemblyVersion": "1.2.1.0",
@@ -324,6 +332,7 @@
           }
         }
       },
+      "System.Buffers/4.6.0": {},
       "System.Configuration.ConfigurationManager/8.0.0": {
         "dependencies": {
           "System.Diagnostics.EventLog": "8.0.0",
@@ -430,6 +439,8 @@
           }
         }
       },
+      "System.Formats.Asn1/8.0.1": {},
+      "System.Memory/4.6.0": {},
       "System.Security.Cryptography.Pkcs/8.0.1": {
         "runtime": {
           "lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
@@ -454,6 +465,7 @@
           }
         }
       },
+      "System.Text.Encodings.Web/8.0.0": {},
       "Dario.Core.Abstraction.Card/1.0.0": {
         "dependencies": {
           "Dario.Core.Domain.Card": "1.0.0"
@@ -527,6 +539,13 @@
       "sha512": "sha512-ZkFpUrSmp6TocxZLBEX3IBv5dPMbQuMs6L/BPl0WRfn32UVOtNYJQ0bLdh3cL9LMV0rmTW/5R0w8CBYxr0AOUw==",
       "path": "microsoft.aspnetcore.routing.abstractions/2.3.0",
       "hashPath": "microsoft.aspnetcore.routing.abstractions.2.3.0.nupkg.sha512"
+    },
+    "Microsoft.CSharp/4.7.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
+      "path": "microsoft.csharp/4.7.0",
+      "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration.Abstractions/9.0.8": {
       "type": "package",
@@ -696,6 +715,13 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
+    "System.Buffers/4.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-lN6tZi7Q46zFzAbRYXTIvfXcyvQQgxnY7Xm6C6xQ9784dEL1amjM6S6Iw4ZpsvesAKnRVsM4scrDQaDqSClkjA==",
+      "path": "system.buffers/4.6.0",
+      "hashPath": "system.buffers.4.6.0.nupkg.sha512"
+    },
     "System.Configuration.ConfigurationManager/8.0.0": {
       "type": "package",
       "serviceable": true,
@@ -731,6 +757,20 @@
       "path": "system.directoryservices.protocols/8.0.2",
       "hashPath": "system.directoryservices.protocols.8.0.2.nupkg.sha512"
     },
+    "System.Formats.Asn1/8.0.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XqKba7Mm/koKSjKMfW82olQdmfbI5yqeoLV/tidRp7fbh5rmHAQ5raDI/7SU0swTzv+jgqtUGkzmFxuUg0it1A==",
+      "path": "system.formats.asn1/8.0.1",
+      "hashPath": "system.formats.asn1.8.0.1.nupkg.sha512"
+    },
+    "System.Memory/4.6.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-OEkbBQoklHngJ8UD8ez2AERSk2g+/qpAaSWWCBFbpH727HxDq5ydVkuncBaKcKfwRqXGWx64dS6G1SUScMsitg==",
+      "path": "system.memory/4.6.0",
+      "hashPath": "system.memory.4.6.0.nupkg.sha512"
+    },
     "System.Security.Cryptography.Pkcs/8.0.1": {
       "type": "package",
       "serviceable": true,
@@ -744,6 +784,13 @@
       "sha512": "sha512-+TUFINV2q2ifyXauQXRwy4CiBhqvDEDZeVJU7qfxya4aRYOKzVBpN+4acx25VcPB9ywUN6C0n8drWl110PhZEg==",
       "path": "system.security.cryptography.protecteddata/8.0.0",
       "hashPath": "system.security.cryptography.protecteddata.8.0.0.nupkg.sha512"
+    },
+    "System.Text.Encodings.Web/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
+      "path": "system.text.encodings.web/8.0.0",
+      "hashPath": "system.text.encodings.web.8.0.0.nupkg.sha512"
     },
     "Dario.Core.Abstraction.Card/1.0.0": {
       "type": "project",

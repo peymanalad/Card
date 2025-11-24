@@ -51,3 +51,21 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\Debug\net9.0\refint\Dario.Core.Application.Card.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.pdb
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Core.Application.Card\obj\Debug\net9.0\ref\Dario.Core.Application.Card.dll
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\bin\Debug\net9.0\Dario.Core.Application.Card.deps.json
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\bin\Debug\net9.0\Dario.Core.Application.Card.dll
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\bin\Debug\net9.0\Dario.Core.Application.Card.pdb
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.dll
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.dll
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\bin\Debug\net9.0\Dario.Core.Abstraction.Card.pdb
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\bin\Debug\net9.0\Dario.Core.Domain.Card.pdb
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.csproj.AssemblyReference.cache
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.AssemblyInfoInputs.cache
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.AssemblyInfo.cs
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.csproj.CoreCompileInputs.cache
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.sourcelink.json
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Co.357559B1.Up2Date
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.dll
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\refint\Dario.Core.Application.Card.dll
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\Dario.Core.Application.Card.pdb
+E:\Projects\Rayan\Card\Dario.Core.Application.Card\obj\Debug\net9.0\ref\Dario.Core.Application.Card.dll
