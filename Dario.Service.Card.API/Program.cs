@@ -93,6 +93,7 @@ builder.Logging.AddOpenTelemetry(logging =>
         options.ExportProcessorType = ExportProcessorType.Batch;
     });
 });
+builder.Services.AddScoped<ICardBinStatsService, OracleCardBinStatsService>();
 
 static IEnumerable<KeyValuePair<string, object>> ParseResourceAttributes(string? rawAttributes)
 {

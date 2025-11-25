@@ -18,11 +18,13 @@ public class CardController : ControllerBase
     private readonly ICardServices _srv;
     private readonly Counter<long> _endpointRequestCounter;
     private readonly Histogram<double> _endpointRequestDuration;
+    private readonly ICardBinStatsService _cardBinStatsService;
 
-    public CardController(ILogger<CardController> logger, ICardServices srv, IMeterFactory meterFactory)
+    public CardController(ILogger<CardController> logger, ICardServices srv, IMeterFactory meterFactory, ICardBinStatsService cardBinStatsService)
     {
         _logger = logger;
         _srv = srv;
+        _cardBinStatsService = cardBinStatsService;
 
         var meter = meterFactory.Create("Dario.Service.Card.API");
         _endpointRequestCounter = meter.CreateCounter<long>(
@@ -36,11 +38,9 @@ public class CardController : ControllerBase
     [HttpPost(Name = "Pool")]
     public async Task<RayanResponse<CardResponse>> Pool(CardRequest request)
     {
-        //_logger.LogInformation($"card is {request.CardPan.Substring(0,6)}");
-        //return await Task.FromResult(await _srv.CardGetAsync(request));
-
         var cardPan = request.CardPan ?? string.Empty;
         var cardBin = request.CardPan?.CardBin();
+
         if (!string.IsNullOrEmpty(cardBin))
         {
             _logger.LogInformation("card is {CardBin}", cardPan[..6]);
@@ -48,6 +48,8 @@ public class CardController : ControllerBase
             _endpointRequestCounter.Add(
                 1,
                 new KeyValuePair<string, object?>("card.bin", cardBin));
+
+            await _cardBinStatsService.IncrementAsync(cardBin);
         }
         else
         {
