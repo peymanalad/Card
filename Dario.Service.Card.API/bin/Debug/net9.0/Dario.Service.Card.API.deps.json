@@ -45,6 +45,9 @@
         }
       },
       "Elastic.Transport/0.10.1": {
+        "dependencies": {
+          "Microsoft.CSharp": "4.7.0"
+        },
         "runtime": {
           "lib/net8.0/Elastic.Transport.dll": {
             "assemblyVersion": "0.0.0.0",
