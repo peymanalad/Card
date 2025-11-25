@@ -346,8 +346,8 @@ C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\obj\Debug
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Elastic.Clients.Elasticsearch.dll
 C:\Users\nasser\Documents\Rayan Parsi\Code\Card\Dario.Service.Card.API\bin\Debug\net9.0\Elastic.Transport.dll
 E:\Projects\Rayan\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.Development.json
-E:\Projects\Rayan\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.staticwebassets.endpoints.json
 E:\Projects\Rayan\Card\Dario.Service.Card.API\bin\Debug\net9.0\appsettings.json
+E:\Projects\Rayan\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.staticwebassets.endpoints.json
 E:\Projects\Rayan\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.exe
 E:\Projects\Rayan\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.deps.json
 E:\Projects\Rayan\Card\Dario.Service.Card.API\bin\Debug\net9.0\Dario.Service.Card.API.runtimeconfig.json
