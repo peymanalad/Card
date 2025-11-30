@@ -85,4 +85,10 @@ public class CardController : ControllerBase
         var response = await _srv.HealthAsync();
         return response.item;
     }
+    [HttpGet(Name = "BinStats")]
+    public async Task<IEnumerable<CardBinStatsDto>> BinStats(CancellationToken cancellationToken)
+    {
+        var stats = await _cardBinStatsService.GetSummaryAsync(cancellationToken);
+        return stats;
+    }
 }

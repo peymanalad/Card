@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dario.Core.Domain.Card;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +10,7 @@ namespace Dario.Core.Application.Card
     public interface ICardBinStatsService
     {
         Task IncrementAsync(string bin, CancellationToken cancellationToken = default);
+        Task<IReadOnlyList<CardBinStatsDto>> GetSummaryAsync(CancellationToken cancellationToken = default);
     }
 
 }

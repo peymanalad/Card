@@ -122,8 +122,9 @@ var config = builder.Configuration.GetSection("CardServices");
 builder.Services.AddDarioCardServices(config);
 builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 {
-    serverOptions.Listen(IPAddress.Parse(config.GetSection("ServiceIP").Value)
-                       , Convert.ToInt32(config.GetSection("ServicePort").Value));
+    //serverOptions.Listen(IPAddress.Parse(config.GetSection("ServiceIP").Value)
+    //                   , Convert.ToInt32(config.GetSection("ServicePort").Value));
+    serverOptions.ListenAnyIP(Convert.ToInt32(config.GetSection("ServicePort").Value));
     //serverOptions.Listen(IPAddress.Loopback, 5001, listenOptions =>
     //{
     //    listenOptions.UseHttps("testCert.pfx", "testPassword");
@@ -136,6 +137,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 //}
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
