@@ -4,6 +4,7 @@ using Dario.Core.Domain.Card;
 using Microsoft.Extensions.Options;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
+using System.Globalization;
 
 public class OracleCardBinStatsService : ICardBinStatsService
 {
@@ -29,10 +30,11 @@ public class OracleCardBinStatsService : ICardBinStatsService
 
         await cmd.ExecuteNonQueryAsync(cancellationToken);
     }
-
     public async Task<IReadOnlyList<CardBinStatsDto>> GetSummaryAsync(
         CancellationToken cancellationToken = default)
     {
+        var (monthStart, monthEnd) = GetCurrentPersianMonthRange();
+
         const string sql = @"
 WITH data_today AS (
     SELECT BIN, SUM(REQUESTCOUNT) AS TodayCount
@@ -43,8 +45,8 @@ WITH data_today AS (
 data_month AS (
     SELECT BIN, SUM(REQUESTCOUNT) AS MonthCount
     FROM CARDBINDAILYSTATS
-    WHERE STATDATE >= TRUNC(SYSDATE, 'MM')
-      AND STATDATE < ADD_MONTHS(TRUNC(SYSDATE, 'MM'), 1)
+    WHERE STATDATE >= :p_MonthStart
+      AND STATDATE <  :p_MonthEnd
     GROUP BY BIN
 ),
 data_total AS (
@@ -70,10 +72,16 @@ ORDER BY tot.BIN";
         await connection.OpenAsync(cancellationToken);
 
         await using var cmd = connection.CreateCommand();
+        cmd.BindByName = true;
         cmd.CommandText = sql;
         cmd.CommandType = CommandType.Text;
 
-        await using var reader = await cmd.ExecuteReaderAsync(cancellationToken);
+        cmd.CommandTimeout = 0;
+
+        cmd.Parameters.Add("p_MonthStart", OracleDbType.Date).Value = monthStart;
+        cmd.Parameters.Add("p_MonthEnd", OracleDbType.Date).Value = monthEnd;
+
+        await using var reader = await cmd.ExecuteReaderAsync();
 
         var binOrdinal = reader.GetOrdinal("BIN");
         var bankNameOrdinal = reader.GetOrdinal("BANKNAME");
@@ -83,7 +91,7 @@ ORDER BY tot.BIN";
 
         const string logoBaseUrl = "http://localhost:13276/logos";
 
-        while (await reader.ReadAsync(cancellationToken))
+        while (await reader.ReadAsync())
         {
             var bin = reader.IsDBNull(binOrdinal) ? string.Empty : reader.GetString(binOrdinal);
             var bankName = reader.IsDBNull(bankNameOrdinal) ? string.Empty : reader.GetString(bankNameOrdinal);
@@ -95,7 +103,6 @@ ORDER BY tot.BIN";
                 TodayCount = reader.IsDBNull(todayOrdinal) ? 0 : reader.GetInt64(todayOrdinal),
                 MonthCount = reader.IsDBNull(monthOrdinal) ? 0 : reader.GetInt64(monthOrdinal),
                 TotalCount = reader.IsDBNull(totalOrdinal) ? 0 : reader.GetInt64(totalOrdinal),
-
                 LogoUrl = $"{logoBaseUrl}/{bin}.png"
             };
 
@@ -103,6 +110,23 @@ ORDER BY tot.BIN";
         }
 
         return result;
+    }
+
+    private static (DateTime MonthStart, DateTime MonthEnd) GetCurrentPersianMonthRange()
+    {
+        var now = DateTime.Now;
+        var pc = new PersianCalendar();
+
+        var year = pc.GetYear(now);
+        var month = pc.GetMonth(now);
+
+        var monthStart = pc.ToDateTime(year, month, 1, 0, 0, 0, 0);
+
+        var nextYear = month == 12 ? year + 1 : year;
+        var nextMonth = month == 12 ? 1 : month + 1;
+        var monthEnd = pc.ToDateTime(nextYear, nextMonth, 1, 0, 0, 0, 0);
+
+        return (monthStart, monthEnd);
     }
 
     private OracleConnection CreateConnection()

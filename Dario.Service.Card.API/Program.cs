@@ -8,6 +8,8 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Oracle.ManagedDataAccess.OpenTelemetry;
+using System.Diagnostics.Metrics;
+using System.Diagnostics;
 using System.Net;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +17,40 @@ var serviceName = builder.Environment.ApplicationName;
 var serviceVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown";
 var deploymentEnvironment = builder.Environment.EnvironmentName;
 
+var meter = new Meter("Dario.Service.Card.API");
+var process = Process.GetCurrentProcess();
+var processStartTime = Process.GetCurrentProcess().StartTime.ToUniversalTime();
+meter.CreateObservableGauge("service_uptime_seconds", () =>
+{
+    var uptime = DateTime.UtcNow - processStartTime;
+
+    return new Measurement<double>(
+        uptime.TotalSeconds,
+        new KeyValuePair<string, object?>("service.name", serviceName),
+        new KeyValuePair<string, object?>("deployment.environment", deploymentEnvironment)
+    );
+});
+meter.CreateObservableGauge("process_cpu_seconds_total", () =>
+{
+    process.Refresh();
+
+    return new Measurement<double>(
+        process.TotalProcessorTime.TotalSeconds,
+        new KeyValuePair<string, object?>("service.name", serviceName),
+        new KeyValuePair<string, object?>("deployment.environment", deploymentEnvironment)
+    );
+});
+
+meter.CreateObservableGauge("process_memory_bytes", () =>
+{
+    process.Refresh();
+
+    return new Measurement<long>(
+        process.WorkingSet64,
+        new KeyValuePair<string, object?>("service.name", serviceName),
+        new KeyValuePair<string, object?>("deployment.environment", deploymentEnvironment)
+    );
+});
 var otelConfig = builder.Configuration.GetSection("OpenTelemetry");
 var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]
                   ?? otelConfig.GetValue<string>("Endpoint")
