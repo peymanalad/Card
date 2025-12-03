@@ -1,6 +1,7 @@
 ﻿using Dario.Core.Abstraction.Card.Options;
 using Dario.Core.Application.Card;
 using Dario.Core.Domain.Card;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Oracle.ManagedDataAccess.Client;
 using System.Data;
@@ -9,10 +10,13 @@ using System.Globalization;
 public class OracleCardBinStatsService : ICardBinStatsService
 {
     private readonly IOptions<CardServicesOptions> _configuration;
+    private readonly ILogger<OracleCardBinStatsService> _logger;
 
-    public OracleCardBinStatsService(IOptions<CardServicesOptions> configuration)
+    public OracleCardBinStatsService(IOptions<CardServicesOptions> configuration,
+        ILogger<OracleCardBinStatsService> logger)
     {
         _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
     public async Task IncrementAsync(string bin, CancellationToken cancellationToken = default)
@@ -20,15 +24,22 @@ public class OracleCardBinStatsService : ICardBinStatsService
         if (string.IsNullOrWhiteSpace(bin))
             return;
 
-        await using var connection = CreateConnection();
-        await connection.OpenAsync(cancellationToken);
+        try
+        {
+            await using var connection = CreateConnection();
+            await connection.OpenAsync(cancellationToken);
 
-        await using var cmd = connection.CreateCommand();
-        cmd.CommandText = "IncrementCardBinDailyStat";
-        cmd.CommandType = CommandType.StoredProcedure;
-        cmd.Parameters.Add("p_Bin", OracleDbType.Varchar2, 6).Value = bin;
+            await using var cmd = connection.CreateCommand();
+            cmd.CommandText = "IncrementCardBinDailyStat";
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("p_Bin", OracleDbType.Varchar2, 6).Value = bin;
 
-        await cmd.ExecuteNonQueryAsync(cancellationToken);
+            await cmd.ExecuteNonQueryAsync(cancellationToken);
+        }
+        catch (OracleException ex) when (ex.Number == 257)
+        {
+            _logger.LogWarning(ex, "Unable to increment BIN stats because the Oracle archiver is full (ORA-00257). Skipping stat update.");
+        }
     }
     public async Task<IReadOnlyList<CardBinStatsDto>> GetSummaryAsync(
         CancellationToken cancellationToken = default)
