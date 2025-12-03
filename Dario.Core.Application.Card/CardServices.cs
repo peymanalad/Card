@@ -62,12 +62,12 @@ public class CardServices : ICardServices
             await using var connection = await _connectionFactory.CreateOpenConnectionAsync(ConnectionKind.Primary);
             await using var command = _connectionFactory.CreateCommand(connection, procedureName, CommandType.StoredProcedure);
 
-            AddInputParameter(command, "p_CardHash", DbType.String, cardHash);
-            AddInputParameter(command, "p_CardData", DbType.String, encryptedPan);
-            AddInputParameter(command, "p_CardBin", DbType.Int64, cardBin);
-            AddInputParameter(command, "p_CardProduct", DbType.String, cardProduct);
-            AddInputParameter(command, "p_CardEnd", DbType.String, cardEnd);
-            AddInputParameter(command, "p_CardExpDate", DbType.String, encryptedExpDate);
+            AddInputParameter(command, DbType.String, cardHash, "p_CardHash", "CardHash");
+            AddInputParameter(command, DbType.String, encryptedPan, "p_CardData", "CardData");
+            AddInputParameter(command, DbType.Int64, cardBin, "p_CardBin", "CardBin");
+            AddInputParameter(command, DbType.String, cardProduct, "p_CardProduct", "CardProduct");
+            AddInputParameter(command, DbType.String, cardEnd, "p_CardEnd", "CardEnd");
+            AddInputParameter(command, DbType.String, encryptedExpDate, "p_CardExpDate", "CardExpDate");
             AddOutputCursor(command);
 
             await using var reader = await command.ExecuteReaderAsync();
@@ -100,9 +100,10 @@ public class CardServices : ICardServices
         return entity;
     }
 
-    private void AddInputParameter(DbCommand command, string name, DbType dbType, object? value)
+    private void AddInputParameter(DbCommand command, DbType dbType, object? value, params string[] names)
     {
-        var parameter = _connectionFactory.CreateParameter(name, dbType, value, ParameterDirection.Input);
+        var parameterName = SelectParameterName(names);
+        var parameter = _connectionFactory.CreateParameter(parameterName, dbType, value, ParameterDirection.Input);
         command.Parameters.Add(parameter);
     }
 
@@ -214,58 +215,26 @@ public class CardServices : ICardServices
         await using var command = _connectionFactory.CreateCommand(connection, procedureName, CommandType.StoredProcedure);
 
         DbDataReader? reader = null;
-        var parameterNames = new[] { "p_Id", "Id", "p_CardId" };
-        for (var attempt = 0; attempt < parameterNames.Length; attempt++)
-        {
-            var parameterName = parameterNames[attempt];
-            command.Parameters.Clear();
-            AddInputParameter(command, parameterName, DbType.Int64, cardId);
-            AddOutputCursor(command);
-
-            try
-            {
-                reader = await command.ExecuteReaderAsync();
-                break;
-            }
-            catch (DbException ex) when (IsParameterBindingException(ex))
-            {
-                reader?.Dispose();
-                reader = null;
-                continue;
-            }
-        }
-
-        if (reader is null)
-        {
-            return null;
-        }
-
+        var parameterName = SelectParameterName("p_Id", "Id", "p_CardId", "CardId");
+        AddInputParameter(command, DbType.Int64, cardId, parameterName);
+        AddOutputCursor(command);
+        reader = await command.ExecuteReaderAsync();
         await using (reader)
         {
             if (!await reader.ReadAsync())
             {
                 return null;
             }
-
             return MapCardResponse(reader);
         }
-    }
-    private static bool IsParameterBindingException(DbException ex)
-    {
-        if (ex.GetType().Name == "OracleException")
-        {
-            var numberProperty = ex.GetType().GetProperty("Number");
-            if (numberProperty?.GetValue(ex) is int number && (number == 6550 || number == 1036))
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     private void AddOutputCursor(DbCommand command)
     {
+        if (_connectionFactory.ActiveProvider != DatabaseProviderType.Oracle)
+        {
+            return;
+        }
         var cursorParameter = _connectionFactory.CreateCursorParameter("o_cursor");
         if (!command.Parameters.Contains(cursorParameter.ParameterName))
         {
@@ -273,6 +242,26 @@ public class CardServices : ICardServices
         }
     }
 
+    private string SelectParameterName(params string[] names)
+    {
+        if (names is { Length: > 0 })
+        {
+            if (_connectionFactory.ActiveProvider == DatabaseProviderType.SqlServer)
+            {
+                foreach (var candidate in names)
+                {
+                    if (!candidate.StartsWith("p_", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return candidate;
+                    }
+                }
+            }
+
+            return names[0];
+        }
+
+        throw new ArgumentException("At least one parameter name must be provided.", nameof(names));
+    }
     private static CardResponse MapCardResponse(IDataRecord record)
     {
         return new CardResponse
