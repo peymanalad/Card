@@ -74,6 +74,31 @@ public class DbConnectionFactory : IDbConnectionFactory
         return parameter;
     }
 
+    public DbParameter CreateCursorParameter(string parameterName)
+    {
+        var provider = EnsureProviderInitialized();
+        var formattedName = FormatParameterName(provider, parameterName);
+
+        DbParameter parameter = provider switch
+        {
+            DatabaseProviderType.SqlServer => new SqlParameter
+            {
+                ParameterName = formattedName,
+                SqlDbType = SqlDbType.Variant,
+                Direction = ParameterDirection.Output
+            },
+            DatabaseProviderType.Oracle => new OracleParameter
+            {
+                ParameterName = formattedName,
+                OracleDbType = OracleDbType.RefCursor,
+                Direction = ParameterDirection.Output
+            },
+            _ => throw new InvalidOperationException($"Unsupported database provider '{provider}'.")
+        };
+
+        return parameter;
+    }
+
     private DatabaseProviderType EnsureProviderInitialized()
     {
         if (_activeProvider.HasValue)

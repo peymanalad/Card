@@ -24,4 +24,5 @@ public interface IDbConnectionFactory
     DbCommand CreateCommand(DbConnection connection, string commandText, CommandType commandType);
 
     DbParameter CreateParameter(string parameterName, DbType dbType, object? value, ParameterDirection direction);
+    DbParameter CreateCursorParameter(string parameterName);
 }
