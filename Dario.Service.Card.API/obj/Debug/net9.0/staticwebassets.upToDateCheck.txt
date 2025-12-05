@@ -8,6 +8,7 @@ wwwroot\logos\504172.png
 wwwroot\logos\504706.png
 wwwroot\logos\505416.png
 wwwroot\logos\505785.png
+wwwroot\logos\505801.png
 wwwroot\logos\505809.png
 wwwroot\logos\507677.png
 wwwroot\logos\585947.png
@@ -17,6 +18,7 @@ wwwroot\logos\589463.png
 wwwroot\logos\603769.png
 wwwroot\logos\603770.png
 wwwroot\logos\603799.png
+wwwroot\logos\606256.png
 wwwroot\logos\606373.png
 wwwroot\logos\610433.png
 wwwroot\logos\621986.png
@@ -30,7 +32,9 @@ wwwroot\logos\627760.png
 wwwroot\logos\627884.png
 wwwroot\logos\627961.png
 wwwroot\logos\628023.png
+wwwroot\logos\628157.png
 wwwroot\logos\636214.png
+wwwroot\logos\636949.png
 wwwroot\logos\639194.png
 wwwroot\logos\639217.png
 wwwroot\logos\639346.png

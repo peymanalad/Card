@@ -17,6 +17,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\NuGet.Config",
           "C:\\Users\\nasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -29,6 +30,7 @@
           "C:\\Program Files\\dotnet\\library-packs": {},
           "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
           "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\RayanparsiPackages": {},
           "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Observability\\Dario.Observability\\bin\\Release": {},
           "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\RayanparsiPackages": {},
           "https://api.nuget.org/v3/index.json": {}
@@ -91,6 +93,7 @@
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\NuGet.Config",
           "C:\\Users\\nasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
@@ -103,6 +106,7 @@
           "C:\\Program Files\\dotnet\\library-packs": {},
           "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
           "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
+          "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\RayanparsiPackages": {},
           "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Observability\\Dario.Observability\\bin\\Release": {},
           "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\RayanparsiPackages": {},
           "https://api.nuget.org/v3/index.json": {}

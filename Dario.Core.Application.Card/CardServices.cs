@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Dario.Core.Abstraction.Card;
+using Dario.Core.Abstraction.Card.Data;
 using Dario.Core.Abstraction.Card.Options;
 using Dario.Core.Domain.Card;
 using Microsoft.Extensions.Logging;
@@ -9,8 +10,9 @@ using Oracle.ManagedDataAccess.Types;
 using Rayanparsi.Core.Domain.Entities;
 using Rayanparsi.Utilities.Extensions;
 using System.Data;
-using System.Diagnostics;
+using System.Data.Common;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Globalization;
 using System.Transactions;
 
@@ -18,13 +20,16 @@ namespace Dario.Core.Application.Card;
 
 public class CardServices : ICardServices
 {
-    private readonly IOptions<CardServicesOptions> _configuration;
+    private readonly IDbConnectionFactory _connectionFactory;
     private readonly ILogger<CardServices> _logger;
-    private readonly string _encryptionKey = "19F83D0DFDE6C9ECE44B735AF7DEC8B3";
-    public CardServices(IOptions<CardServicesOptions> configuration, ILogger<CardServices> logger)
+    private readonly string _encryptionKey;
+    public CardServices(IOptions<CardServicesOptions> configuration, IDbConnectionFactory connectionFactory, ILogger<CardServices> logger)
     {
-        _configuration = configuration;
+        _connectionFactory = connectionFactory;
         _logger = logger;
+        _encryptionKey = string.IsNullOrWhiteSpace(configuration.Value.EncryptionKey)
+            ? "19F83D0DFDE6C9ECE44B735AF7DEC8B3"
+            : configuration.Value.EncryptionKey;
     }
 
     public async Task<RayanResponse<CardResponse>> CardGetAsync(CardRequest request)
@@ -34,7 +39,7 @@ public class CardServices : ICardServices
         {
             isError = true,
             statusCode = 84,
-            message = ""
+            message = "",
         };
         try
         {
@@ -54,34 +59,19 @@ public class CardServices : ICardServices
                 return entity;
             }
 
-            using var connection = CreateConnection();
-            await connection.OpenAsync();
+            await using var connection = await _connectionFactory.CreateOpenConnectionAsync(ConnectionKind.Primary);
+            await using var command = _connectionFactory.CreateCommand(connection, procedureName, CommandType.StoredProcedure);
 
-            using var command = connection.CreateCommand();
-            command.BindByName = true;
-            command.CommandText = procedureName;
-            command.CommandType = CommandType.StoredProcedure;
+            AddInputParameter(command, DbType.String, cardHash, "p_CardHash", "CardHash");
+            AddInputParameter(command, DbType.String, encryptedPan, "p_CardData", "CardData");
+            AddInputParameter(command, DbType.Int64, cardBin, "p_CardBin", "CardBin");
+            AddInputParameter(command, DbType.String, cardProduct, "p_CardProduct", "CardProduct");
+            AddInputParameter(command, DbType.String, cardEnd, "p_CardEnd", "CardEnd");
+            AddInputParameter(command, DbType.String, encryptedExpDate, "p_CardExpDate", "CardExpDate");
+            AddOutputCursor(command);
 
-            AddInputParameter(command, "p_CardHash", OracleDbType.NVarchar2, cardHash);
-            AddInputParameter(command, "p_CardData", OracleDbType.NVarchar2, encryptedPan);
-            AddInputParameter(command, "p_CardBin", OracleDbType.Int64, cardBin);
-            AddInputParameter(command, "p_CardProduct", OracleDbType.NVarchar2, cardProduct);
-            AddInputParameter(command, "p_CardEnd", OracleDbType.NVarchar2, cardEnd);
-            AddInputParameter(command, "p_CardExpDate", OracleDbType.NVarchar2, encryptedExpDate);
-
-            var cursorParameter = command.Parameters.Add("o_cursor", OracleDbType.RefCursor, ParameterDirection.Output);
-
-            await command.ExecuteNonQueryAsync();
-            var refCursor = (OracleRefCursor?)cursorParameter.Value;
-            if (refCursor is null)
-            {
-                entity.message = "Cursor result was empty.";
-                return entity;
-            }
-
-            using var cursor = refCursor;
-            using var reader = cursor.GetDataReader();
-            if (reader.Read())
+            await using var reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
             {
                 var cardIdOrdinal = reader.GetOrdinal("CARDID");
                 var cardIdValue = reader.GetValue(cardIdOrdinal);
@@ -110,10 +100,11 @@ public class CardServices : ICardServices
         return entity;
     }
 
-    private static void AddInputParameter(OracleCommand command, string name, OracleDbType dbType, object? value)
+    private void AddInputParameter(DbCommand command, DbType dbType, object? value, params string[] names)
     {
-        var parameter = command.Parameters.Add(name, dbType, ParameterDirection.Input);
-        parameter.Value = value ?? DBNull.Value;
+        var parameterName = SelectParameterName(names);
+        var parameter = _connectionFactory.CreateParameter(parameterName, dbType, value, ParameterDirection.Input);
+        command.Parameters.Add(parameter);
     }
 
     public async Task<RayanResponse<CardResponse>> CardGetByIdAsync(CardRequest request)
@@ -184,7 +175,8 @@ public class CardServices : ICardServices
 
     public async Task<RayanResponse<bool>> HealthAsync()
     {
-        const string procedureName = "SELECT 1 FROM DUAL";
+        const string oracleProcedureName = "SELECT 1 FROM DUAL";
+        const string sqlServerProcedureName = "SELECT 1";
 
         RayanResponse<bool> entity = new RayanResponse<bool>()
         {
@@ -194,12 +186,13 @@ public class CardServices : ICardServices
         };
         try
         {
-            using var connection = CreateQueryConnection();
-            await connection.OpenAsync();
+            await using var connection = await _connectionFactory.CreateOpenConnectionAsync(ConnectionKind.Query);
 
-            using var command = connection.CreateCommand();
-            command.CommandText = procedureName;
-            command.CommandType = CommandType.Text;
+            var procedureName = _connectionFactory.ActiveProvider == DatabaseProviderType.SqlServer
+                ? sqlServerProcedureName
+                : oracleProcedureName;
+
+            await using var command = _connectionFactory.CreateCommand(connection, procedureName, CommandType.Text);
 
             var result = await command.ExecuteScalarAsync();
             entity.item = Convert.ToInt32(result, CultureInfo.InvariantCulture) == 1;
@@ -208,7 +201,7 @@ public class CardServices : ICardServices
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An error occurred while executing health check against Oracle database.");
+            _logger.LogError(ex, "An error occurred while executing health check against the active database provider.");
             entity.message = ex.Message;
         }
         return entity;
@@ -216,64 +209,59 @@ public class CardServices : ICardServices
 
 
 
-    private OracleConnection CreateConnection()
-        => new OracleConnection(_configuration.Value.ConnectionString);
-
-    private OracleConnection CreateQueryConnection()
-        => new OracleConnection(_configuration.Value.ConnectionStringQuery);
-
     private async Task<CardResponse?> ExecuteCardLookupAsync(string procedureName, long cardId)
     {
-        using var connection = CreateConnection();
-        await connection.OpenAsync();
+        await using var connection = await _connectionFactory.CreateOpenConnectionAsync(ConnectionKind.Primary);
+        await using var command = _connectionFactory.CreateCommand(connection, procedureName, CommandType.StoredProcedure);
 
-        using var command = connection.CreateCommand();
-        command.BindByName = true;
-        command.CommandText = procedureName;
-        command.CommandType = CommandType.StoredProcedure;
-
-        OracleRefCursor? refCursor = null;
-        var parameterNames = new[] { "p_Id", "Id", "p_CardId" };
-        for (var attempt = 0; attempt < parameterNames.Length; attempt++)
+        DbDataReader? reader = null;
+        var parameterName = SelectParameterName("p_Id", "Id", "p_CardId", "CardId");
+        AddInputParameter(command, DbType.Int64, cardId, parameterName);
+        AddOutputCursor(command);
+        reader = await command.ExecuteReaderAsync();
+        await using (reader)
         {
-            var parameterName = parameterNames[attempt];
-            command.Parameters.Clear();
-            AddInputParameter(command, parameterName, OracleDbType.Int64, cardId);
-            var cursorParameter = command.Parameters.Add("o_cursor", OracleDbType.RefCursor, ParameterDirection.Output);
-
-            try
+            if (!await reader.ReadAsync())
             {
-                await command.ExecuteNonQueryAsync();
-                refCursor = cursorParameter.Value as OracleRefCursor;
-                if (refCursor != null)
-                {
-                    break;
-                }
+                return null;
             }
-            catch (OracleException ex) when (IsParameterBindingException(ex))
-            {
-                continue;
-            }
+            return MapCardResponse(reader);
         }
-
-        if (refCursor is null)
-        {
-            return null;
-        }
-
-        using var cursor = refCursor;
-        using var reader = cursor.GetDataReader();
-        if (!reader.Read())
-        {
-            return null;
-        }
-
-        return MapCardResponse(reader);
     }
 
-    private static bool IsParameterBindingException(OracleException ex)
-        => ex.Number is 6550 or 1036;
+    private void AddOutputCursor(DbCommand command)
+    {
+        if (_connectionFactory.ActiveProvider != DatabaseProviderType.Oracle)
+        {
+            return;
+        }
+        var cursorParameter = _connectionFactory.CreateCursorParameter("o_cursor");
+        if (!command.Parameters.Contains(cursorParameter.ParameterName))
+        {
+            command.Parameters.Add(cursorParameter);
+        }
+    }
 
+    private string SelectParameterName(params string[] names)
+    {
+        if (names is { Length: > 0 })
+        {
+            if (_connectionFactory.ActiveProvider == DatabaseProviderType.SqlServer)
+            {
+                foreach (var candidate in names)
+                {
+                    if (!candidate.StartsWith("p_", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return candidate;
+                    }
+                }
+            }
+
+            return names[0];
+        }
+
+        throw new ArgumentException("At least one parameter name must be provided.", nameof(names));
+    }
     private static CardResponse MapCardResponse(IDataRecord record)
     {
         return new CardResponse

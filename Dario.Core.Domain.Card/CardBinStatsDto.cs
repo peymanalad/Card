@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dario.Core.Domain.Card
+﻿namespace Dario.Core.Domain.Card
 {
     public class CardBinStatsDto
     {
@@ -13,7 +7,6 @@ namespace Dario.Core.Domain.Card
         public long TodayCount { get; set; }
         public long MonthCount { get; set; }
         public long TotalCount { get; set; }
-
         public string LogoUrl { get; set; } = default!;
     }
 

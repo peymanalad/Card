@@ -1,0 +1,17 @@
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\bin\Release\net8.0\Dario.Core.Application.Card.deps.json
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\bin\Release\net8.0\Dario.Core.Application.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\bin\Release\net8.0\Dario.Core.Application.Card.pdb
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\bin\Release\net8.0\Dario.Core.Abstraction.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\bin\Release\net8.0\Dario.Core.Domain.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\bin\Release\net8.0\Dario.Core.Abstraction.Card.pdb
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\bin\Release\net8.0\Dario.Core.Domain.Card.pdb
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Core.Application.Card.csproj.AssemblyReference.cache
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Core.Application.Card.GeneratedMSBuildEditorConfig.editorconfig
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Core.Application.Card.AssemblyInfoInputs.cache
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Core.Application.Card.AssemblyInfo.cs
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Core.Application.Card.csproj.CoreCompileInputs.cache
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Co.357559B1.Up2Date
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Core.Application.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\refint\Dario.Core.Application.Card.dll
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\Dario.Core.Application.Card.pdb
+E:\Project\Rayanparsi\MicroServices\Card\Dario.Core.Application.Card\obj\Release\net8.0\ref\Dario.Core.Application.Card.dll

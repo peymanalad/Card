@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  card-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - .env
+    ports:
+      - "${SERVICE_PORT:-13276}:${SERVICE_PORT:-13276}"
+    environment:
+      CardServices__ServicePort: "${SERVICE_PORT:-13276}"
+      DB_CONNECTION_STRING: "${DB_CONNECTION_STRING}"
+      DB_QUERY_CONNECTION_STRING: "${DB_QUERY_CONNECTION_STRING}"
+      DB_SQL_CONNECTION_STRING: "${SQLSERVER_CONNECTION_STRING}"
+      DB_SQL_QUERY_CONNECTION_STRING: "${DB_SQL_QUERY_CONNECTION_STRING}"
+      CARD_ENCRYPTION_KEY: "${CARD_ENCRYPTION_KEY}"
+      OTEL_EXPORTER_OTLP_ENDPOINT: "${OTEL_EXPORTER_OTLP_ENDPOINT:-http://192.168.13.11:4317}"
+      OTEL_EXPORTER_OTLP_PROTOCOL: "${OTEL_EXPORTER_OTLP_PROTOCOL:-grpc}"
+      OTEL_RESOURCE_ATTRIBUTES: "${OTEL_RESOURCE_ATTRIBUTES:-service.name=Dario.Service.Card.API,service.version=1.0.0,deployment.environment=Production}"
+    restart: unless-stopped
