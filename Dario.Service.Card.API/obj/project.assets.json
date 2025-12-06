@@ -3907,24 +3907,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\nasser\\.nuget\\packages\\": {},
+    "C:\\Users\\Alad Zero\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
+      "projectUniqueName": "E:\\Projects\\Rayan\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
       "projectName": "Dario.Service.Card.API",
-      "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
-      "packagesPath": "C:\\Users\\nasser\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Service.Card.API\\obj\\",
+      "projectPath": "E:\\Projects\\Rayan\\Card\\Dario.Service.Card.API\\Dario.Service.Card.API.csproj",
+      "packagesPath": "C:\\Users\\Alad Zero\\.nuget\\packages\\",
+      "outputPath": "E:\\Projects\\Rayan\\Card\\Dario.Service.Card.API\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\NuGet.Config",
-        "C:\\Users\\nasser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "E:\\Projects\\Rayan\\Card\\NuGet.Config",
+        "C:\\Users\\Alad Zero\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3934,25 +3934,22 @@
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "C:\\Program Files\\dotnet\\library-packs": {},
-        "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
-        "C:\\Users\\nasser\\AppData\\Roaming\\RayanparsiPackages": {},
-        "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\RayanparsiPackages": {},
-        "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Observability\\Dario.Observability\\bin\\Release": {},
-        "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\RayanparsiPackages": {},
+        "C:\\Users\\Alad Zero\\Documents\\RayanparsiPackages": {},
+        "E:\\Projects\\Rayan\\Card\\RayanparsiPackages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj": {
-              "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj"
+            "E:\\Projects\\Rayan\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj": {
+              "projectPath": "E:\\Projects\\Rayan\\Card\\Dario.Core.Abstraction.Card\\Dario.Core.Abstraction.Card.csproj"
             },
-            "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj": {
-              "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj"
+            "E:\\Projects\\Rayan\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj": {
+              "projectPath": "E:\\Projects\\Rayan\\Card\\Dario.Core.Application.Card\\Dario.Core.Application.Card.csproj"
             },
-            "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj": {
-              "projectPath": "C:\\Users\\nasser\\Documents\\Rayan Parsi\\Code\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj"
+            "E:\\Projects\\Rayan\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj": {
+              "projectPath": "E:\\Projects\\Rayan\\Card\\Dario.Core.Domain.Card\\Dario.Core.Domain.Card.csproj"
             }
           }
         }

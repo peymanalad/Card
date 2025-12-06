@@ -64,6 +64,7 @@ var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]
 var otlpExportProtocol = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase)
     ? OtlpExportProtocol.HttpProtobuf
     : OtlpExportProtocol.Grpc;
+var logsOtlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_LOGS_ENDPOINT"];
 var otelResourceAttributes = builder.Configuration["OTEL_RESOURCE_ATTRIBUTES"]
                            ?? otelConfig.GetValue<string>("ResourceAttributes");
 
@@ -122,8 +123,9 @@ builder.Logging.AddOpenTelemetry(logging =>
     logging.SetResourceBuilder(resourceBuilder);
     logging.AddOtlpExporter(o =>
     {
-        o.Endpoint = new Uri("http://192.168.13.11:4319");
+        o.Endpoint = new Uri(logsOtlpEndpoint);
         o.Protocol = OtlpExportProtocol.Grpc;
+        o.ExportProcessorType = ExportProcessorType.Batch;
     });
     logging.AddOtlpExporter(options =>
     {
