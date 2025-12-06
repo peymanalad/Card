@@ -50,3 +50,5 @@ Backup*/
 
 .PVS-Studio
 RayanparsiPackages/
+bin/
+obj/

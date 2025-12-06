@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Dario.Service.Card.API.props" />
-</Project>
