@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\Dario.Service.Card.API.props" />
-</Project>

@@ -50,8 +50,6 @@ Backup*/
 
 .PVS-Studio
 RayanparsiPackages/
-bin/*
-obj/*
+*/bin/*
+*/obj/*
 .env*
-/bin/*
-/obj/*
