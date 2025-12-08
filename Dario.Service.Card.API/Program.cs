@@ -50,10 +50,7 @@ meter.CreateObservableGauge("process_memory_bytes", () =>
     );
 });
 var otelConfig = builder.Configuration.GetSection("OpenTelemetry");
-var otlpProtocol = builder.Configuration["OTEL_EXPORTER_OTLP_PROTOCOL"]
-                 ?? otelConfig.GetValue<string>("Protocol")
-                 ?? "grpc";
-var defaultOtlpEndpoint = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase);
+var otlpProtocol = builder.Configuration["OTEL_EXPORTER_OTLP_PROTOCOL"];
 
 var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
 var otlpExportProtocol = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase)

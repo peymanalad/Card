@@ -9,12 +9,15 @@ services:
     restart: unless-stopped
 
     ports:
-      - "${SERVICE_PORT}:10010"
+      - "${SERVICE_PORT}:${SERVICE_PORT}"
     environment:
-      CardServices__ServicePort: "${SERVICE_PORT}"
       ASPNETCORE_ENVIRONMENT: "Production"
-      CardServices__ConnectionString: ${CARD_DB_CONNECTION_STRING}
-      CardServices__ConnectionStringQuery: ${CARD_DB_CONNECTION_STRING_QUERY}
+      CardServices__ServicePort: "${SERVICE_PORT}"
+      CardServices__ConnectionString: "${CARD_DB_CONNECTION_STRING}"
+      CardServices__ConnectionStringQuery: "${CARD_DB_CONNECTION_STRING_QUERY}"
+      DB_CONNECTION_STRING: "${CARD_DB_CONNECTION_STRING}"
+      DB_QUERY_CONNECTION_STRING: "${CARD_DB_CONNECTION_STRING_QUERY}"
+      EncryptionKey: "${CARD_ENCRYPTION_KEY}"
       CARD_ENCRYPTION_KEY: "${CARD_ENCRYPTION_KEY}"
       OTEL_EXPORTER_OTLP_ENDPOINT: "${OTEL_EXPORTER_OTLP_ENDPOINT}"
       OTEL_EXPORTER_OTLP_LOGS_ENDPOINT: "${OTEL_EXPORTER_OTLP_LOGS_ENDPOINT}"
