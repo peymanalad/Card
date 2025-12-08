@@ -52,3 +52,4 @@ Backup*/
 RayanparsiPackages/
 bin/
 obj/
+.env*
