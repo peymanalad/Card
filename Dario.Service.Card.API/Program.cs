@@ -152,10 +152,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var config = builder.Configuration.GetSection("CardServices");
 builder.Services.AddDarioCardServices(config);
-builder.WebHost.ConfigureKestrel((context, serverOptions) =>
-{
-    serverOptions.ListenAnyIP(Convert.ToInt32(config.GetSection("ServicePort").Value));
-});
+
 var app = builder.Build();
 
 app.UseSwagger();
