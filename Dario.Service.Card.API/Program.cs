@@ -1,6 +1,4 @@
 ﻿using Dario.Core.Application.Card;
-using Microsoft.Extensions.Logging.Configuration;
-using Microsoft.Extensions.Options;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
@@ -55,12 +53,9 @@ var otelConfig = builder.Configuration.GetSection("OpenTelemetry");
 var otlpProtocol = builder.Configuration["OTEL_EXPORTER_OTLP_PROTOCOL"]
                  ?? otelConfig.GetValue<string>("Protocol")
                  ?? "grpc";
-var defaultOtlpEndpoint = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase)
-    ? "http://192.168.13.11:4318"
-    : "http://192.168.13.11:4317";
-var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"]
-                  ?? otelConfig.GetValue<string>("Endpoint")
-                  ?? defaultOtlpEndpoint;
+var defaultOtlpEndpoint = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase);
+
+var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
 var otlpExportProtocol = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase)
     ? OtlpExportProtocol.HttpProtobuf
     : OtlpExportProtocol.Grpc;
@@ -154,31 +149,21 @@ static IEnumerable<KeyValuePair<string, object>> ParseResourceAttributes(string?
         }
     }
 }
-// Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var config = builder.Configuration.GetSection("CardServices");
 builder.Services.AddDarioCardServices(config);
 builder.WebHost.ConfigureKestrel((context, serverOptions) =>
 {
-    //serverOptions.Listen(IPAddress.Parse(config.GetSection("ServiceIP").Value)
-    //                   , Convert.ToInt32(config.GetSection("ServicePort").Value));
     serverOptions.ListenAnyIP(Convert.ToInt32(config.GetSection("ServicePort").Value));
-    //serverOptions.Listen(IPAddress.Loopback, 5001, listenOptions =>
-    //{
-    //    listenOptions.UseHttps("testCert.pfx", "testPassword");
-    //});
 });
 var app = builder.Build();
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
+
 app.UseSwagger();
 app.UseSwaggerUI();
-//}
+
 app.UseStaticFiles();
 
 app.UseAuthorization();

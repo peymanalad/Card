@@ -27,9 +27,7 @@ public class CardServices : ICardServices
     {
         _connectionFactory = connectionFactory;
         _logger = logger;
-        _encryptionKey = string.IsNullOrWhiteSpace(configuration.Value.EncryptionKey)
-            ? "19F83D0DFDE6C9ECE44B735AF7DEC8B3"
-            : configuration.Value.EncryptionKey;
+        _encryptionKey = configuration.Value.EncryptionKey;
     }
 
     public async Task<RayanResponse<CardResponse>> CardGetAsync(CardRequest request)
