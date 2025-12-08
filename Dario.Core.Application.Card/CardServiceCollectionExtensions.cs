@@ -1,7 +1,5 @@
 ﻿using Dario.Core.Abstraction.Card;
-using Dario.Core.Abstraction.Card.Data;
 using Dario.Core.Abstraction.Card.Options;
-using Dario.Core.Application.Card.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Rayanparsi.Extensions.Translations.Abstractions;
@@ -13,7 +11,6 @@ public static class CardServiceCollectionExtensions
 {
     public static IServiceCollection AddDarioCardServices(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
         services.AddTransient<ICardServices, CardServices>();
         services.Configure<CardServicesOptions>(configuration);
         services.PostConfigure<CardServicesOptions>(ApplyEnvironmentOverrides);
@@ -26,7 +23,6 @@ public static class CardServiceCollectionExtensions
 
     public static IServiceCollection AddDarioCardServices(this IServiceCollection services, Action<CardServicesOptions> setupAction)
     {
-        services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
         services.AddTransient<ICardServices, CardServices>();
         services.Configure(setupAction);
         services.PostConfigure<CardServicesOptions>(ApplyEnvironmentOverrides);
