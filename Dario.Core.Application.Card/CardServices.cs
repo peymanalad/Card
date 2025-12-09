@@ -127,17 +127,10 @@ public class CardServices : ICardServices
             }
 
             await EnsureOpenAsync(_dbConnection);
+            var parameters = CreateCardGetParameters(cardHash, encryptedPan, cardBin, cardProduct, cardEnd, encryptedExpDate);
+            var command = new CommandDefinition(procedureName, parameters, commandType: CommandType.StoredProcedure);
 
-            var parameters = new DynamicParameters();
-            AddInputParameter(parameters, DbType.String, cardHash, "p_CardHash", "CardHash");
-            AddInputParameter(parameters, DbType.String, encryptedPan, "p_CardData", "CardData");
-            AddInputParameter(parameters, DbType.Int64, cardBin, "p_CardBin", "CardBin");
-            AddInputParameter(parameters, DbType.String, cardProduct, "p_CardProduct", "CardProduct");
-            AddInputParameter(parameters, DbType.String, cardEnd, "p_CardEnd", "CardEnd");
-            AddInputParameter(parameters, DbType.String, encryptedExpDate, "p_CardExpDate", "CardExpDate");
-            AddOutputCursor(parameters);
-
-            await using var reader = (DbDataReader?)await _dbConnection.ExecuteReaderAsync(procedureName, parameters, commandType: CommandType.StoredProcedure);
+            await using var reader = (DbDataReader?)await _dbConnection.ExecuteReaderAsync(command);
             if (reader is not null && await reader.ReadAsync())
             {
                 var cardIdOrdinal = reader.GetOrdinal("CARDID");
@@ -167,10 +160,40 @@ public class CardServices : ICardServices
         return entity;
     }
 
-    private void AddInputParameter(DynamicParameters parameters, DbType dbType, object? value, params string[] names)
+    private SqlMapper.IDynamicParameters CreateCardGetParameters(string cardHash, string encryptedPan, long cardBin, string cardProduct, string cardEnd, string encryptedExpDate)
     {
-        var parameterName = SelectParameterName(names);
-        parameters.Add(parameterName, value, dbType, ParameterDirection.Input);
+        if (_isSqlServer)
+        {
+            return CreateSqlCardGetParameters(cardHash, encryptedPan, cardBin, cardProduct, cardEnd, encryptedExpDate);
+        }
+
+        return CreateOracleCardGetParameters(cardHash, encryptedPan, cardBin, cardProduct, cardEnd, encryptedExpDate);
+    }
+
+    private DynamicParameters CreateSqlCardGetParameters(string cardHash, string encryptedPan, long cardBin, string cardProduct, string cardEnd, string encryptedExpDate)
+    {
+        var parameters = new DynamicParameters();
+        AddSqlInputParameter(parameters, DbType.String, cardHash, "p_CardHash", "CardHash");
+        AddSqlInputParameter(parameters, DbType.String, encryptedPan, "p_CardData", "CardData");
+        AddSqlInputParameter(parameters, DbType.Int64, cardBin, "p_CardBin", "CardBin");
+        AddSqlInputParameter(parameters, DbType.String, cardProduct, "p_CardProduct", "CardProduct");
+        AddSqlInputParameter(parameters, DbType.String, cardEnd, "p_CardEnd", "CardEnd");
+        AddSqlInputParameter(parameters, DbType.String, encryptedExpDate, "p_CardExpDate", "CardExpDate");
+        AddOutputCursor(parameters);
+        return parameters;
+    }
+
+    private OracleDynamicParameters CreateOracleCardGetParameters(string cardHash, string encryptedPan, long cardBin, string cardProduct, string cardEnd, string encryptedExpDate)
+    {
+        var parameters = new OracleDynamicParameters();
+        AddOracleInputParameter(parameters, OracleDbType.Varchar2, cardHash, "p_CardHash");
+        AddOracleInputParameter(parameters, OracleDbType.Varchar2, encryptedPan, "p_CardData");
+        AddOracleInputParameter(parameters, OracleDbType.Int64, cardBin, "p_CardBin");
+        AddOracleInputParameter(parameters, OracleDbType.Varchar2, cardProduct, "p_CardProduct");
+        AddOracleInputParameter(parameters, OracleDbType.Varchar2, cardEnd, "p_CardEnd");
+        AddOracleInputParameter(parameters, OracleDbType.Varchar2, encryptedExpDate, "p_CardExpDate");
+        AddOracleOutputCursor(parameters, "o_cursor");
+        return parameters;
     }
 
     public async Task<RayanResponse<CardResponse>> CardGetByIdAsync(CardRequest request)
@@ -273,12 +296,9 @@ public class CardServices : ICardServices
     private async Task<CardResponse?> ExecuteCardLookupAsync(string procedureName, long cardId)
     {
         await EnsureOpenAsync(_dbConnection);
-
-        var parameters = new DynamicParameters();
-        var parameterName = SelectParameterName("p_Id", "Id", "p_CardId", "CardId");
-        AddInputParameter(parameters, DbType.Int64, cardId, parameterName);
-        AddOutputCursor(parameters);
-        await using var reader = (DbDataReader?)await _dbConnection.ExecuteReaderAsync(procedureName, parameters, commandType: CommandType.StoredProcedure);
+        var parameters = CreateCardLookupParameters(cardId);
+        var command = new CommandDefinition(procedureName, parameters, commandType: CommandType.StoredProcedure);
+        await using var reader = (DbDataReader?)await _dbConnection.ExecuteReaderAsync(command);
         if (reader is null)
         {
             return null;
@@ -293,13 +313,72 @@ public class CardServices : ICardServices
         }
     }
 
+    private SqlMapper.IDynamicParameters CreateCardLookupParameters(long cardId)
+    {
+        if (_isSqlServer)
+        {
+            var parameters = new DynamicParameters();
+            var parameterName = SelectParameterName("p_Id", "Id", "p_CardId", "CardId");
+            AddSqlInputParameter(parameters, DbType.Int64, cardId, parameterName);
+            AddOutputCursor(parameters);
+            return parameters;
+        }
+
+        var oracleParameters = new OracleDynamicParameters();
+        AddOracleInputParameter(oracleParameters, OracleDbType.Int64, cardId, "p_Id");
+        AddOracleOutputCursor(oracleParameters, "o_cursor");
+        return oracleParameters;
+    }
+
+    private void AddSqlInputParameter(DynamicParameters parameters, DbType dbType, object? value, params string[] names)
+    {
+        var parameterName = SelectParameterName(names);
+        parameters.Add(parameterName, value, dbType, ParameterDirection.Input);
+    }
+
+    private static void AddOracleInputParameter(OracleDynamicParameters parameters, OracleDbType dbType, object? value, string name)
+    {
+        parameters.Add(name, dbType, value, ParameterDirection.Input);
+    }
+
+    private static void AddOracleOutputCursor(OracleDynamicParameters parameters, string name)
+    {
+        parameters.Add(name, OracleDbType.RefCursor, null, ParameterDirection.Output);
+    }
+
+
     private void AddOutputCursor(DynamicParameters parameters)
     {
         if (_isSqlServer)
         {
             return;
         }
-        parameters.Add("o_cursor", dbType: DbType.Object, direction: ParameterDirection.Output);
+        parameters.AddDynamicParams(new OracleRefCursorParameter("o_cursor"));
+    }
+
+    private sealed class OracleRefCursorParameter : SqlMapper.IDynamicParameters
+    {
+        private readonly string _parameterName;
+
+        public OracleRefCursorParameter(string parameterName)
+        {
+            _parameterName = parameterName;
+        }
+
+        public void AddParameters(IDbCommand command, SqlMapper.Identity identity)
+        {
+            if (command is OracleCommand oracleCommand)
+            {
+                var cursor = oracleCommand.Parameters.Add(_parameterName, OracleDbType.RefCursor);
+                cursor.Direction = ParameterDirection.Output;
+                return;
+            }
+
+            var parameter = command.CreateParameter();
+            parameter.ParameterName = _parameterName;
+            parameter.Direction = ParameterDirection.Output;
+            command.Parameters.Add(parameter);
+        }
     }
 
     private string SelectParameterName(params string[] names)
@@ -384,4 +463,32 @@ public class CardServices : ICardServices
         return columnName.Replace("_", string.Empty, StringComparison.Ordinal).ToUpperInvariant();
     }
 
+    private sealed class OracleDynamicParameters : SqlMapper.IDynamicParameters
+    {
+        private readonly List<Action<OracleCommand>> _parameterCallbacks = new();
+
+        public void Add(string name, OracleDbType dbType, object? value, ParameterDirection direction)
+        {
+            _parameterCallbacks.Add(command =>
+            {
+                var parameter = command.Parameters.Add(name, dbType);
+                parameter.Direction = direction;
+                parameter.Value = value ?? DBNull.Value;
+            });
+        }
+
+        public void AddParameters(IDbCommand command, SqlMapper.Identity identity)
+        {
+            if (command is not OracleCommand oracleCommand)
+            {
+                throw new InvalidOperationException("OracleDynamicParameters can only be used with OracleCommand.");
+            }
+
+            oracleCommand.BindByName = true;
+            foreach (var callback in _parameterCallbacks)
+            {
+                callback(oracleCommand);
+            }
+        }
+    }
 }
