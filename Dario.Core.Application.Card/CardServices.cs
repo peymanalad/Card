@@ -34,8 +34,19 @@ public class CardServices : ICardServices
 
     private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeConnections(CardServicesOptions options)
     {
-        Exception? sqlInitializationException = null;
+        var provider = CardDatabaseProviderResolver.Resolve(options);
 
+        return provider switch
+        {
+            CardDatabaseProvider.SqlServer => InitializeSqlConnections(options),
+            CardDatabaseProvider.Oracle => InitializeOracleConnections(options),
+            CardDatabaseProvider.Fallback => InitializeWithFallback(options),
+            _ => throw new InvalidOperationException($"Unsupported database provider '{options.DatabaseProvider}'."),
+        };
+    }
+
+    private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeSqlConnections(CardServicesOptions options)
+    {
         IDbConnection? sqlPrimary = null;
         IDbConnection? sqlQuery = null;
         try
@@ -50,11 +61,13 @@ public class CardServices : ICardServices
         }
         catch (Exception sqlEx)
         {
-            sqlInitializationException = sqlEx;
             sqlPrimary?.Dispose();
             sqlQuery?.Dispose();
-            _logger.LogWarning(sqlEx, "Unable to open SQL Server connections; attempting Oracle fallback.");
+            throw new InvalidOperationException("Failed to initialize SQL Server connections.", sqlEx);
         }
+    }
+    private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeOracleConnections(CardServicesOptions options)
+    {
 
         IDbConnection? oraclePrimary = null;
         IDbConnection? oracleQuery = null;
@@ -72,6 +85,31 @@ public class CardServices : ICardServices
         {
             oraclePrimary?.Dispose();
             oracleQuery?.Dispose();
+            throw new InvalidOperationException("Failed to initialize Oracle connections.", oracleEx);
+        }
+    }
+
+    private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeWithFallback(CardServicesOptions options)
+    {
+        Exception? sqlInitializationException = null;
+
+        try
+        {
+            _logger.LogInformation("Database provider fallback enabled; attempting SQL Server connection.");
+            return InitializeSqlConnections(options);
+        }
+        catch (Exception sqlEx)
+        {
+            sqlInitializationException = sqlEx;
+            _logger.LogWarning(sqlEx, "Unable to open SQL Server connections; attempting Oracle fallback.");
+        }
+
+        try
+        {
+            return InitializeOracleConnections(options);
+        }
+        catch (Exception oracleEx)
+        {
 
             var message = "Failed to initialize database connections using SQL Server first, then Oracle.";
             if (sqlInitializationException is not null)

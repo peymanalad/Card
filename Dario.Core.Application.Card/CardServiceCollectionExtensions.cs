@@ -47,24 +47,15 @@ public static class CardServiceCollectionExtensions
         {
             var options = sp.GetRequiredService<IOptions<CardServicesOptions>>().Value;
 
-            var shouldUseSqlServer = ShouldUseSqlServer(options);
-            if (shouldUseSqlServer)
-            {
-                return ActivatorUtilities.CreateInstance<SqlCardBinStatsService>(sp);
-            }
-
-            return ActivatorUtilities.CreateInstance<OracleCardBinStatsService>(sp);
+            return ShouldUseSqlServer(options)
+                ? ActivatorUtilities.CreateInstance<SqlCardBinStatsService>(sp)
+                : ActivatorUtilities.CreateInstance<OracleCardBinStatsService>(sp);
         });
     }
 
     private static bool ShouldUseSqlServer(CardServicesOptions options)
     {
-        if (!string.IsNullOrWhiteSpace(options.DatabaseProvider))
-        {
-            return options.DatabaseProvider.Equals("SqlServer", StringComparison.OrdinalIgnoreCase);
-        }
-
-        return !string.IsNullOrWhiteSpace(options.SqlConnectionString);
+        return CardDatabaseProviderResolver.Resolve(options) != CardDatabaseProvider.Oracle;
     }
 
     private static string OverrideIfSet(string currentValue, string environmentVariable)
