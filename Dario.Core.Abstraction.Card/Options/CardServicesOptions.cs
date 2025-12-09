@@ -1,6 +1,7 @@
 ﻿namespace Dario.Core.Abstraction.Card.Options;
 public class CardServicesOptions
 {
+    public string DatabaseProvider { get; set; } = string.Empty;
     public string ServiceIP { get; set; } = string.Empty;
 
     public int ServicePort = 10010;
