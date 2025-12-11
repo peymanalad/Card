@@ -16,23 +16,18 @@ services:
       CardServices__ServicePort: "${SERVICE_PORT}"
       CardServices__ConnectionString: "${CARD_DB_CONNECTION_STRING}"
       CardServices__ConnectionStringQuery: "${CARD_DB_CONNECTION_STRING_QUERY}"
-      CardServices__SqlConnectionString:
-      CardServices__SqlConnectionStringQuery:
       CardServices__DatabaseProvider: "Oracle"
       DB_CONNECTION_STRING: "${CARD_DB_CONNECTION_STRING}"
       DB_QUERY_CONNECTION_STRING: "${CARD_DB_CONNECTION_STRING_QUERY}"
-      DB_SQL_CONNECTION_STRING: "${CARD_SQL_CONNECTION_STRING}"
-      DB_SQL_QUERY_CONNECTION_STRING: "${CARD_SQL_CONNECTION_STRING_QUERY}"
       EncryptionKey: "${CARD_ENCRYPTION_KEY}"
       CARD_ENCRYPTION_KEY: "${CARD_ENCRYPTION_KEY}"
       OTEL_EXPORTER_OTLP_ENDPOINT: "${OTEL_EXPORTER_OTLP_ENDPOINT}"
-      OTEL_EXPORTER_OTLP_LOGS_ENDPOINT: "${OTEL_EXPORTER_OTLP_LOGS_ENDPOINT}"
       OTEL_EXPORTER_OTLP_PROTOCOL: "${OTEL_EXPORTER_OTLP_PROTOCOL:-grpc}"
       OTEL_RESOURCE_ATTRIBUTES: "service.name=Dario.Service.Card.API,service.version=1.0.0,deployment.environment=Production"
 
     networks:
-      - oracle_observe
+      - rayan
 
 networks:
-  oracle_observe:
+  rayan:
     external: true

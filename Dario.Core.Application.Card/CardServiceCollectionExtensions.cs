@@ -37,8 +37,6 @@ public static class CardServiceCollectionExtensions
         options.DatabaseProvider = OverrideIfSet(options.DatabaseProvider, "DB_PROVIDER");
         options.ConnectionString = OverrideIfSet(options.ConnectionString, "DB_CONNECTION_STRING");
         options.ConnectionStringQuery = OverrideIfSet(options.ConnectionStringQuery, "DB_QUERY_CONNECTION_STRING");
-        options.SqlConnectionString = OverrideIfSet(options.SqlConnectionString, "DB_SQL_CONNECTION_STRING");
-        options.SqlConnectionStringQuery = OverrideIfSet(options.SqlConnectionStringQuery, "DB_SQL_QUERY_CONNECTION_STRING");
         options.EncryptionKey = OverrideIfSet(options.EncryptionKey, "CARD_ENCRYPTION_KEY");
     }
     private static void RegisterCardBinStatsService(IServiceCollection services)

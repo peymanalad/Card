@@ -136,8 +136,7 @@ ORDER BY tot.BIN;";
     }
 
     private SqlConnection CreateConnection()
-        => new SqlConnection(_configuration.Value.SqlConnectionString);
-
+        => new SqlConnection(_configuration.Value.ConnectionString);
     private SqlConnection CreateQueryConnection()
-        => new SqlConnection(_configuration.Value.SqlConnectionStringQuery);
+        => new SqlConnection(_configuration.Value.ConnectionStringQuery);
 }

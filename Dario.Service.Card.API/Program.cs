@@ -9,11 +9,22 @@ using Oracle.ManagedDataAccess.OpenTelemetry;
 using System.Diagnostics.Metrics;
 using System.Diagnostics;
 using System.Net;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var serviceName = builder.Environment.ApplicationName;
 var serviceVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown";
 var deploymentEnvironment = builder.Environment.EnvironmentName;
+
+builder.Host.UseSerilog((context, services, loggerConfiguration) =>
+{
+    loggerConfiguration
+        .ReadFrom.Configuration(context.Configuration)
+        .ReadFrom.Services(services)
+        .Enrich.FromLogContext()
+        .WriteTo.Console();
+});
+
 
 var meter = new Meter("Dario.Service.Card.API");
 var process = Process.GetCurrentProcess();
@@ -56,7 +67,6 @@ var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
 var otlpExportProtocol = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase)
     ? OtlpExportProtocol.HttpProtobuf
     : OtlpExportProtocol.Grpc;
-var logsOtlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_LOGS_ENDPOINT"];
 var otelResourceAttributes = builder.Configuration["OTEL_RESOURCE_ATTRIBUTES"]
                            ?? otelConfig.GetValue<string>("ResourceAttributes");
 
@@ -113,12 +123,6 @@ builder.Logging.AddOpenTelemetry(logging =>
     logging.IncludeScopes = true;
     logging.ParseStateValues = true;
     logging.SetResourceBuilder(resourceBuilder);
-    logging.AddOtlpExporter(o =>
-    {
-        o.Endpoint = new Uri(logsOtlpEndpoint);
-        o.Protocol = OtlpExportProtocol.Grpc;
-        o.ExportProcessorType = ExportProcessorType.Batch;
-    });
     logging.AddOtlpExporter(options =>
     {
         options.Endpoint = new Uri(otlpEndpoint);
@@ -153,7 +157,7 @@ var config = builder.Configuration.GetSection("CardServices");
 builder.Services.AddDarioCardServices(config);
 
 var app = builder.Build();
-
+app.UseSerilogRequestLogging();
 app.UseSwagger();
 app.UseSwaggerUI();
 

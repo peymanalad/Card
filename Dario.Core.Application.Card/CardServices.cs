@@ -51,10 +51,9 @@ public class CardServices : ICardServices
         IDbConnection? sqlQuery = null;
         try
         {
-            sqlPrimary = new SqlConnection(options.SqlConnectionString);
-            sqlPrimary.Open();
+            sqlPrimary = new SqlConnection(options.ConnectionString); sqlPrimary.Open();
 
-            sqlQuery = new SqlConnection(options.SqlConnectionStringQuery);
+            sqlQuery = new SqlConnection(options.ConnectionStringQuery);
             sqlQuery.Open();
 
             return (sqlPrimary, sqlQuery, true);
