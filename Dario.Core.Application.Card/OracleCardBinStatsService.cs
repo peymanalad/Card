@@ -1,5 +1,6 @@
-﻿using Dario.Core.Abstraction.Card.Options;
-using Dario.Core.Application.Card;
+﻿using Dario.Core.Abstraction.Card.Database;
+using Dario.Core.Abstraction.Card.Options;
+using Dario.Core.Application.Card.Db;
 using Dario.Core.Domain.Card;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -7,15 +8,21 @@ using Oracle.ManagedDataAccess.Client;
 using System.Data;
 using System.Globalization;
 
+namespace Dario.Core.Application.Card;
+
 public class OracleCardBinStatsService : ICardBinStatsService
 {
-    private readonly IOptions<CardServicesOptions> _configuration;
+    private readonly CardServicesOptions _configuration;
+    private readonly IDbConnectionFactory _dbConnectionFactory;
     private readonly ILogger<OracleCardBinStatsService> _logger;
 
-    public OracleCardBinStatsService(IOptions<CardServicesOptions> configuration,
-        ILogger<OracleCardBinStatsService> logger)
+    public OracleCardBinStatsService(
+        IOptions<CardServicesOptions> configuration,
+        ILogger<OracleCardBinStatsService> logger,
+        IDbConnectionFactory dbConnectionFactory)
     {
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        _configuration = configuration.Value ?? throw new ArgumentNullException(nameof(configuration));
+        _dbConnectionFactory = dbConnectionFactory ?? throw new ArgumentNullException(nameof(dbConnectionFactory));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -141,8 +148,29 @@ ORDER BY tot.BIN";
     }
 
     private OracleConnection CreateConnection()
-        => new OracleConnection(_configuration.Value.ConnectionString);
+    {
+        if (_dbConnectionFactory.Provider != DatabaseProvider.Oracle)
+        {
+            throw new UnsupportedDatabaseProviderException(_dbConnectionFactory.Provider.ToString());
+        }
+
+        if (_dbConnectionFactory.Create() is not OracleConnection connection)
+        {
+            throw new UnsupportedDatabaseProviderException(_dbConnectionFactory.Provider.ToString());
+        }
+
+        return connection;
+    }
 
     private OracleConnection CreateQueryConnection()
-        => new OracleConnection(_configuration.Value.ConnectionStringQuery);
+    {
+        var connection = CreateConnection();
+
+        if (!string.IsNullOrWhiteSpace(_configuration.ConnectionStringQuery))
+        {
+            connection.ConnectionString = _configuration.ConnectionStringQuery;
+        }
+
+        return connection;
+    }
 }

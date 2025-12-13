@@ -2,6 +2,9 @@
 using Dario.Core.Abstraction.Card;
 using Dario.Core.Abstraction.Card.Options;
 using Dario.Core.Domain.Card;
+using Dario.Core.Abstraction.Card.Database;
+using Dario.Core.Application.Card.Db;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Oracle.ManagedDataAccess.Client;
@@ -10,7 +13,6 @@ using Rayanparsi.Core.Domain.Entities;
 using Rayanparsi.Utilities.Extensions;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Globalization;
 using System.Transactions;
@@ -25,98 +27,24 @@ public class CardServices : ICardServices
     private readonly IDbConnection _dbConnectionQuery;
     private readonly bool _isSqlServer;
 
-    public CardServices(IOptions<CardServicesOptions> configuration, ILogger<CardServices> logger)
+    public CardServices(
+        IOptions<CardServicesOptions> configuration,
+        ILogger<CardServices> logger,
+        IDbConnectionFactory dbConnectionFactory)
     {
         _logger = logger;
-        _encryptionKey = configuration.Value.EncryptionKey;
-        (_dbConnection, _dbConnectionQuery, _isSqlServer) = InitializeConnections(configuration.Value);
-    }
+        var options = configuration.Value ?? throw new ArgumentNullException(nameof(configuration));
+        options.Validate();
 
-    private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeConnections(CardServicesOptions options)
-    {
-        var provider = CardDatabaseProviderResolver.Resolve(options);
+        _encryptionKey = options.EncryptionKey;
+        _isSqlServer = dbConnectionFactory.Provider == DatabaseProvider.SqlServer;
 
-        return provider switch
+        _dbConnection = dbConnectionFactory.Create();
+        _dbConnectionQuery = dbConnectionFactory.Create();
+
+        if (!string.IsNullOrWhiteSpace(options.ConnectionStringQuery))
         {
-            CardDatabaseProvider.SqlServer => InitializeSqlConnections(options),
-            CardDatabaseProvider.Oracle => InitializeOracleConnections(options),
-            CardDatabaseProvider.Fallback => InitializeWithFallback(options),
-            _ => throw new InvalidOperationException($"Unsupported database provider '{options.DatabaseProvider}'."),
-        };
-    }
-
-    private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeSqlConnections(CardServicesOptions options)
-    {
-        IDbConnection? sqlPrimary = null;
-        IDbConnection? sqlQuery = null;
-        try
-        {
-            sqlPrimary = new SqlConnection(options.ConnectionString); sqlPrimary.Open();
-
-            sqlQuery = new SqlConnection(options.ConnectionStringQuery);
-            sqlQuery.Open();
-
-            return (sqlPrimary, sqlQuery, true);
-        }
-        catch (Exception sqlEx)
-        {
-            sqlPrimary?.Dispose();
-            sqlQuery?.Dispose();
-            throw new InvalidOperationException("Failed to initialize SQL Server connections.", sqlEx);
-        }
-    }
-    private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeOracleConnections(CardServicesOptions options)
-    {
-
-        IDbConnection? oraclePrimary = null;
-        IDbConnection? oracleQuery = null;
-        try
-        {
-            oraclePrimary = new OracleConnection(options.ConnectionString);
-            oraclePrimary.Open();
-
-            oracleQuery = new OracleConnection(options.ConnectionStringQuery);
-            oracleQuery.Open();
-
-            return (oraclePrimary, oracleQuery, false);
-        }
-        catch (Exception oracleEx)
-        {
-            oraclePrimary?.Dispose();
-            oracleQuery?.Dispose();
-            throw new InvalidOperationException("Failed to initialize Oracle connections.", oracleEx);
-        }
-    }
-
-    private (IDbConnection Primary, IDbConnection Query, bool IsSqlServer) InitializeWithFallback(CardServicesOptions options)
-    {
-        Exception? sqlInitializationException = null;
-
-        try
-        {
-            _logger.LogInformation("Database provider fallback enabled; attempting SQL Server connection.");
-            return InitializeSqlConnections(options);
-        }
-        catch (Exception sqlEx)
-        {
-            sqlInitializationException = sqlEx;
-            _logger.LogWarning(sqlEx, "Unable to open SQL Server connections; attempting Oracle fallback.");
-        }
-
-        try
-        {
-            return InitializeOracleConnections(options);
-        }
-        catch (Exception oracleEx)
-        {
-
-            var message = "Failed to initialize database connections using SQL Server first, then Oracle.";
-            if (sqlInitializationException is not null)
-            {
-                throw new InvalidOperationException(message, new AggregateException(sqlInitializationException, oracleEx));
-            }
-
-            throw new InvalidOperationException(message, oracleEx);
+            _dbConnectionQuery.ConnectionString = options.ConnectionStringQuery;
         }
     }
 

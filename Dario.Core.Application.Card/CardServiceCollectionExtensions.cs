@@ -1,66 +1,32 @@
 ﻿using Dario.Core.Abstraction.Card;
 using Dario.Core.Abstraction.Card.Options;
+using Dario.Core.Application.Card.Db;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using Rayanparsi.Extensions.Translations.Abstractions;
-using System;
 
 namespace Dario.Core.Application.Card;
 
 public static class CardServiceCollectionExtensions
 {
-    public static IServiceCollection AddDarioCardServices(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddCardApplication(
+        this IServiceCollection services,
+        IConfiguration configuration)
     {
-        services.AddTransient<ICardServices, CardServices>();
-        services.Configure<CardServicesOptions>(configuration);
-        services.PostConfigure<CardServicesOptions>(ApplyEnvironmentOverrides);
-        RegisterCardBinStatsService(services);
-        return services;
-    }
-    public static IServiceCollection AddDarioCardServices(this IServiceCollection services, IConfiguration configuration, string sectionName)
-    {
-        return services.AddDarioCardServices(configuration.GetSection(sectionName));
-    }
+        services.Configure<CardServicesOptions>(
+            configuration.GetSection("CardServices"));
 
-    public static IServiceCollection AddDarioCardServices(this IServiceCollection services, Action<CardServicesOptions> setupAction)
-    {
-        services.AddTransient<ICardServices, CardServices>();
-        services.Configure(setupAction);
-        services.PostConfigure<CardServicesOptions>(ApplyEnvironmentOverrides);
-        RegisterCardBinStatsService(services);
-        return services;
-    }
+        services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
-    private static void ApplyEnvironmentOverrides(CardServicesOptions options)
-    {
-        options.DatabaseProvider = OverrideIfSet(options.DatabaseProvider, "DB_PROVIDER");
-        options.ConnectionString = OverrideIfSet(options.ConnectionString, "DB_CONNECTION_STRING");
-        options.ConnectionStringQuery = OverrideIfSet(options.ConnectionStringQuery, "DB_QUERY_CONNECTION_STRING");
-        options.EncryptionKey = OverrideIfSet(options.EncryptionKey, "CARD_ENCRYPTION_KEY");
-    }
-    private static void RegisterCardBinStatsService(IServiceCollection services)
-    {
+        services.AddTransient<ICardServices, CardServices>();
         services.AddScoped<ICardBinStatsService>(sp =>
         {
-            var options = sp.GetRequiredService<IOptions<CardServicesOptions>>().Value;
-
-            return ShouldUseSqlServer(options)
+            var options = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<CardServicesOptions>>().Value;
+            var provider = Dario.Core.Abstraction.Card.Database.DatabaseProviderParser.Parse(options.Provider);
+            return provider == Dario.Core.Abstraction.Card.Database.DatabaseProvider.SqlServer
                 ? ActivatorUtilities.CreateInstance<SqlCardBinStatsService>(sp)
                 : ActivatorUtilities.CreateInstance<OracleCardBinStatsService>(sp);
         });
-    }
 
-    private static bool ShouldUseSqlServer(CardServicesOptions options)
-    {
-        return CardDatabaseProviderResolver.Resolve(options) != CardDatabaseProvider.Oracle;
-    }
-
-    private static string OverrideIfSet(string currentValue, string environmentVariable)
-    {
-        var environmentValue = Environment.GetEnvironmentVariable(environmentVariable);
-        return string.IsNullOrWhiteSpace(environmentValue)
-            ? currentValue
-            : environmentValue;
+        return services;
     }
 }

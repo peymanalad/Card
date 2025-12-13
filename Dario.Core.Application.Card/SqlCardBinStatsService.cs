@@ -1,23 +1,28 @@
-﻿using Dario.Core.Abstraction.Card.Options;
+﻿using Dario.Core.Abstraction.Card.Database;
+using Dario.Core.Abstraction.Card.Options;
+using Dario.Core.Application.Card.Db;
 using Dario.Core.Domain.Card;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Data;
-using System.Data.SqlClient;
 using System.Globalization;
 
 namespace Dario.Core.Application.Card;
 
 public class SqlCardBinStatsService : ICardBinStatsService
 {
-    private readonly IOptions<CardServicesOptions> _configuration;
+    private readonly CardServicesOptions _configuration;
+    private readonly IDbConnectionFactory _dbConnectionFactory;
     private readonly ILogger<SqlCardBinStatsService> _logger;
 
     public SqlCardBinStatsService(
         IOptions<CardServicesOptions> configuration,
-        ILogger<SqlCardBinStatsService> logger)
+        ILogger<SqlCardBinStatsService> logger,
+        IDbConnectionFactory dbConnectionFactory)
     {
-        _configuration = configuration ?? throw new ArgumentNullException(nameof(configuration));
+        _configuration = configuration.Value ?? throw new ArgumentNullException(nameof(configuration));
+        _dbConnectionFactory = dbConnectionFactory ?? throw new ArgumentNullException(nameof(dbConnectionFactory));
         _logger = logger ?? throw new ArgumentNullException(nameof(logger));
     }
 
@@ -136,7 +141,30 @@ ORDER BY tot.BIN;";
     }
 
     private SqlConnection CreateConnection()
-        => new SqlConnection(_configuration.Value.ConnectionString);
+    {
+        if (_dbConnectionFactory.Provider != DatabaseProvider.SqlServer)
+        {
+            throw new UnsupportedDatabaseProviderException(_dbConnectionFactory.Provider.ToString());
+        }
+
+        if (_dbConnectionFactory.Create() is not SqlConnection connection)
+        {
+            throw new UnsupportedDatabaseProviderException(_dbConnectionFactory.Provider.ToString());
+        }
+
+        return connection;
+    }
+
     private SqlConnection CreateQueryConnection()
-        => new SqlConnection(_configuration.Value.ConnectionStringQuery);
+
+    {
+        var connection = CreateConnection();
+
+        if (!string.IsNullOrWhiteSpace(_configuration.ConnectionStringQuery))
+        {
+            connection.ConnectionString = _configuration.ConnectionStringQuery;
+        }
+
+        return connection;
+    }
 }

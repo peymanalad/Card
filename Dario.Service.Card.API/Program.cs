@@ -6,15 +6,13 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Oracle.ManagedDataAccess.OpenTelemetry;
-using System.Diagnostics.Metrics;
 using System.Diagnostics;
-using System.Net;
+using System.Diagnostics.Metrics;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var serviceName = builder.Environment.ApplicationName;
 var serviceVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown";
-var deploymentEnvironment = builder.Environment.EnvironmentName;
 
 builder.Host.UseSerilog((context, services, loggerConfiguration) =>
 {
@@ -25,7 +23,29 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) =>
         .WriteTo.Console();
 });
 
+var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+if (string.IsNullOrWhiteSpace(otlpEndpoint))
+{
+    throw new InvalidOperationException("'OTEL_EXPORTER_OTLP_ENDPOINT' is not configured.");
+}
 
+var otlpProtocolRaw = builder.Configuration["OTEL_EXPORTER_OTLP_PROTOCOL"]
+                     ?? builder.Configuration["OpenTelemetry:Protocol"];
+var resourceAttributesRaw = builder.Configuration["OTEL_RESOURCE_ATTRIBUTES"]
+                         ?? builder.Configuration["OpenTelemetry:ResourceAttributes"];
+
+var otlpExportProtocol = string.Equals(otlpProtocolRaw, "http/protobuf", StringComparison.OrdinalIgnoreCase)
+    ? OtlpExportProtocol.HttpProtobuf
+    : OtlpExportProtocol.Grpc;
+
+var resourceBuilder = ResourceBuilder.CreateDefault()
+    .AddEnvironmentVariableDetector()
+    .AddService(serviceName: serviceName, serviceVersion: serviceVersion)
+    .AddAttributes(new KeyValuePair<string, object?>[]
+    {
+        new("deployment.environment", builder.Environment.EnvironmentName)
+    })
+    .AddAttributes(ParseResourceAttributes(resourceAttributesRaw));
 var meter = new Meter("Dario.Service.Card.API");
 var process = Process.GetCurrentProcess();
 var processStartTime = Process.GetCurrentProcess().StartTime.ToUniversalTime();
@@ -36,8 +56,8 @@ meter.CreateObservableGauge("service_uptime_seconds", () =>
     return new Measurement<double>(
         uptime.TotalSeconds,
         new KeyValuePair<string, object?>("service.name", serviceName),
-        new KeyValuePair<string, object?>("deployment.environment", deploymentEnvironment)
-    );
+        new KeyValuePair<string, object?>("deployment.environment", builder.Environment.EnvironmentName)
+        );
 });
 meter.CreateObservableGauge("process_cpu_seconds_total", () =>
 {
@@ -46,8 +66,8 @@ meter.CreateObservableGauge("process_cpu_seconds_total", () =>
     return new Measurement<double>(
         process.TotalProcessorTime.TotalSeconds,
         new KeyValuePair<string, object?>("service.name", serviceName),
-        new KeyValuePair<string, object?>("deployment.environment", deploymentEnvironment)
-    );
+        new KeyValuePair<string, object?>("deployment.environment", builder.Environment.EnvironmentName)
+        );
 });
 
 meter.CreateObservableGauge("process_memory_bytes", () =>
@@ -57,36 +77,13 @@ meter.CreateObservableGauge("process_memory_bytes", () =>
     return new Measurement<long>(
         process.WorkingSet64,
         new KeyValuePair<string, object?>("service.name", serviceName),
-        new KeyValuePair<string, object?>("deployment.environment", deploymentEnvironment)
-    );
-});
-var otelConfig = builder.Configuration.GetSection("OpenTelemetry");
-var otlpProtocol = builder.Configuration["OTEL_EXPORTER_OTLP_PROTOCOL"];
-
-var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
-var otlpExportProtocol = string.Equals(otlpProtocol, "http/protobuf", StringComparison.OrdinalIgnoreCase)
-    ? OtlpExportProtocol.HttpProtobuf
-    : OtlpExportProtocol.Grpc;
-var otelResourceAttributes = builder.Configuration["OTEL_RESOURCE_ATTRIBUTES"]
-                           ?? otelConfig.GetValue<string>("ResourceAttributes");
-
-var configureResource = (Action<ResourceBuilder>)(resourceBuilder =>
-{
-    resourceBuilder
-        .AddEnvironmentVariableDetector()
-        .AddService(serviceName: serviceName, serviceVersion: serviceVersion)
-        .AddAttributes(new KeyValuePair<string, object>[]
-        {
-            new("deployment.environment", deploymentEnvironment)
-        })
-        .AddAttributes(ParseResourceAttributes(otelResourceAttributes));
+        new KeyValuePair<string, object?>("deployment.environment", builder.Environment.EnvironmentName)
+        );
 });
 
-var resourceBuilder = ResourceBuilder.CreateDefault();
-configureResource(resourceBuilder);
 
 builder.Services.AddOpenTelemetry()
-    .ConfigureResource(configureResource)
+    .ConfigureResource(_ => _.AddResourceBuilder(resourceBuilder))
     .WithTracing(tracing =>
     {
         tracing
@@ -132,7 +129,25 @@ builder.Logging.AddOpenTelemetry(logging =>
     });
 });
 
-static IEnumerable<KeyValuePair<string, object>> ParseResourceAttributes(string? rawAttributes)
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddHealthChecks();
+builder.Services.AddCardApplication(builder.Configuration);
+
+var app = builder.Build();
+app.UseSerilogRequestLogging();
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.UseStaticFiles();
+
+app.UseAuthorization();
+
+app.MapControllers();
+app.MapHealthChecks("/health");
+app.Run();
+static IEnumerable<KeyValuePair<string, object?>> ParseResourceAttributes(string? rawAttributes)
 {
     if (string.IsNullOrWhiteSpace(rawAttributes))
     {
@@ -145,26 +160,7 @@ static IEnumerable<KeyValuePair<string, object>> ParseResourceAttributes(string?
 
         if (parts.Length == 2)
         {
-            yield return new KeyValuePair<string, object>(parts[0].Trim(), parts[1].Trim());
+            yield return new KeyValuePair<string, object?>(parts[0].Trim(), parts[1].Trim());
         }
     }
 }
-
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-var config = builder.Configuration.GetSection("CardServices");
-builder.Services.AddDarioCardServices(config);
-
-var app = builder.Build();
-app.UseSerilogRequestLogging();
-app.UseSwagger();
-app.UseSwaggerUI();
-
-app.UseStaticFiles();
-
-app.UseAuthorization();
-
-app.MapControllers();
-
-app.Run();
