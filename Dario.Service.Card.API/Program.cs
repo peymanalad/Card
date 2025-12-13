@@ -38,14 +38,20 @@ var otlpExportProtocol = string.Equals(otlpProtocolRaw, "http/protobuf", StringC
     ? OtlpExportProtocol.HttpProtobuf
     : OtlpExportProtocol.Grpc;
 
-var resourceBuilder = ResourceBuilder.CreateDefault()
-    .AddEnvironmentVariableDetector()
-    .AddService(serviceName: serviceName, serviceVersion: serviceVersion)
-    .AddAttributes(new KeyValuePair<string, object?>[]
-    {
-        new("deployment.environment", builder.Environment.EnvironmentName)
-    })
-    .AddAttributes(ParseResourceAttributes(resourceAttributesRaw));
+Action<ResourceBuilder> configureResource = resourceBuilder =>
+{
+    resourceBuilder
+        .AddEnvironmentVariableDetector()
+        .AddService(serviceName: serviceName, serviceVersion: serviceVersion)
+        .AddAttributes(new KeyValuePair<string, object?>[]
+        {
+            new("deployment.environment", builder.Environment.EnvironmentName)
+        })
+        .AddAttributes(ParseResourceAttributes(resourceAttributesRaw));
+};
+
+var resourceBuilder = ResourceBuilder.CreateDefault();
+configureResource(resourceBuilder);
 var meter = new Meter("Dario.Service.Card.API");
 var process = Process.GetCurrentProcess();
 var processStartTime = Process.GetCurrentProcess().StartTime.ToUniversalTime();
@@ -83,7 +89,7 @@ meter.CreateObservableGauge("process_memory_bytes", () =>
 
 
 builder.Services.AddOpenTelemetry()
-    .ConfigureResource(_ => _.AddResourceBuilder(resourceBuilder))
+    .ConfigureResource(configureResource)
     .WithTracing(tracing =>
     {
         tracing
