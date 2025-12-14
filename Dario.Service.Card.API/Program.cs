@@ -1,4 +1,5 @@
-﻿using Dario.Core.Application.Card;
+﻿using Dario.Core.Abstraction.Card.Database;
+using Dario.Core.Application.Card;
 using OpenTelemetry;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
@@ -6,13 +7,14 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Oracle.ManagedDataAccess.OpenTelemetry;
+using Serilog;
 using System.Diagnostics;
 using System.Diagnostics.Metrics;
-using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var serviceName = builder.Environment.ApplicationName;
 var serviceVersion = typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown";
+var deploymentEnvironment = builder.Environment.EnvironmentName;
 
 builder.Host.UseSerilog((context, services, loggerConfiguration) =>
 {
@@ -23,6 +25,27 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) =>
         .WriteTo.Console();
 });
 
+var cardServicesSection = builder.Configuration.GetSection("CardServices");
+var cardServicesConnectionString = cardServicesSection.GetValue<string>("ConnectionString");
+var cardServicesQueryConnectionString = cardServicesSection.GetValue<string>("ConnectionStringQuery");
+var cardServicesProvider = cardServicesSection.GetValue<string>("DatabaseProvider");
+if (string.IsNullOrWhiteSpace(cardServicesConnectionString))
+{
+    throw new InvalidOperationException(
+        "BillServices:ConnectionStringQuery is not configured.");
+}
+
+var provider = DatabaseProviderParser.Parse(cardServicesProvider);
+if (provider is DatabaseProvider.Unknown)
+{
+    throw new UnsupportedDatabaseProviderException(cardServicesProvider ?? string.Empty);
+}
+
+if (string.IsNullOrWhiteSpace(cardServicesQueryConnectionString))
+{
+    throw new InvalidOperationException(
+        "BillServices:QueryConnectionString is not configured.");
+}
 var otlpEndpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
 if (string.IsNullOrWhiteSpace(otlpEndpoint))
 {

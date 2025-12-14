@@ -25,8 +25,10 @@ services:
       OTEL_RESOURCE_ATTRIBUTES: "service.name=Dario.Service.Card.API,service.version=1.0.0,deployment.environment=Production"
 
     networks:
-      - rayan
-
+      # - rayan
+      - oracle_observe
 networks:
-  rayan:
+  # rayan:
+  #   external: true
+  oracle_observe:
     external: true

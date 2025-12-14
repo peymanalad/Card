@@ -22,7 +22,7 @@ public static class DatabaseProviderParser
         if (raw.Equals("Ambiguous", StringComparison.OrdinalIgnoreCase) ||
             raw.Equals("Auto", StringComparison.OrdinalIgnoreCase) ||
             raw.Contains(",") || raw.Contains("|") || raw.Contains(";"))
-            return DatabaseProvider.Ambiguous;
+            return DatabaseProvider.Unknown;
 
         return DatabaseProvider.Unknown;
     }

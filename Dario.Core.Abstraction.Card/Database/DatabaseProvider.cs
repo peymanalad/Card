@@ -4,6 +4,5 @@ public enum DatabaseProvider
 {
     Oracle,
     SqlServer,
-    Unknown,
-    Ambiguous
+    Unknown
 }

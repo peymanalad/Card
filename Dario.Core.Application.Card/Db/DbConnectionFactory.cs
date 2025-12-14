@@ -19,7 +19,7 @@ public sealed class DbConnectionFactory : IDbConnectionFactory
 
         Provider = DatabaseProviderParser.Parse(_options.Provider);
 
-        if (Provider is DatabaseProvider.Unknown or DatabaseProvider.Ambiguous)
+        if (Provider is DatabaseProvider.Unknown)
             throw new UnsupportedDatabaseProviderException(_options.Provider);
     }
 
