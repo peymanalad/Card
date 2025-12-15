@@ -117,9 +117,24 @@ builder.Services.AddOpenTelemetry()
     {
         tracing
             .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            .AddOracleDataProviderInstrumentation()
-            .AddSource("Oracle.ManagedDataAccess.Client")
+            .AddHttpClientInstrumentation();
+
+        if (provider == DatabaseProvider.Oracle)
+        {
+            tracing
+                .AddOracleDataProviderInstrumentation()
+                .AddSource("Oracle.ManagedDataAccess.Client");
+        }
+        else if (provider == DatabaseProvider.SqlServer)
+        {
+            tracing.AddSqlClientInstrumentation(options =>
+            {
+                options.SetDbStatementForText = true;
+                options.RecordException = true;
+            });
+        }
+
+        tracing
             .AddOtlpExporter(options =>
             {
                 options.Endpoint = new Uri(otlpEndpoint);

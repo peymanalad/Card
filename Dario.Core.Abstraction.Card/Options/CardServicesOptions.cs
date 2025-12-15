@@ -4,7 +4,6 @@ namespace Dario.Core.Abstraction.Card.Options;
 
 public sealed class CardServicesOptions
 {
-    [ConfigurationKeyName("DatabaseProvider")]
     public string Provider { get; set; } = "Unknown";
     public string ConnectionString { get; set; } = string.Empty;
     public string? ConnectionStringQuery { get; set; }

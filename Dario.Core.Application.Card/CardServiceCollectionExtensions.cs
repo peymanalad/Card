@@ -17,7 +17,7 @@ public static class CardServiceCollectionExtensions
 
         services.AddSingleton<IDbConnectionFactory, DbConnectionFactory>();
 
-        services.AddTransient<ICardServices, CardServices>();
+        services.AddScoped<ICardServices, CardServices>();
         services.AddScoped<ICardBinStatsService>(sp =>
         {
             var options = sp.GetRequiredService<Microsoft.Extensions.Options.IOptions<CardServicesOptions>>().Value;
