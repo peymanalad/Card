@@ -28,7 +28,7 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) =>
 var cardServicesSection = builder.Configuration.GetSection("CardServices");
 var cardServicesConnectionString = cardServicesSection.GetValue<string>("ConnectionString");
 var cardServicesQueryConnectionString = cardServicesSection.GetValue<string>("ConnectionStringQuery");
-var cardServicesProvider = cardServicesSection.GetValue<string>("DatabaseProvider");
+var cardServicesProvider = cardServicesSection.GetValue<string>("Provider");
 if (string.IsNullOrWhiteSpace(cardServicesConnectionString))
 {
     throw new InvalidOperationException(
@@ -129,18 +129,24 @@ builder.Services.AddOpenTelemetry()
         {
             tracing.AddSqlClientInstrumentation(options =>
             {
-                options.SetDbStatementForText = true;
                 options.RecordException = true;
+                options.EnrichWithSqlCommand = (activity, command) =>
+                {
+                    if (command is System.Data.Common.DbCommand dbCommand)
+                    {
+                        activity.SetTag("db.statement", dbCommand.CommandText);
+                    }
+                };
             });
-        }
 
-        tracing
-            .AddOtlpExporter(options =>
-            {
-                options.Endpoint = new Uri(otlpEndpoint);
-                options.Protocol = otlpExportProtocol;
-                options.ExportProcessorType = ExportProcessorType.Batch;
-            });
+            tracing
+                .AddOtlpExporter(options =>
+                {
+                    options.Endpoint = new Uri(otlpEndpoint);
+                    options.Protocol = otlpExportProtocol;
+                    options.ExportProcessorType = ExportProcessorType.Batch;
+                });
+        }
     })
     .WithMetrics(metrics =>
     {

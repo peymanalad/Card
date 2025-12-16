@@ -16,7 +16,7 @@ services:
       CardServices__ServicePort: "${SERVICE_PORT}"
       CardServices__ConnectionString: "${CARD_DB_CONNECTION_STRING}"
       CardServices__ConnectionStringQuery: "${CARD_DB_CONNECTION_STRING_QUERY}"
-      CardServices__DatabaseProvider: "${CARD_DATABASE_PROVIDER}"
+      CardServices__Provider: "${CARD_DATABASE_PROVIDER}"
       CardServices__EncryptionKey: "${CARD_ENCRYPTION_KEY}"
       DB_CONNECTION_STRING: "${CARD_DB_CONNECTION_STRING}"
       DB_QUERY_CONNECTION_STRING: "${CARD_DB_CONNECTION_STRING_QUERY}"
