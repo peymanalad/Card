@@ -52,4 +52,4 @@ Backup*/
 RayanparsiPackages/
 */bin/*
 */obj/*
-.env*
+.env.local
