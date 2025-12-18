@@ -22,7 +22,22 @@ builder.Host.UseSerilog((context, services, loggerConfiguration) =>
         .ReadFrom.Configuration(context.Configuration)
         .ReadFrom.Services(services)
         .Enrich.FromLogContext()
-        .WriteTo.Console();
+        .WriteTo.Console()
+        .WriteTo.OpenTelemetry(options =>
+        {
+            // Use HTTP endpoint for Serilog (gRPC not well supported)
+            var grpcEndpoint = context.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"];
+            var httpEndpoint = grpcEndpoint?.Replace(":4317", ":4318") ?? "http://signoz-otel-collector:4318";
+            
+            options.Endpoint = httpEndpoint + "/v1/logs";
+            options.Protocol = Serilog.Sinks.OpenTelemetry.OtlpProtocol.HttpProtobuf;
+            options.ResourceAttributes = new Dictionary<string, object>
+            {
+                ["service.name"] = context.HostingEnvironment.ApplicationName,
+                ["service.version"] = typeof(Program).Assembly.GetName().Version?.ToString() ?? "unknown",
+                ["deployment.environment"] = context.HostingEnvironment.EnvironmentName
+            };
+        });
 });
 
 var cardServicesSection = builder.Configuration.GetSection("CardServices");
@@ -138,15 +153,15 @@ builder.Services.AddOpenTelemetry()
                     }
                 };
             });
-
-            tracing
-                .AddOtlpExporter(options =>
-                {
-                    options.Endpoint = new Uri(otlpEndpoint);
-                    options.Protocol = otlpExportProtocol;
-                    options.ExportProcessorType = ExportProcessorType.Batch;
-                });
         }
+
+        tracing
+            .AddOtlpExporter(options =>
+            {
+                options.Endpoint = new Uri(otlpEndpoint);
+                options.Protocol = otlpExportProtocol;
+                options.ExportProcessorType = ExportProcessorType.Batch;
+            });
     })
     .WithMetrics(metrics =>
     {
