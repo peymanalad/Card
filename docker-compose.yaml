@@ -12,6 +12,8 @@ services:
       - "${SERVICE_PORT}:${SERVICE_PORT}"
     environment:
       ASPNETCORE_ENVIRONMENT: "Production"
+      ASPNETCORE_HTTP_PORTS: ""
+      ASPNETCORE_HTTPS_PORTS: ""
       ASPNETCORE_URLS: http://0.0.0.0:${SERVICE_PORT}
       CardServices__ServicePort: "${SERVICE_PORT}"
       CardServices__ConnectionString: "${CARD_DB_CONNECTION_STRING}"
