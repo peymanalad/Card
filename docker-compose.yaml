@@ -23,12 +23,17 @@ services:
       OTEL_EXPORTER_OTLP_ENDPOINT: "${OTEL_EXPORTER_OTLP_ENDPOINT}"
       OTEL_EXPORTER_OTLP_PROTOCOL: "${OTEL_EXPORTER_OTLP_PROTOCOL:-grpc}"
       OTEL_RESOURCE_ATTRIBUTES: "service.name=Dario.Service.Card.API,service.version=1.0.0,deployment.environment=Production"
-
-    networks:
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:${SERVICE_PORT}/health || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+      start_period: 20s
+    # networks:
       # - rayan
-      - oracle_observe
-networks:
+      # - oracle_observe
+# networks:
   # rayan:
   #   external: true
-  oracle_observe:
-    external: true
+  # oracle_observe:
+    # external: true
